@@ -1,0 +1,40 @@
+@import "tailwindcss";
+
+.home-slider-container {
+    position: relative;
+    width: 100%;
+    max-height: 500px;
+    overflow: hidden;
+  }
+  
+  .slider-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+  
+  .custom-prev,
+  .custom-next,
+  .custom-prev2,
+  .custom-next2 {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  
+  .custom-prev {
+    left: 20px;
+  }
+  
+  .custom-next,
+  .custom-next2 {
+    right: 20px;
+  }
+
+  

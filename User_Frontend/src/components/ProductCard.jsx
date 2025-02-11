@@ -1,0 +1,53 @@
+import { CiHeart } from "react-icons/ci";
+import { MdOutlineRemoveRedEye } from "react-icons/md";
+
+
+// components/ProductCard.jsx
+const ProductCard = ({ image, title, price, oldPrice, rating, brand }) => {
+  return (
+    <div className="bg-white rounded-xl shadow-md overflow-hidden p-4 w-64 hover:shadow-lg transition-shadow cursor-pointer group">
+      <div className="w-full h-60 relative rounded-md overflow-hidden">
+        <div className="w-full h-full bg-gray-500/50 absolute top-0 left-0 items-center justify-center hidden group-hover:flex duration-150 ease-in-out opacity-0 group-hover:opacity-100 z-20">
+          <div className="flex items-center justify-center gap-4 bg-white p-2 rounded-md">
+            <CiHeart className="hover:text-green-600" size={20} /> 
+            <MdOutlineRemoveRedEye className="hover:text-green-600" size={20}/>
+          </div>
+        </div>
+        <img
+          src={image}
+          alt={title}
+          className="w-full h-60 object-cover object-top group-hover:scale-110 z-10 duration-150 ease-in-out"
+        />
+      </div>
+      <div className="mt-3">
+        <p className="text-sm text-gray-500">Fashion</p>
+        <h3 className="font-semibold text-gray-800 text-lg truncate">
+          {title}
+        </h3>
+        <div className="flex items-center my-1">
+          {Array.from({ length: 5 }).map((_, index) => (
+            <span
+              key={index}
+              className={`text-yellow-500 text-sm ${
+                index < rating ? "fill-current" : "text-gray-300"
+              }`}
+            >
+              ★
+            </span>
+          ))}
+        </div>
+        <p className="text-sm text-gray-600">
+          By <span className="font-semibold text-green-600">{brand}</span>
+        </p>
+        <div className="flex items-center mt-2">
+          <p className="text-lg font-bold text-green-600">Rs {price}</p>
+          <p className="text-sm text-gray-500 line-through ml-2">
+            Rs {oldPrice}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ProductCard;
