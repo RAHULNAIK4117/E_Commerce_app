@@ -9,9 +9,7 @@ const Home = () => {
       <PopularProducts/>
       <NewArrivals/>
       <FeaturedProducts/>
-      <SubscribeSection/>
-      <ServiceSection/>
-      <Footer/>
+     
     </div>
     
   )

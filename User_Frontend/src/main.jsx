@@ -6,7 +6,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import store from './redux/store.js'
 import {AuthLayout, HomeLayout, PageNotFound, RouteProtector} from './others'
-import {Home, SignIn, SignUp} from './pages'
+import {Cart, Home, MyAccount, Orders, Product, Search, SignIn, SignUp, WishList} from './pages'
 
 const route = createBrowserRouter([
   {
@@ -16,6 +16,30 @@ const route = createBrowserRouter([
       {
         index: true,
         element: <Home/>
+      },
+      {
+        path: "product",
+        element: <Product/>
+      },
+      {
+        path: "account",
+        element: <MyAccount/>
+      },
+      {
+        path: "orders",
+        element: <Orders/>
+      },
+      {
+        path: "wish-list",
+        element: <WishList/>
+      },
+      {
+        path: "cart",
+        element: <Cart/>
+      },
+      {
+        path: "search",
+        element: <Search/>
       },
     ]
   },
