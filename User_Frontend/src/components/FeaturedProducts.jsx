@@ -70,9 +70,9 @@ const products = [
 
 const FeaturedProducts = () => {
   return (
-    <div className="flex items-end space-x-6 px-10 py-5">
+    <div className="flex items-end space-x-6 px-4 md:px-10 py-5">
       {/* Swiper Section */}
-      <div className="w-3/4 ">
+      <div className="w-full md:w-3/4 ">
         <h2 className="text-2xl font-bold">Featured Products</h2>
         <div className="relative w-full ">
           <Swiper
@@ -82,6 +82,24 @@ const FeaturedProducts = () => {
             loop={true}
             navigation={{ nextEl: ".custom-next2", prevEl: ".custom-prev2" }}
             className=""
+            breakpoints={{
+              320: {
+                slidesPerView: 1,
+                spaceBetween: 10,
+              },
+              640: {
+                slidesPerView: 2,
+                spaceBetween: 20,
+              },
+              768: {
+                slidesPerView: 2,
+                spaceBetween: 30,
+              },
+              1024: {
+                slidesPerView: 3,
+                spaceBetween: 40,
+              },
+            }}
           >
             {products.map((product, index) => (
               <SwiperSlide key={index} className="p-2">
@@ -97,9 +115,7 @@ const FeaturedProducts = () => {
           </div>
         </div>
       </div>
-
-      {/* Image Section */}
-      <div className="w-1/4 h-[388px] select-none">
+      <div className="hidden md:block w-1/4 h-[388px] select-none">
         <img
           src="https://api.spicezgold.com/download/file_1734526702388_gespo-black-teal-blue-colorblocked-round-neck-half-sleeve-casual-t-shirt-product-images-rvwmlodbas-0-202304131033.jpg"
           alt="Super Grocery Sale"

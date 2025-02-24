@@ -10,16 +10,16 @@ const services = [
 
 export default function ServiceSection() {
   return (
-    <div className="flex justify-between gap-2 py-6 px-10 ">
+    <div className="grid gap-4 py-6 px-4 md:px-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
       {services.map((service, index) => (
         <div
           key={index}
-          className="flex items-center gap-4 p-10 bg-gray-100 shadow-md rounded-lg w-68"
+          className="flex items-center gap-4 py-6 px-4 bg-gray-100 shadow-md rounded-lg"
         >
           {service.icon}
           <div>
             <h3 className="font-semibold text-lg">{service.title}</h3>
-            <p className="text-gray-500 text-lg">{service.description}</p>
+            <p className="text-gray-500 text-sm">{service.subtitle}</p>
           </div>
         </div>
       ))}

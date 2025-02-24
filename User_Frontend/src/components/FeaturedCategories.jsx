@@ -14,10 +14,10 @@ const categories = [
 const CategoryCard = ({ image, title, bgColor }) => {
   return (
     <div
-      className={`flex flex-col items-center justify-center w-32 h-32 rounded-full shadow-md transition-transform transform hover:scale-110`}
+      className={`flex flex-col items-center justify-center w-24 h-24  md:w-32 md:h-32 rounded-lg md:rounded-full shadow-md transition-transform transform hover:scale-110`}
       style={{ backgroundColor: bgColor }}
     >
-      <img src={image} alt={title} className="w-12 h-12" />
+      <img src={image} alt={title} className="w-10 h-10 md:w-16 md:h-16" />
       <p className="mt-2 text-sm font-semibold">{title}</p>
     </div>
   );
@@ -25,9 +25,9 @@ const CategoryCard = ({ image, title, bgColor }) => {
 
 const FeaturedCategories = () => {
   return (
-    <div className="my-10 w-full px-10">
-      <h2 className="text-2xl font-semibold mb-6">Featured Categories</h2>
-      <div className="flex flex-wrap justify-between gap-6 w-full px-10">
+    <div className="my-10 w-full px-4 md:px-10">
+      <h2 className="text-xl md:text-2xl font-semibold mb-2 md:mb-6">Featured Categories</h2>
+      <div className="flex flex-wrap justify-between gap-4 w-full md:px-10">
         {categories.map((category, index) => (
           <CategoryCard
             key={index}

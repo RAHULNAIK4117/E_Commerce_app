@@ -54,14 +54,14 @@ const HomeSlider = () => {
       >
         {slides.map((slide) => (
           <SwiperSlide key={slide.id}>
-            <img src={slide.image} alt={slide.alt} className="slider-image" />
+            <img src={slide.image} alt={slide.alt} className="w-full h-[200px] md:h-[400px] object-cover " />
           </SwiperSlide>
         ))}
       </Swiper>
-      <div className="custom-prev">
+      <div className="custom-prev hidden md:block">
         <FaChevronLeft />
       </div>
-      <div className="custom-next">
+      <div className="custom-next hidden md:block">
         <FaChevronRight />
       </div>
     </div>

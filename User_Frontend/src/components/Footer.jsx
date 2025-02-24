@@ -4,14 +4,14 @@ import { FaFacebookF, FaTwitter, FaInstagram, FaYoutube } from "react-icons/fa";
 
 const Footer = () => {
   return (
-    <footer className=" text-gray-800 p-10">
-      <div className=" px-6">
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
+    <footer className="text-gray-800 p-4 md:p-10">
+      <div className=" md:px-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
           {/* Company Info */}
           <div className="col-span-1">
-            <img src="/Logo.jpg" alt="Shopstic Logo" className="w-36 mb-4" />
-            <p className="text-lg">Awesome grocery store website template</p>
-            <ul className="mt-4 space-y-2 ">
+            <img src="/Logo.jpg" alt="Shopstic Logo" className="w-24 md:w-36 mb-4" />
+            <p className="text-base md:text-lg">Awesome grocery store website template</p>
+            <ul className="mt-4 space-y-2">
               <li className="flex items-center gap-2">
                 <BiMap className="text-green-500 text-lg" />
                 <span>
@@ -43,7 +43,7 @@ const Footer = () => {
           {["Company", "Company", "Corporate", "Popular"].map((section, index) => (
             <div key={index}>
               <h3 className="font-semibold mb-3">{section}</h3>
-              <ul className="space-y-2 ">
+              <ul className="space-y-2">
                 {[
                   "About Us",
                   "Delivery Information",
@@ -66,7 +66,7 @@ const Footer = () => {
 
         {/* Bottom Section */}
         <div className="mt-8 flex flex-col md:flex-row justify-between items-center border-t pt-6">
-          <p className="">© 2024, Ecommerce Template. All rights reserved</p>
+          <p className="text-center md:text-left">© 2024, Ecommerce Template. All rights reserved</p>
           <div className="flex space-x-4 mt-4 md:mt-0">
             {[FaFacebookF, FaTwitter, FaInstagram, FaYoutube].map((Icon, idx) => (
               <a
