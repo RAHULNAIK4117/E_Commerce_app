@@ -9,12 +9,14 @@ function App() {
   const [count, setCount] = useState(0);
 
   return (
-    <div className=" w-full min-h-screen h-full relative" >
-      <Header/>
-      <Outlet />
-      <SubscribeSection/>
-      <ServiceSection/>
-      <Footer/>
+    <div className="bg-gray-400 w-full ">
+      <div className=" w-full min-h-screen bg-gray-100 max-w-[1600px] mx-auto h-full relative">
+        <Header />
+        <Outlet />
+        <SubscribeSection />
+        <ServiceSection />
+        <Footer />
+      </div>
     </div>
   );
 }

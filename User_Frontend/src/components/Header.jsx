@@ -23,12 +23,24 @@ import {
   Logout,
   KeyboardArrowDownOutlined,
 } from "@mui/icons-material";
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import Products from "../assets/Products";
 
 const Header = () => {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [openSuggestion, setOpenSuggestion] = useState(false)
+  const [searchSuggestions, setSearchSuggestions] = useState([])
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
+  const [searchParams] = useSearchParams();
+  const search = searchParams.get("search");
+
+  useEffect(()=>{
+    if(!search) setSearchQuery('')
+
+  }, [search])
+
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
 
@@ -40,28 +52,90 @@ const Header = () => {
     setAnchorEl(null);
   };
 
+  const handleCategory = (event, cat, subCat) => {
+    event.stopPropagation();
+
+    const ulr = subCat
+      ? `/products?category=${cat}&subCategory=${subCat}`
+      : `/products?category=${cat}`;
+    navigate(ulr);
+  };
+
+  const goToHome = () => {
+    navigate("/");
+    window.scrollTo({
+      top: 0,
+      left: 100,
+      behavior: "smooth",
+    });
+  };
+
+  const handleSearchChange = (e) => {
+
+    setSearchQuery(e.target.value);
+    setOpenSuggestion(e.target.value ? true : false)
+    const searchFiltered = Products?.filter((product) =>
+      product.title.toLowerCase().includes(e.target.value.toLowerCase()) ||
+      product.brand.toLowerCase().includes(e.target.value.toLowerCase()) ||
+      product.category.toLowerCase().includes(e.target.value.toLowerCase()) ||
+      product.description.toLowerCase().includes(e.target.value.toLowerCase())
+    );
+
+    setSearchSuggestions(e.target.value ? searchFiltered.slice(0, 15) : [])
+    // console.log(searchFiltered.slice(0, 15));
+    
+  };
+
+  const handleSuggestionClick = (sugg) => {
+    setSearchQuery(sugg);
+    navigate(`/products?search=${sugg}`)
+    setOpenSuggestion(false)
+  };
+  
+  const handleSearchSubmit = (e) => {
+    e.preventDefault()
+    navigate(`/products?search=${searchQuery}`)
+    setOpenSuggestion(false)
+
+  };
+
   const handleLogout = () => {};
 
   return (
     <header className="bg-white shadow-sm sticky top-0 left-0 w-full z-50">
       <div className=" w-full flex items-center justify-between gap-4 py-3 px-4 md:px-10 ">
         {/* Logo */}
-        <Link
-          to="/"
-          className="hidden sm:flex items-center space-x-2 flex-shrink-0"
+        <button
+          onClick={goToHome}
+          className="hidden sm:flex items-center space-x-2 flex-shrink-0 cursor-pointer"
         >
           <img src="/Logo.jpg" alt="Shopstic Logo" className="h-8" />
-        </Link>
+        </button>
 
         <div className="flex items-center justify-end w-full gap-4 ">
           {/* Search Bar */}
-          <div className="relative flex-grow max-w-lg flex-shrink-0">
-            <input
-              type="text"
-              placeholder="Search for items..."
-              className="w-full border border-gray-300 rounded-md py-2 px-4 pr-10 focus:outline-none focus:ring focus:ring-green-300"
-            />
-            <FaSearch className="absolute right-3 top-3 text-gray-500 cursor-pointer" />
+          <div className="relative flex-grow max-w-lg flex-shrink-0 z-10">
+            <form onSubmit={handleSearchSubmit} className="relative ">
+              <input
+                value={searchQuery}
+                onChange={handleSearchChange}
+                type="text"
+                placeholder="Search for items..."
+                className="w-full border border-gray-300 rounded-md py-2 px-4 pr-10 focus:outline-none focus:ring focus:ring-green-300"
+              />
+              <FaSearch className="absolute right-3 top-3 text-gray-500 cursor-pointer" />
+            </form>
+            {openSuggestion && <div className="absolute top-full left-0 w-full h-[400px] bg-gray-100 rounded-lg shadow-lg shadow-gray-700 mt-2  overflow-auto">
+              <ul className="p-2">
+                {searchSuggestions.length ? searchSuggestions.map(sugg => (
+                  <li onClick={()=>handleSuggestionClick(sugg.title)} className="p-1 cursor-pointer overflow-hidden font-semibold w-full line-clamp-1  border-b-[0px] shadow hover:shadow-lg rounded-md ">{sugg.title} </li>
+                )) : (
+                  <div className="h-full w-full flex items-center justify-center">
+                    <p className="text-gray-500 text-lg">No suggestions</p>
+                  </div>
+                )}
+              </ul>
+            </div>}
           </div>
 
           {/* Location */}
@@ -195,10 +269,13 @@ const Header = () => {
         >
           <div className="flex w-full items-center justify-between">
             {/* Logo */}
-            <div onClick={()=>{
-              navigate("/")
-              setIsMenuOpen(false)
-            }} className=" flex cursor-pointer items-center space-x-2 flex-shrink-0">
+            <div
+              onClick={() => {
+                navigate("/");
+                setIsMenuOpen(false);
+              }}
+              className=" flex cursor-pointer items-center space-x-2 flex-shrink-0"
+            >
               <img src="/Logo.jpg" alt="Shopstic Logo" className="h-7" />
             </div>
 
@@ -234,60 +311,61 @@ const Header = () => {
           </div>
           <div className="font-semibold grid grid-cols-2 gap-2 mt-4 ">
             <button
-            onClick={()=> {
-              navigate("/account")
-              setIsMenuOpen(false)
-            }}
+              onClick={() => {
+                navigate("/account");
+                setIsMenuOpen(false);
+              }}
               className="block cursor-pointer py-2 bg-zinc-300 text-center rounded-md textwhite "
             >
               My Account
             </button>
             <button
-            onClick={()=> {
-              navigate("/cart")
-              setIsMenuOpen(false)
-            }}
+              onClick={() => {
+                navigate("/cart");
+                setIsMenuOpen(false);
+              }}
               className="block cursor-pointer py-2 bg-zinc-300 text-center rounded-md textwhite "
             >
               Carts
             </button>
             <button
-            onClick={()=> {
-              navigate("/orders")
-              setIsMenuOpen(false)
-            }}
+              onClick={() => {
+                navigate("/orders");
+                setIsMenuOpen(false);
+              }}
               className="block cursor-pointer py-2 bg-zinc-300 text-center rounded-md textwhite "
             >
               Orders
             </button>
             <button
-            onClick={()=> {
-              navigate("/wish-list")
-              setIsMenuOpen(false)
-            }}
+              onClick={() => {
+                navigate("/wish-list");
+                setIsMenuOpen(false);
+              }}
               className="block cursor-pointer py-2 bg-zinc-300 text-center rounded-md textwhite "
             >
               My Wishlist
             </button>
-            <button onClick={handleLogout} className="block cursor-pointer py-2 bg-zinc-300 text-center rounded-md textwhite ">
+            <button
+              onClick={handleLogout}
+              className="block cursor-pointer py-2 bg-zinc-300 text-center rounded-md textwhite "
+            >
               Logout
             </button>
           </div>
-          <div className="">
-
-          </div>
+          <div className=""></div>
         </div>
       </div>
 
       {/* Navigation Bar */}
       <div className="hidden md:flex border-t items-center py-2 px-10">
-        <button className="bg-green-600 text-white px-4 py-1 rounded-md flex items-center space-x-2 cursor-pointer">
+        <button className="bg-green-600 text-white px-4 py-1 rounded-md hidden lg:flex items-center space-x-2 cursor-pointer">
           <MdMenu />
           <span>Browse All Categories</span>
         </button>
-        <nav className="flex space-x-6 ml-6">
+        <nav className="flex space-x-6 lg:ml-6">
           <Button
-            onClick={() => navigate("/")}
+            onClick={goToHome}
             sx={{ textTransform: "capitalize" }}
             variant="text"
             color="black"
@@ -296,6 +374,7 @@ const Header = () => {
             Home
           </Button>
           <Button
+            onClick={(event) => handleCategory(event, "fashion")}
             sx={{ textTransform: "capitalize" }}
             variant="text"
             color="black"
@@ -303,15 +382,22 @@ const Header = () => {
           >
             Fashion <KeyboardArrowDownOutlined />
             <ul className="absolute top-full left-0 bg-white min-w-40 flex-col items-start shadow-md shadow-gray-700 rounded hidden duration-150 py-4 group-hover:flex">
-              <li className="px-5 py-1 hover:bg-gray-200 w-full text-start whitespace-nowrap">
+              <li
+                onClick={(event) => handleCategory(event, "fashion", "men")}
+                className="px-5 py-1 hover:bg-gray-200 w-full text-start whitespace-nowrap"
+              >
                 men
               </li>
-              <li className="px-5 py-1 hover:bg-gray-200 w-full text-start whitespace-nowrap">
+              <li
+                onClick={(event) => handleCategory(event, "fashion", "women")}
+                className="px-5 py-1 hover:bg-gray-200 w-full text-start whitespace-nowrap"
+              >
                 women
               </li>
             </ul>
           </Button>
           <Button
+            onClick={(event) => handleCategory(event, "electronics")}
             sx={{ textTransform: "capitalize" }}
             variant="text"
             color="black"
@@ -319,18 +405,34 @@ const Header = () => {
           >
             Electronics <KeyboardArrowDownOutlined />
             <ul className="absolute top-full left-0 bg-white min-w-40 flex-col items-start shadow-md shadow-gray-700 rounded hidden duration-150 py-4 group-hover:flex">
-              <li className="px-5 py-1 hover:bg-gray-200 w-full text-start whitespace-nowrap">
+              <li
+                onClick={(event) =>
+                  handleCategory(event, "electronics", "smart-watch")
+                }
+                className="px-5 py-1 hover:bg-gray-200 w-full text-start whitespace-nowrap"
+              >
                 smart watch accesories
               </li>
-              <li className="px-5 py-1 hover:bg-gray-200 w-full text-start whitespace-nowrap">
+              <li
+                onClick={(event) =>
+                  handleCategory(event, "electronics", "laptop")
+                }
+                className="px-5 py-1 hover:bg-gray-200 w-full text-start whitespace-nowrap"
+              >
                 laptops
               </li>
-              <li className="px-5 py-1 hover:bg-gray-200 w-full text-start whitespace-nowrap">
+              <li
+                onClick={(event) =>
+                  handleCategory(event, "electronics", "camera")
+                }
+                className="px-5 py-1 hover:bg-gray-200 w-full text-start whitespace-nowrap"
+              >
                 camera
               </li>
             </ul>
           </Button>
           <Button
+            onClick={(event) => handleCategory(event, "bags")}
             sx={{ textTransform: "capitalize" }}
             variant="text"
             color="black"
@@ -338,15 +440,22 @@ const Header = () => {
           >
             Bags <KeyboardArrowDownOutlined />
             <ul className="absolute top-full left-0 bg-white min-w-40 flex-col items-start shadow-md shadow-gray-700 rounded hidden duration-150 py-4 group-hover:flex">
-              <li className="px-5 py-1 hover:bg-gray-200 w-full text-start whitespace-nowrap">
+              <li
+                onClick={(event) => handleCategory(event, "bags", "men-bags")}
+                className="px-5 py-1 hover:bg-gray-200 w-full text-start whitespace-nowrap"
+              >
                 men bags
               </li>
-              <li className="px-5 py-1 hover:bg-gray-200 w-full text-start whitespace-nowrap">
+              <li
+                onClick={(event) => handleCategory(event, "bags", "women-bags")}
+                className="px-5 py-1 hover:bg-gray-200 w-full text-start whitespace-nowrap"
+              >
                 women bags
               </li>
             </ul>
           </Button>
           <Button
+            onClick={(event) => handleCategory(event, "footwear")}
             sx={{ textTransform: "capitalize" }}
             variant="text"
             color="black"
@@ -354,15 +463,26 @@ const Header = () => {
           >
             Footwear <KeyboardArrowDownOutlined />
             <ul className="absolute top-full left-0 bg-white min-w-40 flex-col items-start shadow-md shadow-gray-700 rounded hidden duration-150 py-4 group-hover:flex">
-              <li className="px-5 py-1 hover:bg-gray-200 w-full text-start whitespace-nowrap">
+              <li
+                onClick={(event) =>
+                  handleCategory(event, "footwear", "men-footwear")
+                }
+                className="px-5 py-1 hover:bg-gray-200 w-full text-start whitespace-nowrap"
+              >
                 men footware
               </li>
-              <li className="px-5 py-1 hover:bg-gray-200 w-full text-start whitespace-nowrap">
+              <li
+                onClick={(event) =>
+                  handleCategory(event, "footwear", "women-footwear")
+                }
+                className="px-5 py-1 hover:bg-gray-200 w-full text-start whitespace-nowrap"
+              >
                 women footware
               </li>
             </ul>
           </Button>
           <Button
+            onClick={(event) => handleCategory(event, "groceries")}
             sx={{ textTransform: "capitalize" }}
             variant="text"
             color="black"
@@ -371,6 +491,7 @@ const Header = () => {
             Groceries
           </Button>
           <Button
+            onClick={(event) => handleCategory(event, "beauty")}
             sx={{ textTransform: "capitalize" }}
             variant="text"
             color="black"

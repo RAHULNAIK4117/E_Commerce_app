@@ -1,10 +1,10 @@
 import React from "react";
 
 const banners = [
-  { image: "https://api.spicezgold.com/download/file_1734525653108_NewProject(20).jpg", alt: "Grocery Sale" },
-  { image: "https://api.spicezgold.com/download/file_1734525634299_NewProject(2).jpg", alt: "Fashion Sale" },
-  { image: "https://api.spicezgold.com/download/file_1734525620831_NewProject(3).jpg", alt: "Dresses Sale" },
-  { image: "https://api.spicezgold.com/download/file_1734532742018_NewProject(22).jpg", alt: "Black Friday Sale" },
+  { id: 101010, image: "https://api.spicezgold.com/download/file_1734525653108_NewProject(20).jpg", alt: "Grocery Sale" },
+  { id: 101011, image: "https://api.spicezgold.com/download/file_1734525634299_NewProject(2).jpg", alt: "Fashion Sale" },
+  { id: 101012, image: "https://api.spicezgold.com/download/file_1734525620831_NewProject(3).jpg", alt: "Dresses Sale" },
+  { id: 101013, image: "https://api.spicezgold.com/download/file_1734532742018_NewProject(22).jpg", alt: "Black Friday Sale" },
 ];
 
 const NewArrivals = () => {
@@ -15,10 +15,9 @@ const NewArrivals = () => {
         className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4  "
       >
 
-        {banners.map((banner, index) => (
-          <div className="w-full overflow-hidden h-[200px] group cursor-pointer rounded-md" >
+        {banners.map((banner) => (
+          <div key={banner.id} className="w-full overflow-hidden h-[200px] group cursor-pointer rounded-md" >
             <img
-            key={index}
             src={banner.image}
             alt={banner.alt}
             className="w-full h-full group-hover:scale-110 duration-200 ease-in-out "

@@ -3,7 +3,7 @@ import { MdOutlineRemoveRedEye } from "react-icons/md";
 
 
 // components/ProductCard.jsx
-const ProductCard = ({ image, title, price, oldPrice, rating, brand }) => {
+const ProductCard = ({ image, title, price, rating, brand, category }) => {
   return (
     <div className="bg-white rounded-xl shadow-md overflow-hidden p-4 min-w-64 hover:shadow-lg transition-shadow cursor-pointer group">
       <div className="w-full h-60 relative rounded-md overflow-hidden">
@@ -20,7 +20,7 @@ const ProductCard = ({ image, title, price, oldPrice, rating, brand }) => {
         />
       </div>
       <div className="mt-3">
-        <p className="text-sm text-gray-500">Fashion</p>
+        <p className="text-sm text-gray-500 capitalize">{category}</p>
         <h3 className="font-semibold text-gray-800 text-lg truncate">
           {title}
         </h3>
@@ -42,7 +42,7 @@ const ProductCard = ({ image, title, price, oldPrice, rating, brand }) => {
         <div className="flex items-center mt-2">
           <p className="text-lg font-bold text-green-600">Rs {price}</p>
           <p className="text-sm text-gray-500 line-through ml-2">
-            Rs {oldPrice}
+            Rs {price + 100}
           </p>
         </div>
       </div>

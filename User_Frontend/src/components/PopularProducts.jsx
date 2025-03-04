@@ -1,56 +1,89 @@
 // components/ProductList.jsx
+import { Box, Tab, Tabs } from "@mui/material";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Products from "../assets/Products";
 import ProductCard from "./ProductCard";
+import { useState } from "react";
+import { ArrowForwardRounded } from "@mui/icons-material";
 
-const products = [
-  {
-    image: "https://api.spicezgold.com/download/file_1734529005315_glito-black-solid-dry-fit-regular-fit-sports-wear-jacket-upper-for-men-product-images-rvtxobckuy-0-202303140932.webp",
-    title: "Glito Black Solid Dry-Fit...",
-    price: 460,
-    oldPrice: 490,
-    rating: 5,
-    brand: "V-Mart",
+// Create a custom theme
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#00A63E", // green
+    },
+    secondary: {
+      main: "#ff4081", // Pink
+    },
+    background: {
+      default: "#f5f5f5", // Light gray
+      paper: "#ffffff", // White paper background
+    },
+    text: {
+      primary: "#000000", // Black text
+      secondary: "#666666", // Gray text
+    },
   },
-  {
-    image: "https://api.spicezgold.com/download/file_1734529066472_1000014029787-Green-GREEN-1000014029787_01-2100.jpg",
-    title: "Black solid casual shirt...",
-    price: 459,
-    oldPrice: 495,
-    rating: 4,
-    brand: "V-Mart",
+  typography: {
+    fontFamily: "Arial, sans-serif",
+    h1: {
+      fontSize: "2rem",
+      fontWeight: "bold",
+    },
   },
-  {
-    image: "https://api.spicezgold.com/download/file_1734526678422_tazo-mens-round-neck-colourblocked-full-sleeve-dryfit-gymwear-tshirt-product-images-rvzwdw4nio-0-202404101341.webp",
-    title: "VNEED Women Embroider...",
-    price: 450,
-    oldPrice: 490,
-    rating: 4,
-    brand: "VNEED",
-  },
-  {
-    image: "https://api.spicezgold.com/download/file_1734526702388_gespo-black-teal-blue-colorblocked-round-neck-half-sleeve-casual-t-shirt-product-images-rvwmlodbas-0-202304131033.jpg",
-    title: "Sheetal Cotton Pink Saree",
-    price: 500,
-    oldPrice: 650,
-    rating: 5,
-    brand: "SIRIL",
-  },
-  {
-    image: "https://api.spicezgold.com/download/file_1734526809409_need-printed-cotton-straight-kurtis-for-women-fancy-kurti-for-girls-regular-office-college-wear-kurta-for-ladies-kurti-pant-set-of-1-size-l-product-images-rvyi2nw7q6-0-202408011909.jpg",
-    title: "Altecia Tie and Dye Jogger...",
-    price: 1500,
-    oldPrice: 1800,
-    rating: 4,
-    brand: "Altecia",
-  },
-];
+});
 
 const PopularProducts = () => {
+  const catList = [
+    "Footwear",
+    "Electronics",
+    "fashion",
+    "Accessories",
+    "Appliances",
+  ];
+  const [catIndex, setCatIndex] = useState(0);
+
+  const [category, setCategory] = useState("fashion"); // Footwear Electronics fashion Accessories Appliances
+  const popularProducts = Products.filter(
+    (p) => p.category == category.toLowerCase()
+  ).slice(0, 5);
+
+  const handleTabChange = (event, newValue) => {
+    // console.log(newValue);
+    setCatIndex(newValue);
+    const cat = catList[newValue];
+    // console.log(cat);
+
+    setCategory(cat);
+  };
+
   return (
     <div className=" my-10 w-full px-4 md:px-10 py-4">
-      <h2 className="text-xl md:text-2xl font-semibold mb-2 md:mb-6 ">Popular Products</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-4">
-        {products.map((product, index) => (
-          <ProductCard key={index} {...product} />
+      <div className="flex items-center justify-between  mb-2 md:mb-6">
+        <h2 className="text-xl md:text-2xl font-semibold ">
+          Popular Products
+        </h2>
+        <div className="">
+          <ThemeProvider theme={theme}>
+            <Box sx={{  borderColor: "divider" }}>
+              <Tabs
+                value={catIndex}
+                textColor="primary"
+                indicatorColor="primary"
+                onChange={handleTabChange}
+                aria-label="basic tabs example"
+              >
+                {catList.map((cat, index) => (
+                  <Tab label={cat} key={index} />
+                ))}
+              </Tabs>
+            </Box>
+          </ThemeProvider>
+        </div>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4 mt-4">
+        {popularProducts.map((product) => (
+          <ProductCard key={product.id} {...product} />
         ))}
       </div>
     </div>
