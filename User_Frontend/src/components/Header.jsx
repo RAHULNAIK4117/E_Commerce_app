@@ -500,7 +500,7 @@ const Header = () => {
             Beauty
           </Button>
         </nav>
-        <div className="ml-auto flex items-center space-x-2 text-green-600 font-bold">
+        <div className="ml-auto hidden md:flex flex-wrap justify-end items-center space-x-2 text-green-600 font-bold">
           <FaHeadphones className="text-gray-600" />
           <span>1900 - 888</span>
           <span className="text-gray-500 text-sm">24/7 Support Center</span>

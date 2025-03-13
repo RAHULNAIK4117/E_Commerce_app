@@ -1,14 +1,21 @@
 import { CiHeart } from "react-icons/ci";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
+import { Link, useNavigate } from "react-router-dom";
 
 
 // components/ProductCard.jsx
-const ProductCard = ({ image, title, price, rating, brand, category }) => {
+const ProductCard = ({ id, image, title, price, rating, brand, category }) => {
+  const navigate = useNavigate()
+  const stopPropagation = (e) => {
+    e.stopPropagation();
+  };
+
   return (
-    <div className="bg-white rounded-xl shadow-md overflow-hidden p-4 min-w-64 hover:shadow-lg transition-shadow cursor-pointer group">
-      <div className="w-full h-60 relative rounded-md overflow-hidden">
+    
+    <div className="bg-white rounded-xl shadow-md overflow-hidden p-4 min-w-64 hover:shadow-lg transition-shadow group">
+      <div onClick={()=>navigate(`/product/${id}`)} className="w-full h-60 relative rounded-md overflow-hidden cursor-pointer ">
         <div className="w-full h-full bg-gray-500/50 absolute top-0 left-0 items-center justify-center hidden group-hover:flex duration-150 ease-in-out opacity-0 group-hover:opacity-100 z-20">
-          <div className="flex items-center justify-center gap-4 bg-white p-2 rounded-md">
+          <div onClick={stopPropagation} className="flex items-center justify-center gap-4 bg-white p-2 rounded-md">
             <CiHeart className="hover:text-green-600" size={20} /> 
             <MdOutlineRemoveRedEye className="hover:text-green-600" size={20}/>
           </div>
@@ -47,6 +54,7 @@ const ProductCard = ({ image, title, price, rating, brand, category }) => {
         </div>
       </div>
     </div>
+    
   );
 };
 

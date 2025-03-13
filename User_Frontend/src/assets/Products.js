@@ -5,7 +5,7 @@ export default [
     rating: 4.5,
     reviewsCount: 920,
     price: 13999,
-    discount: "15%",
+    discount: "15",
     description:
       "Nike's popular lifestyle running shoe with an extra-large air cushion for maximum comfort. Features responsive cushioning and breathable mesh upper.",
     size: ["UK 7", "UK 8", "UK 9", "UK 10"],
@@ -44,7 +44,7 @@ export default [
     rating: 4.8,
     reviewsCount: 1250,
     price: 124999,
-    discount: "10%",
+    discount: "10",
     description:
       "Latest flagship smartphone featuring a 200MP camera, S Pen functionality, and powerful Snapdragon processor. Includes 12GB RAM and 256GB storage.",
     size: ["256GB", "512GB"],
@@ -82,7 +82,7 @@ export default [
     rating: 4.9,
     reviewsCount: 789,
     price: 149999,
-    discount: "8%",
+    discount: "8",
     description:
       "14-inch MacBook Pro with M2 chip, 16GB unified memory, and 512GB SSD. Features Liquid Retina XDR display and up to 20 hours of battery life.",
     size: ["256GB", "512GB", "1TB"],
@@ -111,7 +111,7 @@ export default [
     rating: 4.3,
     reviewsCount: 2150,
     price: 4999,
-    discount: "20%",
+    discount: "20",
     description:
       "Classic slim-fit jeans with stretch denim fabric. Features a modern cut with room through thigh and straight leg opening.",
     size: ["30x32", "32x32", "34x32", "36x32"],
@@ -140,7 +140,7 @@ export default [
     rating: 4.7,
     reviewsCount: 1560,
     price: 29999,
-    discount: "12%",
+    discount: "12",
     description:
       "Industry-leading noise cancelling wireless headphones with exceptional sound quality and up to 30 hours battery life.",
     size: ["One Size"],
@@ -169,7 +169,7 @@ export default [
     rating: 4.6,
     reviewsCount: 850,
     price: 15999,
-    discount: "20%",
+    discount: "20",
     description:
       "Premium running shoes with responsive Boost midsole and Primeknit+ upper for ultimate comfort and performance.",
     size: ["UK 6", "UK 7", "UK 8", "UK 9", "UK 10"],
@@ -198,7 +198,7 @@ export default [
     rating: 4.7,
     reviewsCount: 560,
     price: 139999,
-    discount: "12%",
+    discount: "12",
     description:
       "Premium business laptop featuring Intel Core i7, 16GB RAM, 1TB SSD, and 14-inch 4K display.",
     size: ["512GB", "1TB"],
@@ -227,7 +227,7 @@ export default [
     rating: 4.4,
     reviewsCount: 1200,
     price: 11999,
-    discount: "15%",
+    discount: "15",
     description:
       "Premium wireless earbuds with adaptive noise cancellation and high-quality audio performance.",
     size: ["One Size"],
@@ -256,7 +256,7 @@ export default [
     rating: 4.3,
     reviewsCount: 780,
     price: 22999,
-    discount: "25%",
+    discount: "25",
     description:
       "Advanced smartwatch with Wear OS, heart rate monitoring, and GPS tracking.",
     size: ["44mm"],
@@ -285,7 +285,7 @@ export default [
     rating: 4.2,
     reviewsCount: 1500,
     price: 1999,
-    discount: "30%",
+    discount: "30",
     description:
       "Classic cotton shirt with modern slim fit design and comfortable fabric.",
     size: ["S", "M", "L", "XL"],
@@ -314,7 +314,7 @@ export default [
     rating: 4.6,
     reviewsCount: 1100,
     price: 27999,
-    discount: "10%",
+    discount: "10",
     description:
       "Comfortable over-ear headphones with exceptional noise cancellation.",
     size: ["One Size"],
@@ -343,7 +343,7 @@ export default [
     rating: 4.4,
     reviewsCount: 1800,
     price: 7999,
-    discount: "15%",
+    discount: "15",
     description: "Classic sunglasses with timeless design.",
     size: ["One Size"],
     image:
@@ -371,7 +371,7 @@ export default [
     rating: 4.7,
     reviewsCount: 950,
     price: 12999,
-    discount: "12%",
+    discount: "12",
     description: "Advanced fitness tracker with heart rate monitoring and GPS.",
     size: ["One Size"],
     image:
@@ -399,7 +399,7 @@ export default [
     rating: 4.3,
     reviewsCount: 1600,
     price: 2499,
-    discount: "20%",
+    discount: "20",
     description: "High-quality formal shirt with crisp cotton fabric.",
     size: ["S", "M", "L", "XL", "XXL"],
     image:
@@ -427,7 +427,7 @@ export default [
     rating: 4.5,
     reviewsCount: 1300,
     price: 9999,
-    discount: "18%",
+    discount: "18",
     description: "Compact and powerful portable Bluetooth speaker.",
     size: ["One Size"],
     image:
@@ -455,7 +455,7 @@ export default [
     rating: 4.4,
     reviewsCount: 2000,
     price: 4999,
-    discount: "25%",
+    discount: "25",
     description: "Smart speaker with Alexa voice assistant.",
     size: ["One Size"],
     image:
@@ -483,7 +483,7 @@ export default [
     rating: 4.2,
     reviewsCount: 1700,
     price: 799,
-    discount: "35%",
+    discount: "35",
     description: "Comfortable cotton T-shirt for everyday wear.",
     size: ["S", "M", "L", "XL", "XXL"],
     image:
@@ -511,7 +511,7 @@ export default [
     rating: 4.8,
     reviewsCount: 650,
     price: 119999,
-    discount: "15%",
+    discount: "15",
     description: "Versatile 2-in-1 tablet with powerful performance.",
     size: ["128GB", "256GB", "512GB"],
     image:
@@ -539,7 +539,7 @@ export default [
     rating: 4.5,
     reviewsCount: 780,
     price: 10999,
-    discount: "20%",
+    discount: "20",
     description: "Elegant women's watch with minimalist design.",
     size: ["One Size"],
     image:
@@ -567,7 +567,7 @@ export default [
     rating: 4.3,
     reviewsCount: 1250,
     price: 1999,
-    discount: "25%",
+    discount: "25",
     description: "Smart light bulb with adjustable color and brightness.",
     size: ["One Size"],
     image:
@@ -595,7 +595,7 @@ export default [
     rating: 4.4,
     reviewsCount: 1500,
     price: 6999,
-    discount: "18%",
+    discount: "18",
     description: "Classic sneakers with comfortable fit.",
     size: ["UK 6", "UK 7", "UK 8", "UK 9", "UK 10"],
     image:
@@ -623,7 +623,7 @@ export default [
     rating: 4.7,
     reviewsCount: 880,
     price: 49999,
-    discount: "10%",
+    discount: "10",
     description: "High-quality action camera with stunning video quality.",
     size: ["One Size"],
     image:
@@ -651,7 +651,7 @@ export default [
     rating: 4.3,
     reviewsCount: 1400,
     price: 2999,
-    discount: "22%",
+    discount: "22",
     description: "Classic polo shirt with comfortable cotton fabric.",
     size: ["S", "M", "L", "XL", "XXL"],
     image:
@@ -679,7 +679,7 @@ export default [
     rating: 4.6,
     reviewsCount: 1700,
     price: 24999,
-    discount: "12%",
+    discount: "12",
     description: "Wireless earbuds with active noise cancellation.",
     size: ["One Size"],
     image:
@@ -707,7 +707,7 @@ export default [
     rating: 4.5,
     reviewsCount: 1000,
     price: 29999,
-    discount: "15%",
+    discount: "15",
     description: "Smartwatch with health and fitness tracking.",
     size: ["40mm", "44mm"],
     image:
@@ -735,7 +735,7 @@ export default [
     rating: 4.2,
     reviewsCount: 1350,
     price: 1299,
-    discount: "30%",
+    discount: "30",
     description: "Comfortable cotton T-shirt with classic design.",
     size: ["S", "M", "L", "XL", "XXL"],
     image:
@@ -763,7 +763,7 @@ export default [
     rating: 4.9,
     reviewsCount: 700,
     price: 149999,
-    discount: "10%",
+    discount: "10",
     description: "High-quality OLED TV with stunning picture quality.",
     size: ["55inch", "65inch"],
     image:
@@ -791,7 +791,7 @@ export default [
     rating: 4.6,
     reviewsCount: 900,
     price: 69999,
-    discount: "15%",
+    discount: "15",
     description: "Versatile mirrorless camera with great image quality.",
     size: ["One Size"],
     image:
@@ -819,7 +819,7 @@ export default [
     rating: 4.4,
     reviewsCount: 1200,
     price: 5499,
-    discount: "20%",
+    discount: "20",
     description: "Slim fit jeans with comfortable denim fabric.",
     size: ["30x32", "32x32", "34x32", "36x32"],
     image:
@@ -847,7 +847,7 @@ export default [
     rating: 4.8,
     reviewsCount: 1500,
     price: 54999,
-    discount: "5%",
+    discount: "5",
     description: "Next-gen gaming console with stunning graphics.",
     size: ["One Size"],
     image:
@@ -875,7 +875,7 @@ export default [
     rating: 4.5,
     reviewsCount: 1100,
     price: 8999,
-    discount: "15%",
+    discount: "15",
     description: "Durable leather boots for everyday wear.",
     size: ["UK 6", "UK 7", "UK 8", "UK 9", "UK 10"],
     image:
@@ -903,7 +903,7 @@ export default [
     rating: 4.6,
     reviewsCount: 800,
     price: 99999,
-    discount: "12%",
+    discount: "12",
     description: "Versatile convertible laptop with powerful performance.",
     size: ["256GB", "512GB"],
     image:
@@ -931,7 +931,7 @@ export default [
     rating: 4.3,
     reviewsCount: 1450,
     price: 3999,
-    discount: "25%",
+    discount: "25",
     description: "Stylish analog watch with classic design.",
     size: ["One Size"],
     image:
@@ -959,7 +959,7 @@ export default [
     rating: 4.4,
     reviewsCount: 1050,
     price: 7499,
-    discount: "18%",
+    discount: "18",
     description: "Durable leather shoes for formal and casual wear.",
     size: ["UK 6", "UK 7", "UK 8", "UK 9", "UK 10"],
     image:
@@ -987,7 +987,7 @@ export default [
     rating: 4.5,
     reviewsCount: 1200,
     price: 3499,
-    discount: "20%",
+    discount: "20",
     description: "Budget-friendly smartwatch with fitness and health tracking.",
     size: ["One Size"],
     image:
@@ -1015,7 +1015,7 @@ export default [
     rating: 4.3,
     reviewsCount: 1650,
     price: 1799,
-    discount: "28%",
+    discount: "28",
     description: "Affordable Bluetooth headphones with good sound quality.",
     size: ["One Size"],
     image:
@@ -1043,7 +1043,7 @@ export default [
     rating: 4.4,
     reviewsCount: 1150,
     price: 6299,
-    discount: "15%",
+    discount: "15",
     description: "Stylish slim fit jeans with comfortable denim fabric.",
     size: ["30x32", "32x32", "34x32", "36x32"],
     image:
@@ -1071,7 +1071,7 @@ export default [
     rating: 4.6,
     reviewsCount: 1300,
     price: 14999,
-    discount: "10%",
+    discount: "10",
     description: "Value-for-money smartphone with good performance.",
     size: ["64GB", "128GB"],
     image:
@@ -1099,7 +1099,7 @@ export default [
     rating: 4.5,
     reviewsCount: 1700,
     price: 7999,
-    discount: "18%",
+    discount: "18",
     description: "Iconic sneakers with comfortable fit.",
     size: ["UK 6", "UK 7", "UK 8", "UK 9", "UK 10"],
     image:
@@ -1127,7 +1127,7 @@ export default [
     rating: 4.7,
     reviewsCount: 1150,
     price: 44999,
-    discount: "12%",
+    discount: "12",
     description: "Advanced smartwatch with health and fitness tracking.",
     size: ["41mm", "45mm"],
     image:
@@ -1155,7 +1155,7 @@ export default [
     rating: 4.3,
     reviewsCount: 1550,
     price: 2799,
-    discount: "20%",
+    discount: "20",
     description: "High-quality formal shirt with comfortable cotton fabric.",
     size: ["S", "M", "L", "XL", "XXL"],
     image:
@@ -1183,7 +1183,7 @@ export default [
     rating: 4.5,
     reviewsCount: 1400,
     price: 19999,
-    discount: "15%",
+    discount: "15",
     description: "Wireless on-ear headphones with rich sound quality.",
     size: ["One Size"],
     image:
@@ -1211,7 +1211,7 @@ export default [
     rating: 4.7,
     reviewsCount: 1050,
     price: 69999,
-    discount: "10%",
+    discount: "10",
     description: "High-quality smartphone with excellent camera.",
     size: ["128GB", "256GB"],
     image:
@@ -1239,7 +1239,7 @@ export default [
     rating: 4.3,
     reviewsCount: 1300,
     price: 3499,
-    discount: "22%",
+    discount: "22",
     description: "High-quality formal trousers with comfortable fabric.",
     size: ["30", "32", "34", "36", "38"],
     image:
@@ -1267,7 +1267,7 @@ export default [
     rating: 4.6,
     reviewsCount: 1500,
     price: 19999,
-    discount: "12%",
+    discount: "12",
     description: "Wireless earbuds with industry-leading noise cancellation.",
     size: ["One Size"],
     image:
@@ -1295,7 +1295,7 @@ export default [
     rating: 4.4,
     reviewsCount: 1450,
     price: 3299,
-    discount: "25%",
+    discount: "25",
     description: "Premium formal shirt with high-quality cotton fabric.",
     size: ["S", "M", "L", "XL", "XXL"],
     image:
@@ -1323,7 +1323,7 @@ export default [
     rating: 4.8,
     reviewsCount: 600,
     price: 249999,
-    discount: "8%",
+    discount: "8",
     description: "High-quality 8K TV with stunning picture quality.",
     size: ["65inch", "75inch"],
     image:
@@ -1351,7 +1351,7 @@ export default [
     rating: 4.5,
     reviewsCount: 450,
     price: 15999,
-    discount: "20%",
+    discount: "20",
     description:
       "Advanced air purifier with HEPA filter and air quality indicator.",
     size: ["One Size"],
@@ -1380,7 +1380,7 @@ export default [
     rating: 4.4,
     reviewsCount: 890,
     price: 8999,
-    discount: "15%",
+    discount: "15",
     description:
       "Elegant women's watch with rose gold finish and mineral glass protection.",
     size: ["One Size"],
@@ -1409,7 +1409,7 @@ export default [
     rating: 4.6,
     reviewsCount: 890,
     price: 8999,
-    discount: "5%",
+    discount: "5",
     description:
       "Rugged analog-digital watch with Carbon Core Guard structure. Features world time, stopwatch, and water resistance up to 200m.",
     size: ["One Size"],
@@ -1439,7 +1439,7 @@ export default [
     rating: 4.5,
     reviewsCount: 320,
     price: 8999,
-    discount: "10%",
+    discount: "10",
     description: "Stylish leather backpack with multiple compartments.",
     size: ["One Size"],
     image: "https://th.bing.com/th/id/R.3e77a1db6bb25f0feb27c95e05a7bc57?rik=DswMYVRRQEHbjQ&riu=http%3a%2f%2fwww.coalitionrc.com%2fwp-content%2fuploads%2f2017%2f01%2fplaceholder.jpg&ehk=AbGRPPcgHhziWn1sygs8UIL6XIb1HLfHjgPyljdQrDY%3d&risl=&pid=ImgRaw&r=0",
@@ -1466,7 +1466,7 @@ export default [
     rating: 4.6,
     reviewsCount: 210,
     price: 2999,
-    discount: "15%",
+    discount: "15",
     description: "Spacious duffel bag perfect for gym and travel.",
     size: ["One Size"],
     image: "https://th.bing.com/th/id/R.3e77a1db6bb25f0feb27c95e05a7bc57?rik=DswMYVRRQEHbjQ&riu=http%3a%2f%2fwww.coalitionrc.com%2fwp-content%2fuploads%2f2017%2f01%2fplaceholder.jpg&ehk=AbGRPPcgHhziWn1sygs8UIL6XIb1HLfHjgPyljdQrDY%3d&risl=&pid=ImgRaw&r=0",
@@ -1495,7 +1495,7 @@ export default [
     rating: 4.7,
     reviewsCount: 150,
     price: 199,
-    discount: "5%",
+    discount: "5",
     description: "High-quality organic brown rice, 1kg pack.",
     size: ["1kg"],
     image: "https://th.bing.com/th/id/R.3e77a1db6bb25f0feb27c95e05a7bc57?rik=DswMYVRRQEHbjQ&riu=http%3a%2f%2fwww.coalitionrc.com%2fwp-content%2fuploads%2f2017%2f01%2fplaceholder.jpg&ehk=AbGRPPcgHhziWn1sygs8UIL6XIb1HLfHjgPyljdQrDY%3d&risl=&pid=ImgRaw&r=0",
@@ -1522,7 +1522,7 @@ export default [
     rating: 4.8,
     reviewsCount: 200,
     price: 599,
-    discount: "10%",
+    discount: "10",
     description: "Premium quality almonds, 500g pack.",
     size: ["500g"],
     image: "https://th.bing.com/th/id/R.3e77a1db6bb25f0feb27c95e05a7bc57?rik=DswMYVRRQEHbjQ&riu=http%3a%2f%2fwww.coalitionrc.com%2fwp-content%2fuploads%2f2017%2f01%2fplaceholder.jpg&ehk=AbGRPPcgHhziWn1sygs8UIL6XIb1HLfHjgPyljdQrDY%3d&risl=&pid=ImgRaw&r=0",
@@ -1551,7 +1551,7 @@ export default [
     rating: 4.5,
     reviewsCount: 320,
     price: 499,
-    discount: "10%",
+    discount: "10",
     description: "Nourishing shampoo for dry hair, 500ml.",
     size: ["500ml"],
     image: "https://th.bing.com/th/id/R.3e77a1db6bb25f0feb27c95e05a7bc57?rik=DswMYVRRQEHbjQ&riu=http%3a%2f%2fwww.coalitionrc.com%2fwp-content%2fuploads%2f2017%2f01%2fplaceholder.jpg&ehk=AbGRPPcgHhziWn1sygs8UIL6XIb1HLfHjgPyljdQrDY%3d&risl=&pid=ImgRaw&r=0",
@@ -1578,7 +1578,7 @@ export default [
     rating: 4.6,
     reviewsCount: 150,
     price: 299,
-    discount: "15%",
+    discount: "15",
     description: "Long-lasting matte lipstick, 4g.",
     size: ["4g"],
     image: "https://th.bing.com/th/id/R.3e77a1db6bb25f0feb27c95e05a7bc57?rik=DswMYVRRQEHbjQ&riu=http%3a%2f%2fwww.coalitionrc.com%2fwp-content%2fuploads%2f2017%2f01%2fplaceholder.jpg&ehk=AbGRPPcgHhziWn1sygs8UIL6XIb1HLfHjgPyljdQrDY%3d&risl=&pid=ImgRaw&r=0",
@@ -1607,7 +1607,7 @@ export default [
     rating: 4.7,
     reviewsCount: 180,
     price: 999,
-    discount: "20%",
+    discount: "20",
     description: "Eco-friendly yoga mat with non-slip surface.",
     size: ["One Size"],
     image: "https://th.bing.com/th/id/R.3e77a1db6bb25f0feb27c95e05a7bc57?rik=DswMYVRRQEHbjQ&riu=http%3a%2f%2fwww.coalitionrc.com%2fwp-content%2fuploads%2f2017%2f01%2fplaceholder.jpg&ehk=AbGRPPcgHhziWn1sygs8UIL6XIb1HLfHjgPyljdQrDY%3d&risl=&pid=ImgRaw&r=0",
@@ -1634,7 +1634,7 @@ export default [
     rating: 4.8,
     reviewsCount: 220,
     price: 299,
-    discount: "10%",
+    discount: "10",
     description: "Organic herbal green tea, 100g pack.",
     size: ["100g"],
     image: "https://th.bing.com/th/id/R.3e77a1db6bb25f0feb27c95e05a7bc57?rik=DswMYVRRQEHbjQ&riu=http%3a%2f%2fwww.coalitionrc.com%2fwp-content%2fuploads%2f2017%2f01%2fplaceholder.jpg&ehk=AbGRPPcgHhziWn1sygs8UIL6XIb1HLfHjgPyljdQrDY%3d&risl=&pid=ImgRaw&r=0",
@@ -1663,7 +1663,7 @@ export default [
     rating: 4.7,
     reviewsCount: 150,
     price: 4999,
-    discount: "10%",
+    discount: "10",
     description: "Elegant necklace with Swarovski crystals.",
     size: ["One Size"],
     image: "https://th.bing.com/th/id/R.3e77a1db6bb25f0feb27c95e05a7bc57?rik=DswMYVRRQEHbjQ&riu=http%3a%2f%2fwww.coalitionrc.com%2fwp-content%2fuploads%2f2017%2f01%2fplaceholder.jpg&ehk=AbGRPPcgHhziWn1sygs8UIL6XIb1HLfHjgPyljdQrDY%3d&risl=&pid=ImgRaw&r=0",
@@ -1690,7 +1690,7 @@ export default [
     rating: 4.8,
     reviewsCount: 200,
     price: 9999,
-    discount: "5%",
+    discount: "5",
     description: "Premium gold earrings with intricate design.",
     size: ["One Size"],
     image: "https://th.bing.com/th/id/R.3e77a1db6bb25f0feb27c95e05a7bc57?rik=DswMYVRRQEHbjQ&riu=http%3a%2f%2fwww.coalitionrc.com%2fwp-content%2fuploads%2f2017%2f01%2fplaceholder.jpg&ehk=AbGRPPcgHhziWn1sygs8UIL6XIb1HLfHjgPyljdQrDY%3d&risl=&pid=ImgRaw&r=0",

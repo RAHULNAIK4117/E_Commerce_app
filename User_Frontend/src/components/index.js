@@ -4,15 +4,17 @@ import Footer from "./Footer"
 import Header from "./Header"
 import HomeSlider from "./HomeSlider"
 import NewArrivals from "./NewArrivals"
+import PageLoader from "./PageLoader"
 import PopularProducts from "./PopularProducts"
 import ProductCard from "./ProductCard"
+import ProductImageGallery from "./ProductImageGallery"
 import ServiceSection from "./ServiceSection"
 import SubscribeSection from "./SubscribeSection"
 
 
-
-
 export {
+    ProductImageGallery,
+    PageLoader,
     Footer,
     ServiceSection,
     SubscribeSection,
