@@ -15,7 +15,7 @@ const FeaturedProducts = () => {
     <div className="flex items-end space-x-6 px-4 md:px-10 py-5  ">
       {/* Swiper Section */}
       <div className="w-full md:w-3/4 ">
-        <h2 className="text-2xl font-bold">Featured Products</h2>
+        <h2 className="text-2xl font-bold mb-4">Featured Products</h2>
         <div className="relative w-full ">
           <Swiper
             modules={[Navigation]}
@@ -44,7 +44,7 @@ const FeaturedProducts = () => {
             }}
           >
             {featuredProduct.map((product, index) => (
-              <SwiperSlide key={index} className="p-2">
+              <SwiperSlide key={index} className="">
                 <ProductCard {...product} />
               </SwiperSlide>
             ))}

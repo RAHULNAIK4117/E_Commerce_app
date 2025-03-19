@@ -27,7 +27,7 @@ const ProductImageGallery = () => {
   ];
 
   return (
-    <div className="w-full ">
+    <div className="w-full">
       {/* Main Image Slider */}
       <div className="h-[500px] ">
         <Swiper
@@ -52,25 +52,25 @@ const ProductImageGallery = () => {
         </Swiper>
       </div>
 
-    {/*  Thumbnail Slider with Fixed Height */}
-        <div className="relative">
-          <Swiper
-            onSwiper={setThumbsSwiper}
-            spaceBetween={10}
-            slidesPerView={6}
-            freeMode={true}
-            // navigation={{
-            // nextEl: ".swiper-button-next",
-            // prevEl: ".swiper-button-prev",
-            // }}
-            watchSlidesProgress={true}
-            modules={[FreeMode, Navigation, Thumbs]}
-            className="mt-2"
-            style={{
+      {/*  Thumbnail Slider with Fixed Height */}
+      <div className="relative">
+        <Swiper
+          onSwiper={setThumbsSwiper}
+          spaceBetween={10}
+          slidesPerView={6}
+          freeMode={true}
+          // navigation={{
+          // nextEl: ".swiper-button-next",
+          // prevEl: ".swiper-button-prev",
+          // }}
+          watchSlidesProgress={true}
+          modules={[FreeMode, Navigation, Thumbs]}
+          className="mt-2"
+          style={{
             height: "80px",
-            }}
-          >
-            {images.map((img, index) => (
+          }}
+        >
+          {images.map((img, index) => (
             <SwiperSlide
               key={index}
               className="cursor-pointer"
@@ -80,18 +80,18 @@ const ProductImageGallery = () => {
                 src={img}
                 alt={`Thumbnail ${index}`}
                 className={`w-full object-cover rounded-lg border ${
-                activeIndex === index ? "border-green-500" : "border-gray-300"
+                  activeIndex === index ? "border-green-500" : "border-gray-300"
                 }`}
               />
             </SwiperSlide>
-            ))}
-          </Swiper>
-          {/* Custom Navigation Buttons */}
-          {/* <div className="swiper-button-prev absolute left-0 top-0 transform bg-gray-800 text-white p-2 h-[80px] cursor-pointer z-10"></div>
+          ))}
+        </Swiper>
+        {/* Custom Navigation Buttons */}
+        {/* <div className="swiper-button-prev absolute left-0 top-0 transform bg-gray-800 text-white p-2 h-[80px] cursor-pointer z-10"></div>
           <div className="swiper-button-next absolute right-0 top-0 transform bg-gray-800 text-white p-2 h-[80px] cursor-pointer z-10"></div> */}
-        </div>
+      </div>
 
-        {/* Manual Controls for Setting Index */}
+      {/* Manual Controls for Setting Index */}
       {/* <div className="overflow-x-auto">
         <div className="flex gap-2 mt-3">
           {images.map((image, index) => (

@@ -6,7 +6,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import store from './redux/store.js'
 import {AuthLayout, HomeLayout, PageNotFound, RouteProtector} from './others'
-import {Cart, Home, MyAccount, Orders, Product, Search, SignIn, SignUp, WishList} from './pages'
+import {Cart, Checkout, Home, MyAccount, Orders, Product, Search, SignIn, SignUp, WishList} from './pages'
 import ProductDetails from './pages/ProductDetails.jsx'
 
 const route = createBrowserRouter([
@@ -41,6 +41,10 @@ const route = createBrowserRouter([
       {
         path: "cart",
         element: <Cart/>
+      },
+      {
+        path: "check-out",
+        element: <Checkout/>
       },
       {
         path: "search",
