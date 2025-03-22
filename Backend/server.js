@@ -2,12 +2,12 @@ import express from 'express'
 import mongoose from 'mongoose';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
-import authRouter from './routes/auth/authRoute.js'
-import productRouter from './routes/admin/productsRoute.js'
-import cartRouter from './routes/user/cartRoute.js'
-import addressRouter from './routes/user/addressRoute.js';
-import orderRouter from './routes/user/orderRoute.js'
-import featuresRouter from './routes/common/featuresRoute.js'
+import authRouter from './routes/authRoute.js'
+import productRouter from './routes/productsRoute.js'
+import cartRouter from './routes/cartRoute.js'
+import addressRouter from './routes/addressRoute.js';
+import orderRouter from './routes/orderRoute.js'
+import bannerRouter from './routes/bannerRoute.js'
 
 import dotenv from 'dotenv';
 dotenv.config();
@@ -40,6 +40,6 @@ app.use("/api/products", productRouter)
 app.use("/api/carts", cartRouter)
 app.use("/api/addresses", addressRouter)
 app.use("/api/orders", orderRouter)
-app.use("/api/features", featuresRouter)
+app.use("/api/banner", bannerRouter)
 
 app.listen(PORT, ()=> console.log(`Server is running on port ${PORT}`))

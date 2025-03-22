@@ -1,46 +1,29 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
-// import "./HomeSlider.css"; // Add custom styles for navigation
+import { getBanners } from "../services/bannerServices";
 
-const slides = [
-  {
-    id: 3,
-    image:
-      "https://api.spicezgold.com/download/file_1734524985581_NewProject(11).jpg",
-    alt: "Slide 3",
-  },
-  {
-    id: 1,
-    image:
-      "https://api.spicezgold.com/download/file_1734524958576_NewProject(10).jpg",
-    alt: "Slide 1",
-  },
-  {
-    id: 3,
-    image:
-      "https://api.spicezgold.com/download/file_1734524985581_NewProject(11).jpg",
-    alt: "Slide 3",
-  },
-  {
-    id: 2,
-    image:
-      "https://api.spicezgold.com/download/file_1734524971122_NewProject(8).jpg",
-    alt: "Slide 2",
-  },
-  {
-    id: 3,
-    image:
-      "https://api.spicezgold.com/download/file_1734524985581_NewProject(11).jpg",
-    alt: "Slide 3",
-  },
-];
 
 const HomeSlider = () => {
+  const [slides, setSlides] = useState([]);
+
+  const fetchBanners = async () => {
+    const response = await getBanners();
+    console.log({response});
+    if (response && response.data) {
+      setSlides(response.data);
+    }
+
+  }
+
+  useEffect(()=>{
+    fetchBanners();
+  }, [])
+
   return (
     <div className="home-slider-container">
       <Swiper
@@ -53,8 +36,8 @@ const HomeSlider = () => {
         className="home-slider"
       >
         {slides.map((slide) => (
-          <SwiperSlide key={slide.id}>
-            <img src={slide.image} alt={slide.alt} className="w-full h-[200px] md:h-[400px] object-cover " />
+          <SwiperSlide key={slide._id}>
+            <img src={slide.image} alt={slide.alt} className="w-full h-[200px] md:h-[400px] object-cover object-center " />
           </SwiperSlide>
         ))}
       </Swiper>

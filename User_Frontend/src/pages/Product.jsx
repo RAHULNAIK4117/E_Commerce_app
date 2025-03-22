@@ -3,6 +3,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import Products from "../assets/Products";
 import { ProductCard } from "../components";
 import { Breadcrumbs, Typography } from "@mui/material";
+import { getProducts } from "../services/productsServices";
 
 const Product = () => {
   const [searchParams] = useSearchParams();
@@ -15,23 +16,36 @@ const Product = () => {
 
   // let showProducts = []
 
-  useEffect(() => {
-    // console.log({ category, subCategory });
+  console.log(Products.length);
+  
 
-    const showProducts = search ? Products?.filter(
-      (product) =>
-        product.title.toLowerCase().includes(search.toLowerCase()) ||
-        product.brand.toLowerCase().includes(search.toLowerCase()) ||
-        product.category.toLowerCase().includes(search.toLowerCase()) ||
-        product.description.toLowerCase().includes(search.toLowerCase())
-    ).slice(0, productNumber) : category
-      ? Products?.filter(
-          (prod) => prod?.category?.toLowerCase() === category?.toLowerCase()
-        ).slice(0, productNumber)
-      : Products.slice(0, 20);
+  const fetchAndSetProducts = async () => {
+    const response = await getProducts({ category, subCategory, search });
+    console.log(response);
+    setShowProducts(response.data);
+  }
+
+  useEffect(() => {
+    // console.log({ category, subCategory, search });
+
+    // const showProducts = search ? Products?.filter(
+    //   (product) =>
+    //     product.title.toLowerCase().includes(search.toLowerCase()) ||
+    //     product.brand.toLowerCase().includes(search.toLowerCase()) ||
+    //     product.category.toLowerCase().includes(search.toLowerCase()) ||
+    //     product.description.toLowerCase().includes(search.toLowerCase())
+    // ).slice(0, productNumber) : category
+    //   ? Products?.filter(
+    //       (prod) => prod?.category?.toLowerCase() === category?.toLowerCase()
+    //     ).slice(0, productNumber)
+    //   : Products.slice(0, 20);
     
 
-    setShowProducts(showProducts);
+    // setShowProducts(showProducts);
+
+    fetchAndSetProducts()
+
+
 
     window.scrollTo({
       top: 0,

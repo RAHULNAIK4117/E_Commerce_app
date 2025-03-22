@@ -70,7 +70,7 @@ const FeaturedCategories = () => {
       <h2 className="text-xl md:text-2xl font-semibold mb-2 md:mb-6">
         Featured Categories
       </h2>
-      <div className="flex flex-wrap justify-between gap-4 w-full md:px-10">
+      <div className="flex flex-wrap justify-start gap-4 w-full md:px-10">
         {categories.map((category, index) => (
           <CategoryCard
             key={index}

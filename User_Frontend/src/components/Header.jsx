@@ -29,17 +29,16 @@ import Products from "../assets/Products";
 
 const Header = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [openSuggestion, setOpenSuggestion] = useState(false)
-  const [searchSuggestions, setSearchSuggestions] = useState([])
+  const [openSuggestion, setOpenSuggestion] = useState(false);
+  const [searchSuggestions, setSearchSuggestions] = useState([]);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [searchParams] = useSearchParams();
   const search = searchParams.get("search");
 
-  useEffect(()=>{
-    if(!search) setSearchQuery('')
-
-  }, [search])
+  useEffect(() => {
+    if (!search) setSearchQuery("");
+  }, [search]);
 
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
@@ -71,35 +70,38 @@ const Header = () => {
   };
 
   const handleSearchChange = (e) => {
-
     setSearchQuery(e.target.value);
-    setOpenSuggestion(e.target.value ? true : false)
-    const searchFiltered = Products?.filter((product) =>
-      product.title.toLowerCase().includes(e.target.value.toLowerCase()) ||
-      product.brand.toLowerCase().includes(e.target.value.toLowerCase()) ||
-      product.category.toLowerCase().includes(e.target.value.toLowerCase()) ||
-      product.description.toLowerCase().includes(e.target.value.toLowerCase())
+    setOpenSuggestion(e.target.value ? true : false);
+    const searchFiltered = Products?.filter(
+      (product) =>
+        product.title.toLowerCase().includes(e.target.value.toLowerCase()) ||
+        product.brand.toLowerCase().includes(e.target.value.toLowerCase()) ||
+        product.category.toLowerCase().includes(e.target.value.toLowerCase()) ||
+        product.description.toLowerCase().includes(e.target.value.toLowerCase())
     );
 
-    setSearchSuggestions(e.target.value ? searchFiltered.slice(0, 15) : [])
+    setSearchSuggestions(e.target.value ? searchFiltered.slice(0, 15) : []);
     // console.log(searchFiltered.slice(0, 15));
-    
   };
 
   const handleSuggestionClick = (sugg) => {
     setSearchQuery(sugg);
-    navigate(`/products?search=${sugg}`)
-    setOpenSuggestion(false)
+    navigate(`/products?search=${sugg}`);
+    setOpenSuggestion(false);
   };
-  
+
   const handleSearchSubmit = (e) => {
-    e.preventDefault()
-    navigate(`/products?search=${searchQuery}`)
-    setOpenSuggestion(false)
-
+    e.preventDefault();
+    navigate(`/products?search=${searchQuery}`);
+    setOpenSuggestion(false);
   };
 
-  const handleLogout = () => {};
+  const handleLogout = () => {
+    handleClose();
+    localStorage.removeItem("token");      
+    navigate("/auth/sign-in");
+
+  };
 
   return (
     <header className="bg-white shadow-sm sticky top-0 left-0 w-full z-50">
@@ -125,17 +127,27 @@ const Header = () => {
               />
               <FaSearch className="absolute right-3 top-3 text-gray-500 cursor-pointer" />
             </form>
-            {openSuggestion && <div className="absolute top-full left-0 w-full h-[400px] bg-gray-100 rounded-lg shadow-lg shadow-gray-700 mt-2  overflow-auto">
-              <ul className="p-2">
-                {searchSuggestions.length ? searchSuggestions.map(sugg => (
-                  <li onClick={()=>handleSuggestionClick(sugg.title)} className="p-1 cursor-pointer overflow-hidden font-semibold w-full line-clamp-1  border-b-[0px] shadow hover:shadow-lg rounded-md ">{sugg.title} </li>
-                )) : (
-                  <div className="h-full w-full flex items-center justify-center">
-                    <p className="text-gray-500 text-lg">No suggestions</p>
-                  </div>
-                )}
-              </ul>
-            </div>}
+            {openSuggestion && (
+              <div className="absolute top-full left-0 w-full h-[400px] bg-gray-100 rounded-lg shadow-lg shadow-gray-700 mt-2  overflow-auto">
+                <ul className="p-2">
+                  {searchSuggestions.length ? (
+                    searchSuggestions.map((sugg, index) => (
+                      <li
+                        key={index}
+                        onClick={() => handleSuggestionClick(sugg.title)}
+                        className="p-1 cursor-pointer overflow-hidden font-semibold w-full line-clamp-1  border-b-[0px] shadow hover:shadow-lg rounded-md "
+                      >
+                        {sugg.title}{" "}
+                      </li>
+                    ))
+                  ) : (
+                    <div className="h-full w-full flex items-center justify-center">
+                      <p className="text-gray-500 text-lg">No suggestions</p>
+                    </div>
+                  )}
+                </ul>
+              </div>
+            )}
           </div>
 
           {/* Location */}
@@ -234,10 +246,7 @@ const Header = () => {
                   <FavoriteBorderOutlined /> My Wishlist
                 </MenuItem>
                 <MenuItem
-                  onClick={() => {
-                    handleLogOut();
-                    handleClose();
-                  }}
+                  onClick={handleLogout}
                   className=" flex whitespace-nowrap gap-1"
                 >
                   <Logout /> Logout

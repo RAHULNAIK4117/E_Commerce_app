@@ -1,10 +1,8 @@
-// components/ProductList.jsx
 import { Box, Tab, Tabs } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import Products from "../assets/Products";
 import ProductCard from "./ProductCard";
-import { useState } from "react";
-import { ArrowForwardRounded } from "@mui/icons-material";
+import { useEffect, useState } from "react";
+import { getProducts } from "../services/productsServices";
 
 // Create a custom theme
 const theme = createTheme({
@@ -35,18 +33,31 @@ const theme = createTheme({
 
 const PopularProducts = () => {
   const catList = [
-    "Footwear",
-    "Electronics",
+    "footwear",
+    "electronics",
     "fashion",
-    "Accessories",
-    "Appliances",
+    "accessories",
+    "appliances",
   ];
   const [catIndex, setCatIndex] = useState(0);
 
-  const [category, setCategory] = useState("fashion"); // Footwear Electronics fashion Accessories Appliances
-  const popularProducts = Products.filter(
-    (p) => p.category == category.toLowerCase()
-  ).slice(0, 5);
+  const [category, setCategory] = useState("fashion"); 
+  const [popularProducts, setPopularProducts] = useState([]);
+
+  // const popularProducts = Products.filter(
+  //   (p) => p.category == category.toLowerCase()
+  // ).slice(0, 5);
+
+  const fetchProducts = async () => {
+    const response = await getProducts({category, limit: 8});
+    console.log(response.data);
+    setPopularProducts(response.data);
+    
+  }
+
+  useEffect(()=>{
+    fetchProducts()
+  }, [category]);
 
   const handleTabChange = (event, newValue) => {
     // console.log(newValue);
@@ -81,9 +92,9 @@ const PopularProducts = () => {
           </ThemeProvider>
         </div>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4 mt-4">
-        {popularProducts.map((product) => (
-          <ProductCard key={product.id} {...product} />
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mt-4">
+        {popularProducts?.map((product, index) => (
+          <ProductCard key={index} {...product} />
         ))}
       </div>
     </div>

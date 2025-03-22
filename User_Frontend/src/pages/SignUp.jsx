@@ -1,28 +1,71 @@
 import { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { signUp } from "../services/authServices";
+import toast from "react-hot-toast";
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log(formData);
+
+    const response = await signUp(formData);
+    console.log(response);
+
+    if (response.success) {
+      localStorage.setItem("token", response.token);
+      toast.success(response.message);
+      navigate("/");
+    } else {
+      toast.error(response.message);
+    }
+
+    // setFormData({
+    //   name: "",
+    //   email: "",
+    //   password: "",
+    // })
+  };
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="bg-white p-8 rounded-xl shadow-md w-96">
+      <div className="bg-white p-8 rounded-xl shadow-md w-96 select-none">
         <h2 className="text-2xl font-semibold text-gray-800 mb-6">Sign Up</h2>
-        <form>
+        <form onSubmit={handleSubmit}>
           <input
+            name="name"
+            onChange={handleChange}
             type="text"
             placeholder="Full Name"
             className="w-full px-4 py-2 mb-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
           />
           <input
+            name="email"
+            onChange={handleChange}
             type="email"
             placeholder="Email"
             className="w-full px-4 py-2 mb-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
           />
-          
+
           <div className="relative">
             <input
+              name="password"
+              onChange={handleChange}
               type={showPassword ? "text" : "password"}
               placeholder="Password"
               className="w-full px-4 py-2 pr-10 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"

@@ -1,6 +1,6 @@
 import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
-import User from "../../models/UserModel.js";
+import User from "../models/UserModel.js";
 
 
 
@@ -8,9 +8,9 @@ import User from "../../models/UserModel.js";
 
 // register
 const registerUser = async (req, res) => {
-    const { username, email, password } = req.body;
+    const { name, email, password } = req.body;
 
-    console.log({ username, email, password });
+    console.log({ name, email, password });
     
 
     try {
@@ -25,14 +25,23 @@ const registerUser = async (req, res) => {
 
         const hashPassword = await bcrypt.hash(password, 12)
         const user = new User({
-            userName: username,
+            name: name,
             email,
             password: hashPassword
         })
 
+        const token = jwt.sign({
+            id: user._id,
+            role: user.role,
+            email: user.email,
+            name: user.name
+        }, "CLIENT_SECRET_KEY", { expiresIn: '1h' })
+
         await user.save();
+
         res.status(200).json({
             success: true,
+            token,
             message: "Registration successfull :)"
         })
 
@@ -55,7 +64,7 @@ const loginUser = async (req, res) => {
         if (!user) {
             return res.status(200).json({
                 success: false,
-                message: "User doesn't exists!"
+                message: "Invalid credentials!"
             })
         }
 
@@ -65,7 +74,7 @@ const loginUser = async (req, res) => {
         if (!matchPassword) {
             return res.status(200).json({
                 success: false,
-                message: "Incorrect password!"
+                message: "Invalid credentials!"
             })
         }
 
@@ -73,7 +82,7 @@ const loginUser = async (req, res) => {
             id: user._id,
             role: user.role,
             email: user.email,
-            userName: user.userName
+            name: user.name
         }, "CLIENT_SECRET_KEY", { expiresIn: '1h' })
 
         // res.cookie("token", token, { httpOnly: true, secure: false }).json({
@@ -83,7 +92,7 @@ const loginUser = async (req, res) => {
         //         id: user._id,
         //         email: user.email,
         //         role: user.role,
-        //         userName: user.userName
+        //         name: user.name
         //     }
         // })
 
@@ -95,7 +104,7 @@ const loginUser = async (req, res) => {
                 id: user._id,
                 email: user.email,
                 role: user.role,
-                userName: user.userName
+                name: user.name
             }
         })
 

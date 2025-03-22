@@ -1,6 +1,6 @@
 import express from 'express'
-import { addProduct, deleteProduct, getProductDetails, getProducts, updateProduct } from '../../controllers/admin/productsController.js'
-import { upload } from '../../helpers/cloudinary.js'
+import { addProduct, deleteProduct, getProductDetails, getProducts, updateProduct } from '../controllers/productsController.js'
+import { upload } from '../helpers/cloudinary.js'
 
 const router = express.Router()
 

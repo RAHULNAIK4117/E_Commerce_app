@@ -33,21 +33,28 @@ import {
   FaRegHeart,
 } from "react-icons/fa";
 import { RiShoppingCartLine } from "react-icons/ri";
+import { getProductDetails, getProducts } from "../services/productsServices";
 
 const ProductDetails = () => {
   const { id } = useParams();
   const [loading, setLoading] = useState(false);
   const [product, setProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
+  const [relatedProducts, setrelatedProducts] = useState(null)
 
-  const relatedProducts = product
-    ? Products.filter((prod) => prod.category === product.category).slice(0, 10)
-    : null;
+  // const relatedProducts = product
+  //   ? Products.filter((prod) => prod.category === product.category).slice(0, 10)
+  //   : null;
 
   const getThisProduct = async () => {
     setLoading(true);
-    const product = Products.find((pro) => pro.id === Number(id));
-    setProduct(product);
+    const product = await getProductDetails(id);
+    console.log({product});
+    setProduct(product?.data);
+
+    const relProducts = await getProducts({category: product?.data?.category})
+    setrelatedProducts(relProducts.data)
+    
     setLoading(false);
   };
 
@@ -117,7 +124,7 @@ const ProductDetails = () => {
                     readOnly
                   />
                   <span className="text-xl">
-                    ({product?.reviews.length} Reviews)
+                    ({product?.reviews?.length} Reviews)
                   </span>
                 </div>
 
@@ -206,6 +213,7 @@ const ProductDetails = () => {
             </div>
 
             <hr />
+
             {/* details */}
             <div className="min-h-screen w-full space-y-10">
               {/* Product Details */}
@@ -215,10 +223,10 @@ const ProductDetails = () => {
                   <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableBody>
                       {product &&
-                        Object.entries(product).map(([key, value]) => {
+                        Object.entries(product)?.map(([key, value]) => {
                           if (
                             key !== "image" &&
-                            key !== "id" &&
+                            key !== "_id" &&
                             value !== "" &&
                             value !== null &&
                             (typeof value === "string" ||
@@ -255,9 +263,9 @@ const ProductDetails = () => {
                 <h2 className="text-2xl font-semibold mb-4 col-span-full">
                   Product Reviews
                 </h2>
-                <div className="w-full overflow-y-auto  max-h-[500px]">
-                  <div className="space-y-4">
-                    {product?.reviews.map((review, index) => (
+                <div className="w-full overflow-y-auto max-h-[500px]">
+                  <div className="space-y-4 h-full">
+                    {product?.reviews ? product?.reviews?.map((review, index) => (
                       <Card
                         key={index}
                         sx={{
@@ -307,7 +315,11 @@ const ProductDetails = () => {
                           />
                         </Box>
                       </Card>
-                    ))}
+                    )) : (
+                      <div className="w-full h-full flex items-center justify-center">
+                        <h2 className="text-2xl font-semibold">No reviews yet!</h2>
+                      </div>
+                    )}
                   </div>
                 </div>
 
@@ -349,7 +361,7 @@ const ProductDetails = () => {
                         },
                       }}
                     >
-                      {relatedProducts.map((product, index) => (
+                      {relatedProducts && relatedProducts?.map((product, index) => (
                         <SwiperSlide key={index}>
                           <ProductCard {...product} />
                         </SwiperSlide>

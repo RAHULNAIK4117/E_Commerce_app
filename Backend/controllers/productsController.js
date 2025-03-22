@@ -1,4 +1,4 @@
-import Product from "../../models/ProductModel.js";
+import {Product} from "../models/ProductModel.js";
 
 // add a products
 const addProduct = async (req, res) => {
@@ -72,22 +72,31 @@ const addProduct = async (req, res) => {
 
 // get all products
 const getProducts = async (req, res) => {
+  console.log("prams", req.query);
+  
   try {
     const sort = req.query.sort ? JSON.parse(req.query.sort) : { title: 1 };
 
     const filters = {};
 
     req.query.category &&
-      JSON.parse(req.query.category).length > 0 &&
-      (filters.category = { $in: JSON.parse(req.query.category) });
+      req.query.category.length > 0 &&
+      (filters.category = { $in: req.query.category });
 
-    req.query.brand &&
-      JSON.parse(req.query.brand).length > 0 &&
-      (filters.brand = { $in: JSON.parse(req.query.brand) });
+    // req.query.subCategory &&
+    //   req.query.subCategory.length > 0 &&
+    //   (filters.subCategory = { $in: req.query.subCategory });
+
+    req.query.search &&
+      req.query.search.length > 0 &&
+      (filters.title = { $regex: req.query.search, $options: "i" });
+    // req.query.search &&
+    //   req.query.search.length > 0 &&
+    //   (filters.description = { $regex: req.query.search, $options: "i" });
 
     console.log('sort: ', sort, 'filters: ', filters);
 
-    const products = await Product.find(filters).sort(sort);
+    const products = await Product.find(filters).sort(sort).limit(req.query.limit || 20);
     res.status(200).json({
       success: true,
       message: "products fetch successfully.",
