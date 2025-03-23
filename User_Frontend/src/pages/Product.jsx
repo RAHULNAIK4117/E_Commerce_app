@@ -7,7 +7,7 @@ import { getProducts } from "../services/productsServices";
 
 const Product = () => {
   const [searchParams] = useSearchParams();
-  const [productNumber, setProductNumber] = useState(12);
+  const [productNumber, setProductNumber] = useState(20);
   const [showProducts, setShowProducts] = useState([]);
   const category = searchParams.get("category");
   const subCategory = searchParams.get("subCategory");
@@ -16,7 +16,7 @@ const Product = () => {
 
   // let showProducts = []
 
-  console.log(Products.length);
+  console.log(Products?.length);
   
 
   const fetchAndSetProducts = async () => {
@@ -100,14 +100,14 @@ const Product = () => {
           <div className="py-4 font-semibold text-gray-600">
             We found{" "}
             <span className="text-[#00A63E] text-lg ">
-              {showProducts.length}
+              {showProducts?.length}
             </span>{" "}
             items for you!
           </div>
           <div className=" w-full min-h-[500px] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-2">
-            {showProducts.length ? (
+            {showProducts?.length ? (
               showProducts.map((product) => (
-                <ProductCard key={product.id} {...product} />
+                <ProductCard key={product._id} {...product} />
               ))
             ) : (
               <div className="w-full flex col-span-full justify-center items-center h-full">

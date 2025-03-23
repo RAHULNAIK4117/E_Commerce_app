@@ -26,6 +26,8 @@ import {
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import Products from "../assets/Products";
+import { useDispatch, useSelector } from "react-redux";
+import { setIsAuthenticated, setUserData } from "../redux/authSlice";
 
 const Header = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -35,6 +37,9 @@ const Header = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [searchParams] = useSearchParams();
   const search = searchParams.get("search");
+  const dispatch = useDispatch();
+  const cart = useSelector((state) => state.cart.item);
+
 
   useEffect(() => {
     if (!search) setSearchQuery("");
@@ -98,7 +103,9 @@ const Header = () => {
 
   const handleLogout = () => {
     handleClose();
-    localStorage.removeItem("token");      
+    localStorage.removeItem("token"); 
+    dispatch(setUserData(null));
+    dispatch(setIsAuthenticated(false));     
     navigate("/auth/sign-in");
 
   };
@@ -204,7 +211,7 @@ const Header = () => {
             >
               <FaShoppingCart className="text-gray-600 text-lg" />
               <span className="absolute top-0 left-0 bg-green-500 text-white text-xs px-1 rounded-full">
-                0
+                {cart.length}
               </span>
               <span className="text-sm ml-1">Cart</span>
             </Button>

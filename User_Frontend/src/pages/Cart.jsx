@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { AiOutlineDelete } from "react-icons/ai";
-import Product from "../assets/Products.js";
 import {
   Table,
   TableBody,
@@ -10,17 +9,33 @@ import {
   TableRow,
 } from "@mui/material";
 import { FaMinus, FaPlus } from "react-icons/fa";
-import Checkout from "./Checkout.jsx";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  deleteCart,
+  updateCart,
+} from "../services/cartServices.js";
+import { setItem } from "../redux/cartSlice.js";
 
 const Cart = () => {
-  const wishlist = Product.slice(0, 5);
-  const [quantity, setQuantity] = useState(1);
-  const [openCheckout, setOpenCheckout] = useState(false)
+  const [openCheckout, setOpenCheckout] = useState(false);
+  const userData = useSelector((state) => state.auth.userData);
+  const cart = useSelector((state) => state.cart.item);
+  const dispatch = useDispatch();
 
-  const changeQuantity = (value) => {
-    if (quantity === 1 && value === -1) return;
-    setQuantity(quantity + value);
+  const changeQuantity = async (id, quantity, value) => {
+    // console.log({ id, quantity, value });
+
+    const response = await updateCart({
+      userId: userData?._id,
+      productId: id,
+      quantity: quantity + value,
+    });
+
+    if (response.success) {
+      // console.log(response.data);
+      dispatch(setItem(response.data[0].products));
+    }
   };
 
   const handleClose = () => {
@@ -28,6 +43,15 @@ const Cart = () => {
   };
   const handleOpen = () => {
     setOpenCheckout(true);
+  };
+
+  const deleteProductFromCart = async (productId) => {
+    // console.log({ productId });
+    const response = await deleteCart({ userId: userData?._id, productId });
+    if (response.success) {
+      // console.log("delete response", response);
+      dispatch(setItem(response.data[0].products));
+    }
   };
 
   return (
@@ -63,16 +87,16 @@ const Cart = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {wishlist.map((product) => (
+                {cart?.map((product) => (
                   <TableRow
-                    key={product.title}
+                    key={product.details?._id}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
                     <TableCell component="th" scope="row">
                       <div style={{ display: "flex", alignItems: "center" }}>
                         <img
-                          src={product.image}
-                          alt={product.title}
+                          src={product?.details?.image}
+                          alt={product.details?.title}
                           style={{
                             width: 100,
                             height: 100,
@@ -80,25 +104,39 @@ const Cart = () => {
                             marginRight: 16,
                           }}
                         />
-                        <span className="text-lg ">{product.title}</span>
+                        <span className="text-lg ">
+                          {product.details?.title}
+                        </span>
                       </div>
                     </TableCell>
                     <TableCell align="left" sx={{ fontSize: "16px" }}>
-                      Rs. {product.price}
+                      Rs. {product.details?.price}
                     </TableCell>
                     <TableCell align="left" sx={{ fontSize: "16px" }}>
                       <div className="flex items-center">
                         <button
-                          onClick={() => changeQuantity(-1)}
+                          onClick={() =>
+                            changeQuantity(
+                              product?.productId,
+                              product?.quantity,
+                              -1
+                            )
+                          }
                           className="h-8 w-8 rounded-md flex items-center justify-center bg-gray-200 hover:bg-gray-300 cursor-pointer"
                         >
                           <FaMinus />
                         </button>
                         <span className="text-xl w-14 flex items-center justify-center">
-                          {quantity}
+                          {product.quantity}
                         </span>
                         <button
-                          onClick={() => changeQuantity(1)}
+                          onClick={() =>
+                            changeQuantity(
+                              product?.productId,
+                              product.quantity,
+                              1
+                            )
+                          }
                           className="h-8 w-8 rounded-md flex items-center justify-center bg-gray-200 hover:bg-gray-300 cursor-pointer"
                         >
                           <FaPlus />
@@ -106,7 +144,10 @@ const Cart = () => {
                       </div>
                     </TableCell>
                     <TableCell align="right">
-                      <button style={{ color: "#f44336", cursor: "pointer" }}>
+                      <button
+                        onClick={() => deleteProductFromCart(product.productId)}
+                        style={{ color: "#f44336", cursor: "pointer" }}
+                      >
                         <AiOutlineDelete size={24} />{" "}
                       </button>
                     </TableCell>
@@ -138,13 +179,15 @@ const Cart = () => {
               <span className="text-gray-500">Total</span>
               <span className="text-green-600 font-semibold">₹459.00</span>
             </div>
-            <Link to={"/check-out"} className="w-full bg-green-600 text-white font-semibold py-2 rounded-md hover:bg-green-700 px-4 transition">
+            <Link
+              to={"/check-out"}
+              className="w-full bg-green-600 text-white font-semibold py-2 rounded-md hover:bg-green-700 px-4 transition"
+            >
               Proceed To CheckOut
             </Link>
           </div>
         </div>
       </div>
-
     </div>
   );
 };

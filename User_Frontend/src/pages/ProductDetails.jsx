@@ -34,13 +34,20 @@ import {
 } from "react-icons/fa";
 import { RiShoppingCartLine } from "react-icons/ri";
 import { getProductDetails, getProducts } from "../services/productsServices";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-hot-toast";
+import { addToCart } from "../redux/cartSlice";
 
 const ProductDetails = () => {
   const { id } = useParams();
   const [loading, setLoading] = useState(false);
   const [product, setProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
-  const [relatedProducts, setrelatedProducts] = useState(null)
+  const [relatedProducts, setrelatedProducts] = useState(null);
+  const userData = useSelector((state) => state.auth.userData);
+  const dispatch = useDispatch();
+
+  console.log({ userData });
 
   // const relatedProducts = product
   //   ? Products.filter((prod) => prod.category === product.category).slice(0, 10)
@@ -49,13 +56,25 @@ const ProductDetails = () => {
   const getThisProduct = async () => {
     setLoading(true);
     const product = await getProductDetails(id);
-    console.log({product});
+    console.log({ product });
     setProduct(product?.data);
 
-    const relProducts = await getProducts({category: product?.data?.category})
-    setrelatedProducts(relProducts.data)
-    
+    const relProducts = await getProducts({
+      category: product?.data?.category,
+    });
+    setrelatedProducts(relProducts.data);
+
     setLoading(false);
+  };
+
+  const addToCartProduct = async () => {
+    dispatch(addToCart({ userId: userData?._id, productId: id, quantity }));
+    
+    // const product = await addToCart({ userId: userData._id, productId: id, quantity });
+    // console.log({product});
+    // if (product?.success) {
+    //   console.log("Product added to cart!");
+    // }
   };
 
   useEffect(() => {
@@ -197,6 +216,7 @@ const ProductDetails = () => {
                 {/* Action buttons */}
                 <div className="space-x-5 flex items-center">
                   <button
+                    onClick={addToCartProduct}
                     type="button"
                     className="py-2 px-3 bg-[#00A63E] hover:bg-[#008f34] text-lg font-semibold rounded-md cursor-pointer text-white flex flex-nowrap items-center gap-2"
                   >
@@ -265,59 +285,67 @@ const ProductDetails = () => {
                 </h2>
                 <div className="w-full overflow-y-auto max-h-[500px]">
                   <div className="space-y-4 h-full">
-                    {product?.reviews ? product?.reviews?.map((review, index) => (
-                      <Card
-                        key={index}
-                        sx={{
-                          display: "flex",
-                          alignItems: "center",
-                          p: 2,
-                          borderRadius: 2,
-                        }}
-                      >
-                        {/* User Avatar */}
-                        <Avatar
-                          src={
-                            "https://th.bing.com/th/id/OIP.yhqkR9B2hKbtwwZ8bPNbQQHaHw?rs=1&pid=ImgDetMain"
-                          }
-                          alt={"image"}
-                          sx={{ width: 70, height: 70, mr: 2 }}
-                        />
-
-                        {/* Review Content */}
-                        <CardContent sx={{ flex: 1 }}>
-                          <Typography variant="body2" color="textSecondary">
-                            12/22/2025
-                          </Typography>
-
-                          <Typography variant="body1" sx={{ mt: 1 }}>
-                            {review.comment}
-                          </Typography>
-
-                          <Typography
-                            variant="subtitle2"
-                            color="green"
-                            sx={{ mt: 1 }}
-                          >
-                            username
-                          </Typography>
-                        </CardContent>
-
-                        {/* Star Rating */}
-                        <Box
-                          sx={{ display: "flex", alignItems: "center", mr: 2 }}
+                    {product?.reviews ? (
+                      product?.reviews?.map((review, index) => (
+                        <Card
+                          key={index}
+                          sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            p: 2,
+                            borderRadius: 2,
+                          }}
                         >
-                          <Rating
-                            name="read-only"
-                            value={review.rating}
-                            precision={0.1}
-                            readOnly
+                          {/* User Avatar */}
+                          <Avatar
+                            src={
+                              "https://th.bing.com/th/id/OIP.yhqkR9B2hKbtwwZ8bPNbQQHaHw?rs=1&pid=ImgDetMain"
+                            }
+                            alt={"image"}
+                            sx={{ width: 70, height: 70, mr: 2 }}
                           />
-                        </Box>
-                      </Card>
-                    )) : (
+
+                          {/* Review Content */}
+                          <CardContent sx={{ flex: 1 }}>
+                            <Typography variant="body2" color="textSecondary">
+                              12/22/2025
+                            </Typography>
+
+                            <Typography variant="body1" sx={{ mt: 1 }}>
+                              {review.comment}
+                            </Typography>
+
+                            <Typography
+                              variant="subtitle2"
+                              color="green"
+                              sx={{ mt: 1 }}
+                            >
+                              username
+                            </Typography>
+                          </CardContent>
+
+                          {/* Star Rating */}
+                          <Box
+                            sx={{
+                              display: "flex",
+                              alignItems: "center",
+                              mr: 2,
+                            }}
+                          >
+                            <Rating
+                              name="read-only"
+                              value={review.rating}
+                              precision={0.1}
+                              readOnly
+                            />
+                          </Box>
+                        </Card>
+                      ))
+                    ) : (
                       <div className="w-full h-full flex items-center justify-center">
-                        <h2 className="text-2xl font-semibold">No reviews yet!</h2>
+                        <h2 className="text-2xl font-semibold">
+                          No reviews yet!
+                        </h2>
                       </div>
                     )}
                   </div>
@@ -361,11 +389,12 @@ const ProductDetails = () => {
                         },
                       }}
                     >
-                      {relatedProducts && relatedProducts?.map((product, index) => (
-                        <SwiperSlide key={index}>
-                          <ProductCard {...product} />
-                        </SwiperSlide>
-                      ))}
+                      {relatedProducts &&
+                        relatedProducts?.map((product, index) => (
+                          <SwiperSlide key={index}>
+                            <ProductCard {...product} />
+                          </SwiperSlide>
+                        ))}
                     </Swiper>
                     <div className="custom-prev2">
                       <FaChevronLeft />

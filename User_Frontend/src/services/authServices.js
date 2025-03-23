@@ -24,3 +24,17 @@ export const signIn = async (user) => {
         return error.response?.data || { message: "An error occurred" };
     }
 };
+
+export const getUserDetails = async (token) => {
+    try {
+        const response = await api.get('user-details', {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+        return response.data;
+        
+    } catch (error) {
+        return error.response?.data || { message: "An error occurred" };
+    }
+}

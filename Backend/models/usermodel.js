@@ -12,12 +12,16 @@ const UserSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        required: true
+        required: true,
+        select: false
     },
     role: {
         type: String,
         default: "user"
     },
+    phone: {
+        type: String
+    }
 })
 
 const User = mongoose.model("User", UserSchema);
