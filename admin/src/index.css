@@ -1,0 +1,22 @@
+@import "tailwindcss";
+
+* {
+    font-size: 10px;
+   }
+   
+   @media screen and (max-width: 640px) {
+    * {
+      font-size: 15px;
+    }
+   }
+  
+   .active{
+    background-color: #ffebf5;
+    border-color:#c586A5;
+   }
+
+   .logout:hover{
+    color:black;
+    background-color: red;
+
+   }
