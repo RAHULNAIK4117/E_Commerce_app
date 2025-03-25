@@ -4,38 +4,39 @@ import Order from "../models/OrderModel.js";
 
 const addOrder = async (req, res) => {
     try {
-        const { userId, orders, addressInfo, orderStatus, paymentMethod, paymentStatus, totalAmount } = req.body;
+        const { user, orders, address, payment, totalPrice } = req.body;
 
-        if(!userId || !orders || !addressInfo || !orderStatus || !paymentMethod || !paymentStatus || !totalAmount){
-            return res.status(400).json({ 
+        console.log(req.body);
+        
+
+        if (!user || !orders || !address || !payment || !totalPrice) {
+            return res.status(400).json({
                 success: false,
-                message: "Please fill all the fields" 
+                message: "Please fill all the fields"
             });
         }
 
         const newOrder = new Order({
-            userId,
+            user,
             orders,
-            addressInfo,
-            orderStatus,
-            paymentMethod,
-            paymentStatus,
-            totalAmount,
-        })
+            address,
+            payment,
+            totalPrice,
+        });
 
-        await newOrder.save()
+        await newOrder.save();
         res.status(201).json({
             success: true,
             message: "Order created successfully",
             data: newOrder
-        })
+        });
 
     } catch (error) {
         console.log('Error in adding Order!', error);
         res.status(500).json({
             success: false,
             message: 'Error in adding Order',
-        })
+        });
     }
 };
 

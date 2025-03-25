@@ -54,6 +54,15 @@ const Cart = () => {
     }
   };
 
+  const totalPrice = cart?.reduce((acc, item) => {
+    return (
+      acc +
+      (Number(item.details?.price) -
+        (Number(item.details?.price) * Number(item.details?.discount)) / 100) *
+        item.quantity
+    );
+  }, 0);
+
   return (
     <div className="w-full px-4 md:px-10 py-5 grid grid-cols-3">
       <div className="col-span-2">
@@ -164,7 +173,7 @@ const Cart = () => {
           <div className="border rounded-lg p-6 bg-white shadow-md">
             <div className="flex justify-between mb-2">
               <span className="text-gray-500">Subtotal</span>
-              <span className="text-green-600 font-semibold">₹459.00</span>
+              <span className="text-green-600 font-semibold">₹{totalPrice.toFixed(2)}</span>
             </div>
             <div className="flex justify-between mb-2">
               <span className="text-gray-500">Shipping</span>
@@ -177,7 +186,7 @@ const Cart = () => {
             <div className="border-t my-2"></div>
             <div className="flex justify-between mb-4">
               <span className="text-gray-500">Total</span>
-              <span className="text-green-600 font-semibold">₹459.00</span>
+              <span className="text-green-600 font-semibold">₹{totalPrice.toFixed(2)}</span>
             </div>
             <Link
               to={"/check-out"}

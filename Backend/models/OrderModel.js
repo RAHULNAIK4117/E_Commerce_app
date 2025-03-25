@@ -14,9 +14,14 @@ const orderSchema = new mongoose.Schema(
       state: { type: String, required: true },
       postcode: { type: String, required: true },
     },
+    payment:{
+      orderId: { type: String, required: true },
+      paymentId: { type: String, required: true },
+      signature: { type: String, required: true },
+    },
     orders: [
       {
-        productId: {
+        product: {
           type: mongoose.Schema.Types.ObjectId,
           ref: "Product",
           required: true,

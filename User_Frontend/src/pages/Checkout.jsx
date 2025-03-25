@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addAddress, fetchAddress } from "../redux/addressSlice";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { makeOrder } from "../services/orderServices";
 
 const Checkout = () => {
   const cart = useSelector((state) => state.cart.item);
@@ -95,6 +98,91 @@ const Checkout = () => {
       dispatch(fetchAddress({ userId: userData?._id }));
     }
   }, [userData, dispatch]);
+
+  // handlePayment Function
+  const handlePayment = async () => {
+    try {
+      const res = await axios.post(
+        `${import.meta.env.VITE_SERVER_BASE_URL}/api/payment/order`,
+        {
+          amount: Number(totalPrice.toFixed(0)),
+        }
+      );
+
+      const data = res.data;
+      console.log(data);
+      handlePaymentVerify(data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // handlePaymentVerify Function
+  const handlePaymentVerify = async (data) => {
+    const options = {
+      key: import.meta.env.VITE_RAZORPAY_KEY_ID,
+      amount: data.amount,
+      currency: data.currency,
+      name: "Raj_Store",
+      description: "Test Mode",
+      order_id: data.id,
+      handler: async (response) => {
+        console.log("response", response);
+        try {
+          const res = await axios.post(
+            `${import.meta.env.VITE_SERVER_BASE_URL}/api/payment/verify`,
+            {
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature: response.razorpay_signature,
+            }
+          );
+
+          const verifyData = res.data;
+          console.log(verifyData);
+
+          if (verifyData.message) {
+            handleOrder({
+              order_id: response.razorpay_order_id,
+              payment_id: response.razorpay_payment_id,
+              signature: response.razorpay_signature,
+            });
+            
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      },
+      theme: {
+        color: "#5f63b8",
+      },
+    };
+    const rzp1 = new window.Razorpay(options);
+    rzp1.open();
+  };
+
+  const handleOrder = async ({ order_id, payment_id, signature }) => {
+    const order = await makeOrder({
+      user: userData?._id,
+      orders: cart.map((item) => ({
+        product: item.productId,
+        quantity: item.quantity,
+      })),
+      address: form,
+      payment: {
+        orderId: order_id,
+        paymentId: payment_id,
+        signature: signature,
+      },
+      totalPrice: totalPrice.toFixed(2),
+    });
+
+    if (order.success) {
+      toast.success("Order placed successfully");
+      console.log({ order });
+    }
+    
+  };
 
   return (
     <div className="w-full flex items-center justify-center">
@@ -269,7 +357,14 @@ const Checkout = () => {
           </div>
 
           <button
-            type="submit"
+            // type="submit"
+            type="button"
+            onClick={handlePayment}
+            // onClick={()=>handleOrder({
+            //   order_id: "sjioerunwur8489n8v",
+            //   payment_id: "iuerituirwpeurt894",
+            //   signature: "ejmijn8439",
+            // })}
             className="w-full bg-green-600 text-white font-semibold py-2 rounded-md hover:bg-green-700 transition"
           >
             Checkout
