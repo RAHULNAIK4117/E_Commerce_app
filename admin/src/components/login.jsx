@@ -13,7 +13,7 @@ const Login = ({ setToken }) => {
     const onsubmitHandler = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post(`${backendURL}/api/admin/login`, { email, password });
+            const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/login-admin`, { email, password });
 
             console.log({response});
             

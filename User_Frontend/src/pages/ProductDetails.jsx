@@ -126,7 +126,7 @@ const ProductDetails = () => {
             <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-5 mb-4 ">
               {/* Image section */}
               <div className=" w-full max-w-[600px] h-[600px] mx-auto">
-                <ProductImageGallery />
+                <ProductImageGallery images={product?.images} />
               </div>
               {/* Details section */}
               <div className="space-y-5 w-full ">

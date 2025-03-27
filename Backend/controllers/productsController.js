@@ -46,7 +46,7 @@ const addProduct = async (req, res) => {
         brand,
         price,
         discount,
-        stock,
+        stock: Number(stock),
         size,
         color,
         reviews,

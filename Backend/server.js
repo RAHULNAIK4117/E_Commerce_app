@@ -20,9 +20,17 @@ mongoose.connect(process.env.MONGODB_URL).then(() => console.log("mongoDB connec
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+const allowedOrigins = process.env.CLIENT_URL.split(',');
+
 app.use(
     cors({
-        origin: process.env.CLIENT_URL,
+        origin: (origin, callback) => {
+            if (!origin || allowedOrigins.includes(origin)) {
+              callback(null, true);
+            } else {
+              callback(new Error("Not allowed by CORS"));
+            }
+          },
         methods: ["GET", "POST", "DELETE", "PUT"],
         allowedHeaders: [
             "Content-Type",

@@ -21,7 +21,7 @@ const Product = () => {
 
   const fetchAndSetProducts = async () => {
     const response = await getProducts({ category, subCategory, search });
-    console.log(response);
+    console.log({response});
     setShowProducts(response.data);
   }
 

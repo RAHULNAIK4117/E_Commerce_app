@@ -74,7 +74,7 @@ const PopularProducts = () => {
         <h2 className="text-xl md:text-2xl font-semibold ">
           Popular Products
         </h2>
-        <div className="">
+        <div className="hidden md:block">
           <ThemeProvider theme={theme}>
             <Box sx={{  borderColor: "divider" }}>
               <Tabs

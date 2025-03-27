@@ -83,7 +83,7 @@ const loginUser = async (req, res) => {
         name: user.name,
       },
       "CLIENT_SECRET_KEY",
-      { expiresIn: "1d" }
+      { expiresIn: "1h" }
     );
 
     // res.cookie("token", token, { httpOnly: true, secure: false }).json({
@@ -156,7 +156,7 @@ const updateUser = async (req, res) => {
 
     console.log({ userDetails });
 
-    cons = User.findByIdAndUpdate(userId, userDetails, { new: true });
+    const user = User.findByIdAndUpdate(userId, userDetails, { new: true });
 
     res.status(200).json({
       success: true,
@@ -172,4 +172,60 @@ const updateUser = async (req, res) => {
   }
 };
 
-export { registerUser, loginUser, logoutUser, getUserDetails, updateUser };
+const loginAdmin = async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    const user = await User.findOne({ email }).select("+password");
+    const isAdmin = user.role === "admin";
+    if (!isAdmin) {
+      return res.status(200).json({
+        success: false,
+        message: "Invalid credentials!",
+      });
+    }
+
+    //     // console.log(user);
+
+    const matchPassword = await bcrypt.compare(password, user.password);
+    if (!matchPassword) {
+      return res.status(200).json({
+        success: false,
+        message: "Invalid credentials!",
+      });
+    }
+
+    const token = jwt.sign(
+      {
+        id: user._id,
+        role: user.role,
+        email: user.email,
+        name: user.name,
+      },
+      "CLIENT_SECRET_KEY",
+      { expiresIn: "1h" }
+    );
+
+    res.status(200).json({
+      success: true,
+      message: "Login successfull :)",
+      token,
+      data: {
+        id: user._id,
+        email: user.email,
+        role: user.role,
+        name: user.name,
+      },
+    });
+  } catch (error) {
+    console.log("Login failed :: ", error);
+    res.status(500).json({
+      success: false,
+      message: "something went wrong...",
+    });
+  }
+};
+
+
+
+export { registerUser, loginUser, logoutUser, getUserDetails, updateUser, loginAdmin };

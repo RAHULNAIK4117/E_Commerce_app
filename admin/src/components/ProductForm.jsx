@@ -1,0 +1,194 @@
+import { useState } from "react";
+import axios from "axios";
+import { MdOutlineDelete } from "react-icons/md";
+import { toast } from "react-toastify";
+
+const categories = ["footwear", "electronics", "fashion", "accessories", "appliances"];
+const subCategories = {
+  footwear: ["men", "women"],
+  electronics: ["laptop", "camera"],
+  fashion: ["men", "women"],
+  accessories: ["smart watch accessories"],
+  appliances: [],
+};
+const sizes = ["S", "M", "L", "XL", "XXL"];
+const colors = ["Red", "Blue", "Green", "Black", "White"];
+
+const ProductForm = () => {
+  const [formData, setFormData] = useState({
+    title: "",
+    description: "",
+    images: [],
+    category: "",
+    subCategory: "",
+    brand: "",
+    price: "",
+    discount: "",
+    stock: "",
+    size: [],
+    color: [],
+    warranty: "No warranty",
+    returnPolicy: "10 days return policy",
+  });
+  const [imagePreviews, setImagePreviews] = useState([]);
+  const [errors, setErrors] = useState({});
+
+  const validateForm = () => {
+    let newErrors = {};
+    if (!formData.title) newErrors.title = "Title is required";
+    if (!formData.description) newErrors.description = "Description is required";
+    if (!formData.category) newErrors.category = "Category is required";
+    if (!formData.price || isNaN(formData.price) || formData.price <= 0)
+      newErrors.price = "Valid price is required";
+    if (!formData.stock || isNaN(formData.stock) || formData.stock < 0)
+      newErrors.stock = "Valid stock quantity is required";
+    if (formData.images.length === 0) newErrors.images = "At least one image is required";
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleCheckboxChange = (e, field, value) => {
+    setFormData((prev) => ({
+      ...prev,
+      [field]: e.target.checked ? [...prev[field], value] : prev[field].filter((v) => v !== value),
+    }));
+  };
+
+  const handleImageChange = (e) => {
+    const files = Array.from(e.target.files);
+    setFormData({ ...formData, images: files });
+    setImagePreviews(files.map((file) => URL.createObjectURL(file)));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!validateForm()) return;
+
+    try {
+      const formDataToSend = new FormData();
+      Object.keys(formData).forEach((key) => {
+        if (key === "images") {
+          formData.images.forEach((image) => formDataToSend.append("images", image));
+        } else {
+          formDataToSend.append(key, formData[key]);
+        }
+      });
+      console.log("Form Data Submitted:", formData);
+      const response = await axios.post("http://localhost:5000/api/products/add", formDataToSend);
+      if(response.data.success){
+        toast.success(response.data.message)
+        setImagePreviews([])
+        setFormData({
+          title: "",
+          description: "",
+          images: [],
+          category: "",
+          subCategory: "",
+          brand: "",
+          price: "",
+          discount: "",
+          stock: "",
+          size: [],
+          color: [],
+          warranty: "No warranty",
+          returnPolicy: "10 days return policy",
+        })
+        window.scrollTo({
+          top: 0,
+          left: 100,
+          behavior: "smooth",
+        });
+      } else {
+        toast.error(response.data.message)
+      }
+      console.log("Response:", response);
+      // alert("Product added successfully!");
+    } catch (error) {
+      console.error("Error adding product:", error);
+    }
+  };
+
+  return (
+    <div className="max-w-2xl mx-auto bg-white shadow-lg rounded-lg p-6">
+      <h2 className="text-2xl font-semibold text-gray-700 mb-4">Add Product</h2>
+      <form onSubmit={handleSubmit} className="space-y-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+        {Object.keys(formData).map((field) =>
+          field !== "images" ? (
+            <div key={field}>
+              <label className="block text-sm font-medium text-gray-600 capitalize mb-1">
+                {field.replace(/([A-Z])/g, " $1")}:
+              </label>
+              {field === "category" ? (
+                <select
+                  name={field}
+                  value={formData[field]}
+                  onChange={handleChange}
+                  className="w-full p-2 border rounded-md"
+                >
+                  <option value="">Select Category</option>
+                  {categories.map((cat) => (
+                    <option key={cat} value={cat}>{cat}</option>
+                  ))}
+                </select>
+              ) : field === "size" ? (
+                sizes.map((size) => (
+                  <label key={size} className="inline-flex items-center mr-2">
+                    <input type="checkbox" onChange={(e) => handleCheckboxChange(e, "size", size)} />
+                    <span className="ml-1">{size}</span>
+                  </label>
+                ))
+              ) : field === "color" ? (
+                colors.map((color) => (
+                  <label key={color} className="inline-flex items-center mr-2">
+                    <input type="checkbox" onChange={(e) => handleCheckboxChange(e, "color", color)} />
+                    <span className="ml-1">{color}</span>
+                  </label>
+                ))
+              ) : (
+                <input
+                  type="text"
+                  name={field}
+                  value={formData[field]}
+                  onChange={handleChange}
+                  className="w-full p-2 border rounded-md"
+                />
+              )}
+              {errors[field] && <p className="text-red-500 text-sm">{errors[field]}</p>}
+            </div>
+          ) : (
+            <div key={field} className="col-span-full">
+              <label className="block text-sm font-medium text-gray-600">Images:</label>
+              <input type="file" multiple onChange={handleImageChange} className="w-full p-2 border rounded-md" />
+              {errors.images && <p className="text-red-500 text-sm">{errors.images}</p>}
+              <div className="mt-4 grid grid-cols-4 gap-2">
+                {imagePreviews.map((src, index) => (
+                  <div key={index} className="relative">
+                    <img src={src} alt={`Preview ${index}`} className="w-full h-24 object-cover rounded-md" />
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setFormData({ ...formData, images: formData.images.filter((_, i) => i !== index) });
+                        setImagePreviews(imagePreviews.filter((_, i) => i !== index));
+                      }}
+                      className="absolute top-1 right-1 bg-red-500 text-white p-1 rounded-full"
+                    >
+                      <MdOutlineDelete size={20} />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )
+        )}
+        <button type="submit" className="w-full bg-blue-600 text-white p-2 rounded-md hover:bg-blue-700 transition">Add Product</button>
+      </form>
+    </div>
+  );
+};
+
+export default ProductForm;

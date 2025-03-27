@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 
 // components/ProductCard.jsx
-const ProductCard = ({ _id, image, title, price, rating, brand, category, images }) => {
+const ProductCard = ({ _id, image, title, price, rating, brand, category }) => {
   const navigate = useNavigate()
   const stopPropagation = (e) => {
     e.stopPropagation();
@@ -21,7 +21,7 @@ const ProductCard = ({ _id, image, title, price, rating, brand, category, images
           </div>
         </div>
         <img
-          src={images.length ? images[0] : image}
+          src={image}
           alt={title}
           className="w-full h-60 object-cover object-top group-hover:scale-110 z-10 duration-150 ease-in-out"
         />
