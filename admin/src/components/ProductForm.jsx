@@ -3,7 +3,13 @@ import axios from "axios";
 import { MdOutlineDelete } from "react-icons/md";
 import { toast } from "react-toastify";
 
-const categories = ["footwear", "electronics", "fashion", "accessories", "appliances"];
+const categories = [
+  "footwear",
+  "electronics",
+  "fashion",
+  "accessories",
+  "appliances",
+];
 const subCategories = {
   footwear: ["men", "women"],
   electronics: ["laptop", "camera"],
@@ -11,6 +17,14 @@ const subCategories = {
   accessories: ["smart watch accessories"],
   appliances: [],
 };
+const brands = {
+  footwear: ["Nike", "Adidas", "Puma", "Reebok", "Skechers"],
+  electronics: ["Apple", "Samsung", "Dell", "Sony", "HP"],
+  fashion: ["Zara", "H&M", "Levi's", "Gucci", "Louis Vuitton"],
+  accessories: ["Rolex", "Fossil", "Casio", "Titan", "Daniel Wellington"],
+  appliances: ["LG", "Samsung", "Whirlpool", "Philips", "Bosch"],
+};
+
 const sizes = ["S", "M", "L", "XL", "XXL"];
 const colors = ["Red", "Blue", "Green", "Black", "White"];
 
@@ -36,13 +50,15 @@ const ProductForm = () => {
   const validateForm = () => {
     let newErrors = {};
     if (!formData.title) newErrors.title = "Title is required";
-    if (!formData.description) newErrors.description = "Description is required";
+    if (!formData.description)
+      newErrors.description = "Description is required";
     if (!formData.category) newErrors.category = "Category is required";
     if (!formData.price || isNaN(formData.price) || formData.price <= 0)
       newErrors.price = "Valid price is required";
     if (!formData.stock || isNaN(formData.stock) || formData.stock < 0)
       newErrors.stock = "Valid stock quantity is required";
-    if (formData.images.length === 0) newErrors.images = "At least one image is required";
+    if (formData.images.length === 0)
+      newErrors.images = "At least one image is required";
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -55,7 +71,9 @@ const ProductForm = () => {
   const handleCheckboxChange = (e, field, value) => {
     setFormData((prev) => ({
       ...prev,
-      [field]: e.target.checked ? [...prev[field], value] : prev[field].filter((v) => v !== value),
+      [field]: e.target.checked
+        ? [...prev[field], value]
+        : prev[field].filter((v) => v !== value),
     }));
   };
 
@@ -65,6 +83,26 @@ const ProductForm = () => {
     setImagePreviews(files.map((file) => URL.createObjectURL(file)));
   };
 
+  const handleClearForm = () => {
+    setFormData({
+      title: "",
+      description: "",
+      images: [],
+      category: "",
+      subCategory: "",
+      brand: "",
+      price: "",
+      discount: "",
+      stock: "",
+      size: [],
+      color: [],
+      warranty: "No warranty",
+      returnPolicy: "10 days return policy",
+    })
+    setImagePreviews([]);
+
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateForm()) return;
@@ -73,16 +111,21 @@ const ProductForm = () => {
       const formDataToSend = new FormData();
       Object.keys(formData).forEach((key) => {
         if (key === "images") {
-          formData.images.forEach((image) => formDataToSend.append("images", image));
+          formData.images.forEach((image) =>
+            formDataToSend.append("images", image)
+          );
         } else {
           formDataToSend.append(key, formData[key]);
         }
       });
       console.log("Form Data Submitted:", formData);
-      const response = await axios.post("http://localhost:5000/api/products/add", formDataToSend);
-      if(response.data.success){
-        toast.success(response.data.message)
-        setImagePreviews([])
+      const response = await axios.post(
+        "http://localhost:5000/api/products/add",
+        formDataToSend
+      );
+      if (response.data.success) {
+        toast.success(response.data.message);
+        setImagePreviews([]);
         setFormData({
           title: "",
           description: "",
@@ -97,14 +140,14 @@ const ProductForm = () => {
           color: [],
           warranty: "No warranty",
           returnPolicy: "10 days return policy",
-        })
+        });
         window.scrollTo({
           top: 0,
           left: 100,
           behavior: "smooth",
         });
       } else {
-        toast.error(response.data.message)
+        toast.error(response.data.message);
       }
       console.log("Response:", response);
       // alert("Product added successfully!");
@@ -116,7 +159,10 @@ const ProductForm = () => {
   return (
     <div className="max-w-2xl mx-auto bg-white shadow-lg rounded-lg p-6">
       <h2 className="text-2xl font-semibold text-gray-700 mb-4">Add Product</h2>
-      <form onSubmit={handleSubmit} className="space-y-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+      <form
+        onSubmit={handleSubmit}
+        className="space-y-4 grid grid-cols-1 md:grid-cols-2 gap-4"
+      >
         {Object.keys(formData).map((field) =>
           field !== "images" ? (
             <div key={field}>
@@ -128,25 +174,66 @@ const ProductForm = () => {
                   name={field}
                   value={formData[field]}
                   onChange={handleChange}
-                  className="w-full p-2 border rounded-md"
+                  className="w-full p-2 border rounded-md cursor-pointer"
                 >
                   <option value="">Select Category</option>
                   {categories.map((cat) => (
-                    <option key={cat} value={cat}>{cat}</option>
+                    <option key={cat} value={cat}>
+                      {cat}
+                    </option>
+                  ))}
+                </select>
+              ) : field === "subCategory" ? (
+                <select
+                  name={field}
+                  value={formData[field]}
+                  onChange={handleChange}
+                  className="w-full p-2 border rounded-md cursor-pointer"
+                  disabled={!formData.category} // Disable if category is not selected
+                >
+                  <option value="">Select Subcategory</option>
+                  {(subCategories[formData.category] || []).map((sub) => (
+                    <option key={sub} value={sub}>
+                      {sub}
+                    </option>
+                  ))}
+                </select>
+              ) : field === "brand" ? (
+                <select
+                  name={field}
+                  value={formData[field]}
+                  onChange={handleChange}
+                  className="w-full p-2 border rounded-md"
+                  disabled={!formData.category} // Disable if no category is selected
+                >
+                  <option value="">Select Brand</option>
+                  {(brands[formData.category] || []).map((brand) => (
+                    <option key={brand} value={brand}>
+                      {brand}
+                    </option>
                   ))}
                 </select>
               ) : field === "size" ? (
                 sizes.map((size) => (
                   <label key={size} className="inline-flex items-center mr-2">
-                    <input type="checkbox" onChange={(e) => handleCheckboxChange(e, "size", size)} />
-                    <span className="ml-1">{size}</span>
+                    <input
+                      type="checkbox"
+                      checked={formData.size.includes(size)}
+
+                      onChange={(e) => handleCheckboxChange(e, "size", size)}
+                    />
+                    <span className="ml-1 text-lg">{size}</span>
                   </label>
                 ))
               ) : field === "color" ? (
                 colors.map((color) => (
                   <label key={color} className="inline-flex items-center mr-2">
-                    <input type="checkbox" onChange={(e) => handleCheckboxChange(e, "color", color)} />
-                    <span className="ml-1">{color}</span>
+                    <input
+                      type="checkbox"
+                      checked={formData.color.includes(color)}
+                      onChange={(e) => handleCheckboxChange(e, "color", color)}
+                    />
+                    <span className="ml-1 text-lg">{color}</span>
                   </label>
                 ))
               ) : (
@@ -158,22 +245,42 @@ const ProductForm = () => {
                   className="w-full p-2 border rounded-md"
                 />
               )}
-              {errors[field] && <p className="text-red-500 text-sm">{errors[field]}</p>}
+              {errors[field] && (
+                <p className="text-red-500 text-sm">{errors[field]}</p>
+              )}
             </div>
           ) : (
             <div key={field} className="col-span-full">
-              <label className="block text-sm font-medium text-gray-600">Images:</label>
-              <input type="file" multiple onChange={handleImageChange} className="w-full p-2 border rounded-md" />
-              {errors.images && <p className="text-red-500 text-sm">{errors.images}</p>}
+              <label className="block text-sm font-medium text-gray-600">
+                Images:
+              </label>
+              <input
+                type="file"
+                multiple
+                onChange={handleImageChange}
+                className="w-full p-2 border rounded-md"
+              />
+              {errors.images && (
+                <p className="text-red-500 text-sm">{errors.images}</p>
+              )}
               <div className="mt-4 grid grid-cols-4 gap-2">
                 {imagePreviews.map((src, index) => (
                   <div key={index} className="relative">
-                    <img src={src} alt={`Preview ${index}`} className="w-full h-24 object-cover rounded-md" />
+                    <img
+                      src={src}
+                      alt={`Preview ${index}`}
+                      className="w-full h-24 object-cover rounded-md"
+                    />
                     <button
                       type="button"
                       onClick={() => {
-                        setFormData({ ...formData, images: formData.images.filter((_, i) => i !== index) });
-                        setImagePreviews(imagePreviews.filter((_, i) => i !== index));
+                        setFormData({
+                          ...formData,
+                          images: formData.images.filter((_, i) => i !== index),
+                        });
+                        setImagePreviews(
+                          imagePreviews.filter((_, i) => i !== index)
+                        );
                       }}
                       className="absolute top-1 right-1 bg-red-500 text-white p-1 rounded-full"
                     >
@@ -185,7 +292,21 @@ const ProductForm = () => {
             </div>
           )
         )}
-        <button type="submit" className="w-full bg-blue-600 text-white p-2 rounded-md hover:bg-blue-700 transition">Add Product</button>
+        <div className="flex items-center gap-5 justify-between w-full col-span-full">
+        <button
+          type="button"
+          onClick={handleClearForm}
+          className="w-full bg-red-600 text-white p-2 rounded-md cursor-pointer hover:bg-red-700 transition"
+        >
+          Clear Form
+        </button>
+        <button
+          type="submit"
+          className="w-full bg-blue-600 text-white p-2 rounded-md cursor-pointer hover:bg-blue-700 transition"
+        >
+          Add Product
+        </button>
+        </div>
       </form>
     </div>
   );

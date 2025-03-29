@@ -52,7 +52,7 @@ const getOrders = async (req, res) => {
             });
         }
 
-        const order = await Order.find({userId})
+        const order = await Order.find({user: userId})
 
         res.status(200).json({
             success: true,
@@ -67,6 +67,44 @@ const getOrders = async (req, res) => {
         })
     }
 };
+
+const getOrder = async (req, res) => {
+    try {
+        const {orderId} = req.params
+        console.log({orderId});
+        
+
+        if(!orderId ){
+            return res.status(400).json({ 
+                success: false,
+                message: "Please Provide Order ID" 
+            });
+        }
+
+        const order = await Order.findOne({_id: orderId})
+        if(!order ){
+            return res.status(400).json({ 
+                success: false,
+                message: "Order ID not valid!" 
+            });
+        }
+        console.log({order});
+
+        
+        res.status(200).json({
+            success: true,
+            message: "Orders fetched successfully",
+            data: order
+        })
+        
+    } catch (error) {
+        console.log('Error in fetching Order!', error);
+        res.status(500).json({
+            success: false,
+            message: 'Error in fetching Order!',
+        })
+    }
+}
 
 
 const getAllOrders = async (req, res) => {
@@ -90,7 +128,8 @@ const getAllOrders = async (req, res) => {
 
 const updateOrder = async (req, res) => {
     try {
-        const { orderId, orderStatus } = req.body;
+        const {orderId} = req.params
+        const { orderStatus } = req.body;
 
         if(!orderId || !orderStatus){
             return res.status(400).json({
@@ -100,7 +139,7 @@ const updateOrder = async (req, res) => {
         }
 
         const order = await Order.findByIdAndUpdate({_id:orderId},{
-            $set: {orderStatus: orderStatus}
+            $set: {status: orderStatus}
         },{
             new: true
         })
@@ -124,4 +163,4 @@ const updateOrder = async (req, res) => {
 
 
 
-export { addOrder, getOrders, getAllOrders, updateOrder }
+export { addOrder, getOrders, getOrder, getAllOrders, updateOrder }

@@ -1,4 +1,4 @@
-import {Product} from "../models/ProductModel.js";
+import { Product } from "../models/ProductModel.js";
 
 // add a products
 const addProduct = async (req, res) => {
@@ -38,21 +38,21 @@ const addProduct = async (req, res) => {
     }
 
     const newProduct = new Product({
-        title,
-        description,
-        images,
-        category,
-        subCategory,
-        brand,
-        price,
-        discount,
-        stock: Number(stock),
-        size,
-        color,
-        reviews,
-        rating,
-        warranty,
-        returnPolicy
+      title,
+      description,
+      images,
+      category,
+      subCategory,
+      brand,
+      price,
+      discount,
+      stock: Number(stock),
+      size,
+      color,
+      reviews,
+      rating,
+      warranty,
+      returnPolicy,
     });
 
     await newProduct.save();
@@ -73,9 +73,11 @@ const addProduct = async (req, res) => {
 // get all products
 const getProducts = async (req, res) => {
   console.log("prams", req.query);
-  
+
   try {
     const sort = req.query.sort ? JSON.parse(req.query.sort) : { title: 1 };
+    const page = parseInt(req.query.page) || 1; // Current page (default 1)
+    const limit = parseInt(req.query.limit) || 20; // Items per page (default 10)
 
     const filters = {};
 
@@ -94,13 +96,21 @@ const getProducts = async (req, res) => {
     //   req.query.search.length > 0 &&
     //   (filters.description = { $regex: req.query.search, $options: "i" });
 
-    console.log('sort: ', sort, 'filters: ', filters);
+    console.log("sort: ", sort, "filters: ", filters);
 
-    const products = await Product.find(filters).sort(sort).limit(req.query.limit || 20);
+    const total  = await Product.countDocuments()
+
+    const products = await Product.find(filters)
+      .sort(sort)
+      .skip((page - 1) * limit)
+      .limit(limit);
+
     res.status(200).json({
       success: true,
       message: "products fetch successfully.",
+      total,
       data: products,
+      totalPages: Math.ceil(total / limit),
     });
   } catch (error) {
     console.log(error);

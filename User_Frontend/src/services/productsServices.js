@@ -8,8 +8,8 @@ const productAPI = axios.create({
 });
 
 
-export const getProducts = async ({ category, subCategory, search, limit }) => {
-    console.log({ category, subCategory, search, limit });
+export const getProducts = async ({ category, subCategory, search, page, limit }) => {
+    console.log({ category, subCategory, search, page, limit });
 
     try {
         const response = await productAPI.get('get', {
@@ -17,6 +17,7 @@ export const getProducts = async ({ category, subCategory, search, limit }) => {
                 category,
                 subCategory,
                 search,
+                page,
                 limit
             }
         });
