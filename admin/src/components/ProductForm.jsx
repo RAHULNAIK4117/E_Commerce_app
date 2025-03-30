@@ -27,12 +27,25 @@ const brands = {
   appliances: ["LG", "Samsung", "Whirlpool", "Philips", "Bosch"],
 };
 
-const sizes = ["S", "M", "L", "XL", "XXL"];
-const colors = ["Red", "Blue", "Green", "Black", "White"];
+const sizes = {
+  footwear: ["6", "7", "8", "9", "10", "11"], // Shoe sizes
+  electronics: [], // No sizes for electronics
+  fashion: ["S", "M", "L", "XL", "XXL"], // Clothing sizes
+  accessories: [], // No sizes for accessories
+  appliances: [], // No sizes for appliances
+};
+
+const colors = {
+  footwear: ["Black", "White", "Red", "Blue", "Green"],
+  electronics: ["Black", "White", "Silver", "Gray", "Blue"],
+  fashion: ["Red", "Blue", "Green", "Black", "White", "Yellow", "Pink"],
+  accessories: ["Black", "White", "Gold", "Silver", "Brown"],
+  appliances: ["White", "Black", "Silver", "Gray"],
+};
 
 const ProductForm = ({ formTitle }) => {
   const { id } = useParams();
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -87,7 +100,7 @@ const ProductForm = ({ formTitle }) => {
     setFormData({ ...formData, images: [...formData.images, ...files] });
     setImagePreviews(
       [...formData.images, ...files].map((file) => {
-        if (typeof file === 'string') {
+        if (typeof file === "string") {
           return file;
         } else {
           return URL.createObjectURL(file);
@@ -118,19 +131,17 @@ const ProductForm = ({ formTitle }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateForm()) return;
-    setLoading(true)
+    setLoading(true);
 
     try {
       const formDataToSend = new FormData();
       Object.keys(formData).forEach((key) => {
         if (key === "images") {
           formData.images.forEach((image) =>
-        formDataToSend.append("files", image)
+            formDataToSend.append("files", image)
           );
         } else if (key === "size" || key === "color") {
-          formData[key].forEach((item) =>
-        formDataToSend.append(key, item)
-          );
+          formData[key].forEach((item) => formDataToSend.append(key, item));
         } else {
           formDataToSend.append(key, formData[key]);
         }
@@ -182,7 +193,7 @@ const ProductForm = ({ formTitle }) => {
     } catch (error) {
       console.error("Error adding product:", error);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
   };
 
@@ -216,7 +227,7 @@ const ProductForm = ({ formTitle }) => {
     };
 
     if (id) {
-      fetchProductDetails()
+      fetchProductDetails();
     }
   }, [id]);
 
@@ -278,7 +289,7 @@ const ProductForm = ({ formTitle }) => {
                   ))}
                 </select>
               ) : field === "size" ? (
-                sizes.map((size) => (
+                sizes[formData.category]?.map((size) => (
                   <label key={size} className="inline-flex items-center mr-2">
                     <input
                       type="checkbox"
@@ -289,7 +300,7 @@ const ProductForm = ({ formTitle }) => {
                   </label>
                 ))
               ) : field === "color" ? (
-                colors.map((color) => (
+                colors[formData.category]?.map((color) => (
                   <label key={color} className="inline-flex items-center mr-2">
                     <input
                       type="checkbox"
@@ -368,7 +379,11 @@ const ProductForm = ({ formTitle }) => {
             type="submit"
             className="w-full bg-blue-600 text-white p-2 rounded-md cursor-pointer hover:bg-blue-700 transition"
           >
-            {loading ? <LuLoader size={20} className="animate-spin mx-auto" /> : formTitle}
+            {loading ? (
+              <LuLoader size={20} className="animate-spin mx-auto" />
+            ) : (
+              formTitle
+            )}
           </button>
         </div>
       </form>
