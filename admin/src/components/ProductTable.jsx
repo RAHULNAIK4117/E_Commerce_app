@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { FaEdit, FaTrash } from "react-icons/fa";
+import { FaEye } from "react-icons/fa6";
 
 const AdminProductTable = ({ products, onDelete }) => {
   return (
@@ -44,6 +45,9 @@ const AdminProductTable = ({ products, onDelete }) => {
                 ))}
               </td>
               <td className="py-2 px-4 flex justify-center items-center h-full gap-3">
+                <Link to={`/admin/product/${product._id}`} className="text-gray-500 hover:text-gray-700 cursor-pointer">
+                  <FaEye size={20} />
+                </Link>
                 <Link to={`/admin/edit-product/${product._id}`} className="text-blue-500 hover:text-blue-700 cursor-pointer">
                   <FaEdit size={20} />
                 </Link>

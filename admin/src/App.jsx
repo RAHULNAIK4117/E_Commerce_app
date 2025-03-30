@@ -12,6 +12,7 @@ import EditProduct from "./pages/editproduct";
 import OrderDetails from "./pages/OrderDetails";
 import ProductForm from "./components/ProductForm";
 import EditProductDetails from "./pages/EditProductDetails";
+import ProductDetails from "./pages/ProductDetails";
 
 export const backendURL = "http://localhost:5500";
 
@@ -63,6 +64,7 @@ const App = () => {
             <div className="px-4 md:px-8 mx-auto w-full my-8 text-gray-600 ">
               <Routes>
                 <Route path="/admin/list" element={<List token={token} />} />
+                <Route path="/admin/product/:productId" element={<ProductDetails token={token} />} />
                 <Route path="/admin/add" element={<Add token={token} />} />
                 <Route path="/admin/edit-product/:id" element={<EditProductDetails token={token} />} />
                 <Route path="/admin/orders" element={<Orders token={token} />} />
