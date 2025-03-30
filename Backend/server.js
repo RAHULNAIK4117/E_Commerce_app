@@ -9,6 +9,7 @@ import addressRouter from './routes/addressRoute.js';
 import orderRouter from './routes/orderRoute.js'
 import bannerRouter from './routes/bannerRoute.js'
 import paymentRouter from './routes/paymentRoute.js';
+import reviewRouter from './routes/reviewRoute.js'
 
 import dotenv from 'dotenv';
 dotenv.config();
@@ -51,5 +52,6 @@ app.use("/api/addresses", addressRouter)
 app.use("/api/orders", orderRouter)
 app.use("/api/banner", bannerRouter)
 app.use("/api/payment", paymentRouter);
+app.use("/api/review", reviewRouter);
 
 app.listen(PORT, ()=> console.log(`Server is running on port ${PORT}`))

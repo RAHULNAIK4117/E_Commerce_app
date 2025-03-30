@@ -324,10 +324,7 @@ const deleteCartProduct = async (req, res) => {
       });
     }
 
-    const cart = await Cart.findOne({ userId }).populate({
-      path: "products.productId",
-      select: "image title price salePrice",
-    });
+    const cart = await Cart.findOne({ userId })
 
     if (!cart) {
       return res.status(404).json({
@@ -335,9 +332,11 @@ const deleteCartProduct = async (req, res) => {
         message: "Cart not found!",
       });
     }
+    console.log({cart});
+    
 
     cart.products = cart.products.filter(
-      (item) => item.productId._id.toString() !== productId
+      (item) => item.productId.toString() !== productId
     );
 
     await cart.save();
@@ -388,6 +387,9 @@ const deleteCartProduct = async (req, res) => {
         },
       },
     ]);
+
+    console.log({newCart});
+    
 
     res.status(200).json({
       success: true,

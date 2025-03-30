@@ -63,6 +63,8 @@ const OrderList = () => {
                       ? "bg-yellow-500"
                       : order.status === "Shipped"
                       ? "bg-blue-500"
+                      : order.status === "Cancelled"
+                      ? "bg-red-500"
                       : "bg-green-500"
                   }`}
                 >

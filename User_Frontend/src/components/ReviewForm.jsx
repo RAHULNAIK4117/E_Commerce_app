@@ -1,100 +1,70 @@
-import React from "react";
-import { useForm, Controller } from "react-hook-form";
-import {
-  TextField,
-  Button,
-  Box,
-  Typography,
-  Rating,
-  Card,
-  CardContent,
-} from "@mui/material";
+import { Rating } from "@mui/material";
+import React, { useState } from "react";
+import { createReview } from "../services/reviewServices";
 
-const ReviewForm = ({ onSubmit }) => {
-  const {
-    handleSubmit,
-    control,
-    reset,
-    formState: { errors },
-  } = useForm();
+const ReviewForm = ({ userId, productId, getThisProduct }) => {
+  const [username, setUsername] = useState("");
+  const [comment, setComment] = useState("");
+  const [rating, setRating] = useState(0);
 
-  const handleFormSubmit = (data) => {
-    onSubmit(data);
-    reset(); // Reset form after submission
+  const submit = async (e) => {
+    e.preventDefault();
+    console.log({ comment, rating, userId, productId });
+
+    const response = await createReview({
+      comment,
+      rating,
+      userId,
+      productId,
+      username,
+    });
+    if (response.success) {
+      console.log(response);
+      setComment("");
+      setRating(0);
+      getThisProduct();
+    }
   };
 
   return (
-    <Card sx={{ maxWidth: 500, mx: "auto", p: 2 }}>
-      <CardContent>
-        <Typography variant="h6" gutterBottom>
-          Submit your Review
-        </Typography>
-
-        <form onSubmit={handleSubmit(handleFormSubmit)}>
-          {/* Name Field */}
-          <Controller
-            name="name"
-            control={control}
-            defaultValue=""
-            rules={{ required: "Name is required" }}
-            render={({ field }) => (
-              <TextField
-                {...field}
-                label="Your Name"
-                fullWidth
-                margin="normal"
-                error={!!errors.name}
-                helperText={errors.name?.message}
-              />
-            )}
+    <div className="w-full max-w-lg mx-auto bg-white p-6 rounded-lg shadow-md">
+      <h2 className="text-2xl font-bold mb-4 text-gray-800">Your Review</h2>
+      <form onSubmit={submit}>
+        <div className="mb-4 space-y-4">
+          <input
+            type="text"
+            name="username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            placeholder="Enter Your Name..."
+            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 "
           />
-
-          {/* Comment Field */}
-          <Controller
-            name="comment"
-            control={control}
-            defaultValue=""
-            rules={{ required: "Comment is required" }}
-            render={({ field }) => (
-              <TextField
-                {...field}
-                label="Your Review"
-                fullWidth
-                multiline
-                rows={3}
-                margin="normal"
-                error={!!errors.comment}
-                helperText={errors.comment?.message}
-              />
-            )}
+          <textarea
+            id="review"
+            name="review"
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none"
+            placeholder="Write Your Review..."
+            rows="4"
+          ></textarea>
+          <Rating
+            name="simple-controlled"
+            onChange={(event, newValue) => {
+              setRating(newValue);
+            }}
+            value={rating}
+            precision={0.5}
           />
-
-          {/* Star Rating */}
-          <Controller
-            name="rating"
-            control={control}
-            defaultValue={0}
-            rules={{ required: "Rating is required" }}
-            render={({ field }) => (
-              <Box sx={{ my: 2 }}>
-                <Typography variant="body1">Rating</Typography>
-                <Rating {...field} precision={0.5} />
-                {errors.rating && (
-                  <Typography color="error" variant="body2">
-                    {errors.rating.message}
-                  </Typography>
-                )}
-              </Box>
-            )}
-          />
-
-          {/* Submit Button */}
-          <Button type="submit" variant="contained" fullWidth>
-            Submit Review
-          </Button>
-        </form>
-      </CardContent>
-    </Card>
+        </div>
+        <button
+          type="submit"
+          className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-300"
+        >
+          Submit Review
+        </button>
+      </form>
+    </div>
   );
 };
 

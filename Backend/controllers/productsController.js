@@ -210,7 +210,7 @@ const deleteProduct = async (req, res) => {
 const getProductDetails = async (req, res) => {
   try {
     const { id } = req.params;
-    const findProduct = await Product.findById(id);
+    const findProduct = await Product.findById(id).populate("reviews");
 
     if (!findProduct) {
       return res.status(404).json({

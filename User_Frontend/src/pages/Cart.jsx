@@ -49,7 +49,7 @@ const Cart = () => {
     // console.log({ productId });
     const response = await deleteCart({ userId: userData?._id, productId });
     if (response.success) {
-      // console.log("delete response", response);
+      console.log("delete response", response);
       dispatch(setItem(response.data[0].products));
     }
   };
@@ -57,9 +57,7 @@ const Cart = () => {
   const totalPrice = cart?.reduce((acc, item) => {
     return (
       acc +
-      (Number(item.details?.price) -
-        (Number(item.details?.price) * Number(item.details?.discount)) / 100) *
-        item.quantity
+      Number(item.details?.price) * item.quantity
     );
   }, 0);
 
@@ -104,9 +102,9 @@ const Cart = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {cart?.map((product) => (
+                {cart?.map((product, index) => (
                   <TableRow
-                    key={product.details?._id}
+                    key={index}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
                     <TableCell component="th" scope="row">
@@ -166,7 +164,7 @@ const Cart = () => {
                         onClick={() => deleteProductFromCart(product.productId)}
                         style={{ color: "#f44336", cursor: "pointer" }}
                       >
-                        <AiOutlineDelete size={20} className="md:size-24" />{" "}
+                        <AiOutlineDelete size={26} />{" "}
                       </button>
                     </TableCell>
                   </TableRow>

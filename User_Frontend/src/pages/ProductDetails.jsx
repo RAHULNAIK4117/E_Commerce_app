@@ -91,8 +91,9 @@ const ProductDetails = () => {
     setQuantity(quantity + value);
   };
 
-  const handleReviewSubmit = (data) => {
-    console.log("New Review:", data);
+  const handleReviewSubmit = (e, comment) => {
+    e.preventDefault();
+    console.log("New Review:", comment);
   };
 
   return (
@@ -247,6 +248,7 @@ const ProductDetails = () => {
                           if (
                             key !== "image" &&
                             key !== "_id" &&
+                            key !== "updatedAt" &&
                             value !== "" &&
                             value !== null &&
                             (typeof value === "string" ||
@@ -308,11 +310,11 @@ const ProductDetails = () => {
                           {/* Review Content */}
                           <CardContent sx={{ flex: 1 }}>
                             <Typography variant="body2" color="textSecondary">
-                              12/22/2025
+                              {review?.createdAt.split('T')[0]}
                             </Typography>
 
                             <Typography variant="body1" sx={{ mt: 1 }}>
-                              {review.comment}
+                              {review?.comment}
                             </Typography>
 
                             <Typography
@@ -320,7 +322,7 @@ const ProductDetails = () => {
                               color="green"
                               sx={{ mt: 1 }}
                             >
-                              username
+                              {review?.username}
                             </Typography>
                           </CardContent>
 
@@ -351,7 +353,7 @@ const ProductDetails = () => {
                   </div>
                 </div>
 
-                <ReviewForm onSubmit={handleReviewSubmit} />
+                <ReviewForm userId={userData?._id} productId={id} getThisProduct={getThisProduct} />
               </div>
 
               {/* Related Products */}
