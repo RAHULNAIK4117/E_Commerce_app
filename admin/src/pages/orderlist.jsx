@@ -14,7 +14,7 @@ const OrderList = () => {
     const fetchOrders = async () => {
       try {
         const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/orders/getAllOrders`);
-        console.log("All orders", response.data);
+        // console.log("All orders", response.data);
 
         setOrders(response.data.data)
         setLoading(false);

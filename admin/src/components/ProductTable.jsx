@@ -22,7 +22,7 @@ const AdminProductTable = ({ products, onDelete }) => {
             <tr key={product._id} className="border-b hover:bg-gray-50">
               <td className="py-2 px-4">
                 <img
-                  src={product.image}
+                  src={product.images[0] || product.image}
                   alt={product.title}
                   className="w-12 h-12 object-cover rounded-md"
                 />

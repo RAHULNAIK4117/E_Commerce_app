@@ -13,7 +13,7 @@ const OrderDetails = () => {
       const response = await axios.get(
         `${import.meta.env.VITE_BACKEND_URL}/api/orders/get-order/${orderId}`
       );
-      console.log("response", response.data);
+      // console.log("response", response.data);
       setOrder(response.data.data);
     } catch (error) {
       console.error(error);
@@ -29,7 +29,7 @@ const OrderDetails = () => {
         }
       );
       if (response.data.success) {
-        console.log("response", response.data);
+        // console.log("response", response.data);
         toast.success(response.data.message);
         setIsModified(false);
       }
@@ -40,7 +40,7 @@ const OrderDetails = () => {
 
   useEffect(() => {
     const changeStatus = () => {
-      console.log({ status: order.status });
+      // console.log({ status: order.status });
     };
 
     changeStatus();
@@ -81,7 +81,7 @@ const OrderDetails = () => {
 
   useEffect(() => {
     if (orderId) {
-      console.log({ orderId });
+      // console.log({ orderId });
       getOrderDetails();
     }
   }, [orderId]);

@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { MdOutlineDelete } from "react-icons/md";
 import { toast } from "react-toastify";
+import { useParams } from "react-router-dom";
+import { LuLoader } from "react-icons/lu";
 
 const categories = [
   "footwear",
@@ -28,7 +30,9 @@ const brands = {
 const sizes = ["S", "M", "L", "XL", "XXL"];
 const colors = ["Red", "Blue", "Green", "Black", "White"];
 
-const ProductForm = () => {
+const ProductForm = ({ formTitle }) => {
+  const { id } = useParams();
+  const [loading, setLoading] = useState(false)
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -79,8 +83,17 @@ const ProductForm = () => {
 
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
-    setFormData({ ...formData, images: files });
-    setImagePreviews(files.map((file) => URL.createObjectURL(file)));
+
+    setFormData({ ...formData, images: [...formData.images, ...files] });
+    setImagePreviews(
+      [...formData.images, ...files].map((file) => {
+        if (typeof file === 'string') {
+          return file;
+        } else {
+          return URL.createObjectURL(file);
+        }
+      })
+    );
   };
 
   const handleClearForm = () => {
@@ -98,31 +111,46 @@ const ProductForm = () => {
       color: [],
       warranty: "No warranty",
       returnPolicy: "10 days return policy",
-    })
+    });
     setImagePreviews([]);
-
-  }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateForm()) return;
+    setLoading(true)
 
     try {
       const formDataToSend = new FormData();
       Object.keys(formData).forEach((key) => {
         if (key === "images") {
           formData.images.forEach((image) =>
-            formDataToSend.append("images", image)
+        formDataToSend.append("files", image)
+          );
+        } else if (key === "size" || key === "color") {
+          formData[key].forEach((item) =>
+        formDataToSend.append(key, item)
           );
         } else {
           formDataToSend.append(key, formData[key]);
         }
       });
-      console.log("Form Data Submitted:", formData);
-      const response = await axios.post(
-        "http://localhost:5000/api/products/add",
-        formDataToSend
-      );
+      // console.log("Form Data Submitted:", formData);
+
+      // Call API to submit form data
+      let response;
+      if (formTitle === "Add Product") {
+        response = await axios.post(
+          `${import.meta.env.VITE_BACKEND_URL}/api/products/add`,
+          formDataToSend
+        );
+      } else {
+        response = await axios.put(
+          `${import.meta.env.VITE_BACKEND_URL}/api/products/update/${id}`,
+          formDataToSend
+        );
+      }
+
       if (response.data.success) {
         toast.success(response.data.message);
         setImagePreviews([]);
@@ -149,16 +177,52 @@ const ProductForm = () => {
       } else {
         toast.error(response.data.message);
       }
-      console.log("Response:", response);
+      // console.log("Response:", response);
       // alert("Product added successfully!");
     } catch (error) {
       console.error("Error adding product:", error);
+    } finally {
+      setLoading(false)
     }
   };
 
+  useEffect(() => {
+    const fetchProductDetails = async () => {
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_BACKEND_URL}/api/products/get/${id}`
+        );
+        // console.log({ product: response.data.data });
+        const product = response.data.data;
+        setFormData({
+          title: product.title || "",
+          description: product.description || "",
+          images: product.images || [],
+          category: product.category || "",
+          subCategory: product.subCategory || "",
+          brand: product.brand || "",
+          price: product.price || "",
+          discount: product.discount || "",
+          stock: product.stock || "",
+          size: product.size || [],
+          color: product.color || [],
+          warranty: product.warranty || "No warranty",
+          returnPolicy: product.returnPolicy || "10 days return policy",
+        });
+        setImagePreviews(product.images || []);
+      } catch (error) {
+        console.error("Error fetching product details:", error);
+      }
+    };
+
+    if (id) {
+      fetchProductDetails()
+    }
+  }, [id]);
+
   return (
     <div className="max-w-2xl mx-auto bg-white shadow-lg rounded-lg p-6">
-      <h2 className="text-2xl font-semibold text-gray-700 mb-4">Add Product</h2>
+      <h2 className="text-2xl font-semibold text-gray-700 mb-4">{formTitle}</h2>
       <form
         onSubmit={handleSubmit}
         className="space-y-4 grid grid-cols-1 md:grid-cols-2 gap-4"
@@ -219,7 +283,6 @@ const ProductForm = () => {
                     <input
                       type="checkbox"
                       checked={formData.size.includes(size)}
-
                       onChange={(e) => handleCheckboxChange(e, "size", size)}
                     />
                     <span className="ml-1 text-lg">{size}</span>
@@ -243,6 +306,7 @@ const ProductForm = () => {
                   value={formData[field]}
                   onChange={handleChange}
                   className="w-full p-2 border rounded-md"
+                  placeholder={`Enter ${field.toLowerCase()}`} // Add placeholder
                 />
               )}
               {errors[field] && (
@@ -293,19 +357,19 @@ const ProductForm = () => {
           )
         )}
         <div className="flex items-center gap-5 justify-between w-full col-span-full">
-        <button
-          type="button"
-          onClick={handleClearForm}
-          className="w-full bg-red-600 text-white p-2 rounded-md cursor-pointer hover:bg-red-700 transition"
-        >
-          Clear Form
-        </button>
-        <button
-          type="submit"
-          className="w-full bg-blue-600 text-white p-2 rounded-md cursor-pointer hover:bg-blue-700 transition"
-        >
-          Add Product
-        </button>
+          <button
+            type="button"
+            onClick={handleClearForm}
+            className="w-full bg-red-600 text-white p-2 rounded-md cursor-pointer hover:bg-red-700 transition"
+          >
+            Clear Form
+          </button>
+          <button
+            type="submit"
+            className="w-full bg-blue-600 text-white p-2 rounded-md cursor-pointer hover:bg-blue-700 transition"
+          >
+            {loading ? <LuLoader size={20} className="animate-spin mx-auto" /> : formTitle}
+          </button>
         </div>
       </form>
     </div>

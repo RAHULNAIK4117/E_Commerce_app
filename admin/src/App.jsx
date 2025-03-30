@@ -10,6 +10,8 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import EditProduct from "./pages/editproduct";
 import OrderDetails from "./pages/OrderDetails";
+import ProductForm from "./components/ProductForm";
+import EditProductDetails from "./pages/EditProductDetails";
 
 export const backendURL = "http://localhost:5500";
 
@@ -30,7 +32,7 @@ const App = () => {
   }, [token]);
   
   useEffect(() => {
-    console.log({pathname});
+    // console.log({pathname});
     if(pathname === '/' || pathname === '/admin' || pathname === '/admin/'){
       navigate('/admin/list')
     }
@@ -62,7 +64,7 @@ const App = () => {
               <Routes>
                 <Route path="/admin/list" element={<List token={token} />} />
                 <Route path="/admin/add" element={<Add token={token} />} />
-                <Route path="/admin/edit-product/:id" element={<EditProduct token={token} />} />
+                <Route path="/admin/edit-product/:id" element={<EditProductDetails token={token} />} />
                 <Route path="/admin/orders" element={<Orders token={token} />} />
                 <Route path="/admin/order/:orderId" element={<OrderDetails token={token} />} />
                 <Route path="/admin/login" element={<Login setToken={setToken} />} />

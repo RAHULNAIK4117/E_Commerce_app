@@ -3,9 +3,9 @@ import { Product } from "../models/ProductModel.js";
 // add a products
 const addProduct = async (req, res) => {
   try {
-    const images = req.files?.map((image) => image.path) || [];
+    const files = req.files?.map((image) => image.path) || [];
 
-    console.log({ images, body: req.body });
+    console.log({ files, body: req.body });
 
     const {
       title,
@@ -28,7 +28,7 @@ const addProduct = async (req, res) => {
     if (
       !title ||
       !description ||
-      !images ||
+      !files ||
       !category ||
       !brand ||
       !price ||
@@ -40,7 +40,7 @@ const addProduct = async (req, res) => {
     const newProduct = new Product({
       title,
       description,
-      images,
+      images: files,
       category,
       subCategory,
       brand,
@@ -98,7 +98,7 @@ const getProducts = async (req, res) => {
 
     console.log("sort: ", sort, "filters: ", filters);
 
-    const total  = await Product.countDocuments()
+    const total = await Product.countDocuments();
 
     const products = await Product.find(filters)
       .sort(sort)
@@ -124,40 +124,53 @@ const getProducts = async (req, res) => {
 // update a product
 const updateProduct = async (req, res) => {
   try {
+    const newImages = req.files?.map((image) => image.path) || [];
+    const newProduct = req.body;
+
+    console.log({ newImages, newProduct });
+
     const { id } = req.params;
-    const {
-      title,
-      price,
-      salePrice,
-      description,
-      image,
-      stock,
-      brand,
-      category,
-    } = req.body;
-    const findProduct = await Product.findById(id);
-    if (!findProduct) {
-      return res.status(404).json({
-        success: false,
-        message: "Product not found",
-      });
-    }
 
-    findProduct.title = title || findProduct.title;
-    findProduct.price = price === "" ? 0 : price || findProduct.price;
-    findProduct.salePrice =
-      salePrice === "" ? 0 : salePrice || findProduct.salePrice;
-    findProduct.description = description || findProduct.description;
-    findProduct.image = image || findProduct.image;
-    findProduct.stock = stock != null ? stock : findProduct.stock;
-    findProduct.brand = brand || findProduct.brand;
-    findProduct.category = category || findProduct.category;
+    const updatedProductDetails = {
+      ...newProduct,
+      images: [
+        ...newImages,
+        ...(newProduct?.files ? (Array.isArray(newProduct.files) ? newProduct.files : [newProduct.files]) : []),
+      ],
+      stock: Number(newProduct.stock),
+    };
 
-    await findProduct.save();
+    console.log({ updatedProductDetails });
+
+    const updatedProduct = await Product.findByIdAndUpdate(id, updatedProductDetails, {
+      new: true,
+    });
+
+
+
+    // const findProduct = await Product.findById(id);
+    // if (!findProduct) {
+    //   return res.status(404).json({
+    //     success: false,
+    //     message: "Product not found",
+    //   });
+    // }
+
+    // findProduct.title = title || findProduct.title;
+    // findProduct.price = price === "" ? 0 : price || findProduct.price;
+    // findProduct.salePrice =
+    //   salePrice === "" ? 0 : salePrice || findProduct.salePrice;
+    // findProduct.description = description || findProduct.description;
+    // findProduct.image = image || findProduct.image;
+    // findProduct.stock = stock != null ? stock : findProduct.stock;
+    // findProduct.brand = brand || findProduct.brand;
+    // findProduct.category = category || findProduct.category;
+
+    // await findProduct.save();
     res.status(200).json({
       success: true,
       message: "Product updated successfully",
-      data: findProduct,
+      data: updatedProduct,
     });
   } catch (error) {
     console.log(error);

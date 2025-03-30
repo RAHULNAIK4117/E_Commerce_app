@@ -163,7 +163,7 @@ const EditProduct = ({ token }) => {
         }
       );
 
-      console.log("Product updated successfully:", response.data);
+      // console.log("Product updated successfully:", response.data);
       setSuccess("Product updated successfully! Redirecting...");
 
       // Redirect to product list after 2 seconds

@@ -15,7 +15,7 @@ const Login = ({ setToken }) => {
         try {
             const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/login-admin`, { email, password });
 
-            console.log({response});
+            // console.log({response});
             
 
             if (response.data.success) {

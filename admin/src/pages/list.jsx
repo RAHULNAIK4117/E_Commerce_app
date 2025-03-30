@@ -27,7 +27,7 @@ const ProductList = () => {
           },
         }
       );
-      console.log("Products:", response.data);
+      // console.log("Products:", response.data);
 
       setProducts(response.data.data);
       setTotal(response.data.total);
@@ -51,13 +51,13 @@ const ProductList = () => {
   }, [page]);
 
   const handleDelete = async (productId) => {
-    console.log({ productId });
+    // console.log({ productId });
     try {
       const response = await axios.delete(
         `${import.meta.env.VITE_BACKEND_URL}/api/products/delete/${productId}`
       );
       if (response.data.success) {
-        console.log("delete response", response.data);
+        // console.log("delete response", response.data);
         toast.success(response.data.message)
         setProducts(products.filter(p => p._id !== productId))
       }
