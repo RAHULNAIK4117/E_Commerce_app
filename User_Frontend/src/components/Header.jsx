@@ -28,6 +28,8 @@ import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import Products from "../assets/Products";
 import { useDispatch, useSelector } from "react-redux";
 import { setIsAuthenticated, setUserData } from "../redux/authSlice";
+import { setAddress } from "../redux/addressSlice";
+import { setItem } from "../redux/cartSlice";
 
 const Header = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -105,7 +107,9 @@ const Header = () => {
     handleClose();
     localStorage.removeItem("token"); 
     dispatch(setUserData(null));
-    dispatch(setIsAuthenticated(false));     
+    dispatch(setIsAuthenticated(false));  
+    dispatch(setAddress(null))  
+    dispatch(setItem([])) 
     navigate("/auth/sign-in");
 
   };

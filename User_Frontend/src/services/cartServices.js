@@ -29,3 +29,13 @@ export const deleteCart = async ({ userId, productId }) => {
         
     }
 }
+
+export const clearCart = async (userId) => {
+    try {
+        const response = await api.delete(`clear/${userId}`)
+        return response.data;
+        
+    } catch (error) {
+        return error.response?.data || { message: "Failed to clear cart!" };
+    }
+}

@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import AddressForm from "../components/AddressForm";
 
 const MyAccount = () => {
   const userDate = useSelector((state) => state.auth.userData);
 
-
-
   return (
-    <div className="w-full flex items-center justify-center p-10">
-      <div className="min-w-xl mx-auto p-6 bg-white shadow-md rounded-md ">
+    <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-5 p-10">
+      <div className="  p-6 bg-white shadow-md rounded-md ">
         <h2 className="text-2xl font-semibold mb-4">My Account</h2>
         <div className="flex mt-6">
           {/* Profile Image */}
@@ -20,6 +19,18 @@ const MyAccount = () => {
           </div>
 
           <div className="ml-6 w-full">
+            {/* User id */}
+            <div className="mb-4">
+              <label className="text-sm font-semibold">User Id</label>
+              <input
+                value={userDate?._id}
+                disabled
+                type="text"
+                placeholder="Enter your phone number"
+                className="w-full p-2 border rounded bg-gray-100"
+              />
+            </div>
+
             {/* Name */}
             <div className="mb-4">
               <label className="text-sm font-semibold">Name</label>
@@ -44,18 +55,6 @@ const MyAccount = () => {
               />
             </div>
 
-            {/* Phone */}
-            <div className="mb-4">
-              <label className="text-sm font-semibold">Phone</label>
-              <input
-                value={userDate?.phone}
-                // disabled
-                type="text"
-                placeholder="Enter your phone number"
-                className="w-full p-2 border rounded bg-gray-100"
-              />
-            </div>
-
             {/* Save Button */}
             {/* <button className="bg-green-600 text-white font-semibold px-6 py-2 rounded-md hover:bg-green-700 transition">
               Save
@@ -63,6 +62,7 @@ const MyAccount = () => {
           </div>
         </div>
       </div>
+      <AddressForm />
     </div>
   );
 };

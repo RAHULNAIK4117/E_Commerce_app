@@ -6,6 +6,7 @@ import { Toaster } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { addToCart } from "./redux/cartSlice";
+import { fetchAddress } from "./redux/addressSlice";
 
 function App() {
   const dispatch = useDispatch();
@@ -15,6 +16,7 @@ function App() {
   useEffect(() => {
     if (userData) {
       dispatch(addToCart({ userId: userData?._id }));
+      dispatch(fetchAddress({ userId: userData?._id }));
     }
   }, [dispatch, userData]);
 

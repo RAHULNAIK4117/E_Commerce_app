@@ -10,13 +10,13 @@ const api = axios.create({
 });
 
 export const addToCart = createAsyncThunk(
-  "addToCart",
+  "cart/addToCart",
   async ({ userId, productId, quantity }, { rejectWithValue }) => {
     try {
       const response = await api.post("add", { userId, productId, quantity });
-      // console.log("response", response.data);
       return response.data;
     } catch (error) {
+      console.error("Error adding to cart:", error.response?.data || error.message);
       toast.error(error.response?.data?.message || "Failed to add to cart");
       return rejectWithValue(error.response?.data || error.message);
     }
@@ -26,25 +26,23 @@ export const addToCart = createAsyncThunk(
 const cartSlice = createSlice({
   name: "cart",
   initialState: {
-    item: [],
+    item: [], // ✅ Always initialized as an empty array
   },
   reducers: {
     setItem: (state, action) => {
-      state.item = action.payload
+      state.item = action.payload || []; // ✅ Always ensure it's an array
     }
   },
   extraReducers: (builder) => {
     builder
       .addCase(addToCart.fulfilled, (state, action) => {
-        console.log("Full action object:", action); // Debugging: Log entire action object
-        console.log("Payload:", action.payload); // Ensure payload is logged
+        console.log("Payload:", action.payload);
 
-        if (action.payload && action.payload.data) {
-          toast.success(action.payload.message);
-          state.item = action.payload.data[0].products;
-        //   state.totalPrice = action.payload.data.totalPrice;
+        if (action.payload && action.payload.data && action.payload.data.length > 0) {
+          state.item = action.payload.data[0]?.products || []; // ✅ Ensures it's an array
         } else {
           toast.error("Unexpected response format");
+          state.item = []; // ✅ Prevents undefined state
         }
       })
       .addCase(addToCart.rejected, (state, action) => {

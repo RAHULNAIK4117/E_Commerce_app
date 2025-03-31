@@ -18,3 +18,12 @@ export const makeOrder = async (order) => {
         
     }
 }
+
+export const getOrders = async (userId) => {
+    try {
+        const response = await api.get(`get/${userId}`);
+        return response.data;
+    } catch (error) {
+        return error.response?.data || { message: "Failed to get orders!" };
+    }
+}
