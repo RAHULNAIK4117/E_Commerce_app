@@ -193,7 +193,7 @@ const Header = () => {
 
           {/* Icons */}
           <div className="hidden md:flex items-center gap-2">
-            <Button
+            {/* <Button
               onClick={() => navigate("/wish-list")}
               sx={{ textTransform: "capitalize" }}
               variant="text"
@@ -205,7 +205,7 @@ const Header = () => {
                 0
               </span>
               <span className="text-sm ml-1">Wishlist</span>
-            </Button>
+            </Button> */}
             <Button
               onClick={() => navigate("/cart")}
               sx={{ textTransform: "capitalize" }}
@@ -247,7 +247,7 @@ const Header = () => {
                 >
                   <LocalShippingOutlined /> Orders
                 </MenuItem>
-                <MenuItem
+                {/* <MenuItem
                   onClick={() => {
                     navigate("/wish-list");
                     handleClose();
@@ -255,7 +255,7 @@ const Header = () => {
                   className=" flex whitespace-nowrap gap-1"
                 >
                   <FavoriteBorderOutlined /> My Wishlist
-                </MenuItem>
+                </MenuItem> */}
                 <MenuItem
                   onClick={handleLogout}
                   className=" flex whitespace-nowrap gap-1"
@@ -357,7 +357,7 @@ const Header = () => {
             >
               Orders
             </button>
-            <button
+            {/* <button
               onClick={() => {
                 navigate("/wish-list");
                 setIsMenuOpen(false);
@@ -365,7 +365,7 @@ const Header = () => {
               className="block cursor-pointer py-2 bg-zinc-300 text-center rounded-md textwhite "
             >
               My Wishlist
-            </button>
+            </button> */}
             <button
               onClick={handleLogout}
               className="block cursor-pointer py-2 bg-zinc-300 text-center rounded-md textwhite "
@@ -379,10 +379,10 @@ const Header = () => {
 
       {/* Navigation Bar */}
       <div className="hidden md:flex border-t items-center py-2 px-10">
-        <button className="bg-green-600 text-white px-4 py-1 rounded-md hidden lg:flex items-center space-x-2 cursor-pointer">
+        {/* <button className="bg-green-600 text-white px-4 py-1 rounded-md hidden lg:flex items-center space-x-2 cursor-pointer">
           <MdMenu />
           <span>Browse All Categories</span>
-        </button>
+        </button> */}
         <nav className="flex space-x-6 lg:ml-6">
           <Button
             onClick={goToHome}
