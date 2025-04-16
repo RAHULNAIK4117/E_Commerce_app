@@ -162,7 +162,7 @@ const Header = () => {
           </div>
 
           {/* Location */}
-          <div className="hidden lg:flex items-center space-x-1 cursor-pointer border py-2 px-2 border-gray-300 rounded-md ">
+          {/* <div className="hidden lg:flex items-center space-x-1 cursor-pointer border py-2 px-2 border-gray-300 rounded-md ">
             <IoLocationOutline size={20} className="text-gray-600 ml-2" />
             <select className="text-green-600 bg-transparent focus:outline-none cursor-pointer px-2">
               <option value="all">All</option>
@@ -189,11 +189,11 @@ const Header = () => {
               <option value="tr">Turkey</option>
               <option value="ar">Argentina</option>
             </select>
-          </div>
+          </div> */}
 
           {/* Icons */}
           <div className="hidden md:flex items-center gap-2">
-            <Button
+            {/*<Button
               onClick={() => navigate("/wish-list")}
               sx={{ textTransform: "capitalize" }}
               variant="text"
@@ -205,7 +205,7 @@ const Header = () => {
                 0
               </span>
               <span className="text-sm ml-1">Wishlist</span>
-            </Button>
+            </Button>*/}
             <Button
               onClick={() => navigate("/cart")}
               sx={{ textTransform: "capitalize" }}
@@ -247,7 +247,7 @@ const Header = () => {
                 >
                   <LocalShippingOutlined /> Orders
                 </MenuItem>
-                <MenuItem
+                {/* <MenuItem
                   onClick={() => {
                     navigate("/wish-list");
                     handleClose();
@@ -255,7 +255,7 @@ const Header = () => {
                   className=" flex whitespace-nowrap gap-1"
                 >
                   <FavoriteBorderOutlined /> My Wishlist
-                </MenuItem>
+                </MenuItem> */}
                 <MenuItem
                   onClick={handleLogout}
                   className=" flex whitespace-nowrap gap-1"
@@ -300,7 +300,7 @@ const Header = () => {
             </div>
 
             {/* Location */}
-            <div className="flex items-center cursor-pointer border py-2 px-2 border-gray-300 rounded-md ">
+            {/* <div className="flex items-center cursor-pointer border py-2 px-2 border-gray-300 rounded-md ">
               <IoLocationOutline size={20} className="text-gray-600 " />
               <select className="bg-transparent focus:outline-none cursor-pointer w-32 ">
                 <option value="all">All</option>
@@ -327,7 +327,7 @@ const Header = () => {
                 <option value="tr">Turkey</option>
                 <option value="ar">Argentina</option>
               </select>
-            </div>
+            </div> */}
           </div>
           <div className="font-semibold grid grid-cols-2 gap-2 mt-4 ">
             <button
@@ -379,10 +379,10 @@ const Header = () => {
 
       {/* Navigation Bar */}
       <div className="hidden md:flex border-t items-center py-2 px-10">
-        <button className="bg-green-600 text-white px-4 py-1 rounded-md hidden lg:flex items-center space-x-2 cursor-pointer">
+        {/* <button className="bg-green-600 text-white px-4 py-1 rounded-md hidden lg:flex items-center space-x-2 cursor-pointer">
           <MdMenu />
           <span>Browse All Categories</span>
-        </button>
+        </button> */}
         <nav className="flex space-x-6 lg:ml-6">
           <Button
             onClick={goToHome}
@@ -522,7 +522,7 @@ const Header = () => {
         </nav>
         <div className="ml-auto hidden md:flex flex-wrap justify-end items-center space-x-2 text-green-600 font-bold">
           <FaHeadphones className="text-gray-600" />
-          <span>1900 - 888</span>
+          <span>7609858433</span>
           <span className="text-gray-500 text-sm">24/7 Support Center</span>
         </div>
       </div>

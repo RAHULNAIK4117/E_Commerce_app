@@ -33,9 +33,9 @@ const theme = createTheme({
 
 const PopularProducts = () => {
   const catList = [
+    "fashion",
     "footwear",
     "electronics",
-    "fashion",
     "accessories",
     "appliances",
   ];
