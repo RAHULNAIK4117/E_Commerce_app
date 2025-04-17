@@ -3,7 +3,7 @@ import Review from "../models/ReviewModel.js";
 
 export const createReview = async (req, res) => {
   const { rating, comment, productId, userId, username } = req.body;
-  console.log(req.body);
+  // console.log(req.body);
 
   try {
     if (!rating || !comment || !productId || !userId || !username) {

@@ -22,10 +22,10 @@ const SignIn = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
+    // console.log(formData);
     
     const response = await signIn(formData);
-    console.log(response);
+    // console.log(response);
 
     
     if(response.success){

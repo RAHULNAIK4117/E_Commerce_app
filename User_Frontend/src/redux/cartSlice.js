@@ -17,7 +17,7 @@ export const addToCart = createAsyncThunk(
       return response.data;
     } catch (error) {
       console.error("Error adding to cart:", error.response?.data || error.message);
-      toast.error(error.response?.data?.message || "Failed to add to cart");
+      // toast.error(error.response?.data?.message || "Failed to add to cart");
       return rejectWithValue(error.response?.data || error.message);
     }
   }
@@ -36,7 +36,7 @@ const cartSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(addToCart.fulfilled, (state, action) => {
-        console.log("Payload:", action.payload);
+        // console.log("Payload:", action.payload);
 
         if (action.payload && action.payload.data && action.payload.data.length > 0) {
           state.item = action.payload.data[0]?.products || []; // ✅ Ensures it's an array

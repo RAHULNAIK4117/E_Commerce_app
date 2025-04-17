@@ -16,12 +16,12 @@ const Product = () => {
 
   // let showProducts = []
 
-  console.log(Products?.length);
+  // console.log(Products?.length);
   
 
   const fetchAndSetProducts = async () => {
     const response = await getProducts({ category, subCategory, search });
-    console.log({response});
+    // console.log({response});
     setShowProducts(response.data);
   }
 

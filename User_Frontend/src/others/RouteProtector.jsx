@@ -14,7 +14,7 @@ const RouteProtector = ({ children }) => {
   const fetchUserDetails = async () => {
     try {
       const response = await getUserDetails(token);
-      console.log(response);
+      // console.log(response);
       if (response.success) {
         dispatch(setUserData(response.user));
         dispatch(setIsAuthenticated(true));

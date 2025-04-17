@@ -32,6 +32,7 @@ const FeaturedProducts = () => {
         <h2 className="text-2xl font-bold mb-4">Featured Products</h2>
         <div className="relative w-full ">
           <Swiper
+           key={featuredProduct.length}
             modules={[Navigation]}
             spaceBetween={0}
             slidesPerView={4}

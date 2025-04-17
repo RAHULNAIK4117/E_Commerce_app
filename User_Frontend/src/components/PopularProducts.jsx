@@ -50,7 +50,7 @@ const PopularProducts = () => {
 
   const fetchProducts = async () => {
     const response = await getProducts({category, limit: 8});
-    console.log(response.data);
+    // console.log(response.data);
     setPopularProducts(response.data);
     
   }

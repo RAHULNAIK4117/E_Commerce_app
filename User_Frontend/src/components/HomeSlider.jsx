@@ -13,7 +13,7 @@ const HomeSlider = () => {
 
   const fetchBanners = async () => {
     const response = await getBanners();
-    console.log({response});
+    // console.log({response});
     if (response && response.data) {
       setSlides(response.data);
     }
@@ -27,6 +27,7 @@ const HomeSlider = () => {
   return (
     <div className="home-slider-container">
       <Swiper
+       key={slides.length}
         modules={[Navigation, Pagination, Autoplay]}
         slidesPerView={1}
         loop={true}

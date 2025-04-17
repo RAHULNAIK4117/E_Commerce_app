@@ -10,7 +10,7 @@ const Orders = () => {
   const fetchOrders = async () => {
     const response = await getOrders(userDate?._id);
     if (response.success) {
-      console.log(response);
+      // console.log(response);
       setOrders(response.data);
     }
   };

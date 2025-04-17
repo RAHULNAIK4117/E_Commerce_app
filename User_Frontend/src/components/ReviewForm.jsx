@@ -9,7 +9,7 @@ const ReviewForm = ({ userId, productId, getThisProduct }) => {
 
   const submit = async (e) => {
     e.preventDefault();
-    console.log({ comment, rating, userId, productId });
+    // console.log({ comment, rating, userId, productId });
 
     const response = await createReview({
       comment,
@@ -19,7 +19,7 @@ const ReviewForm = ({ userId, productId, getThisProduct }) => {
       username,
     });
     if (response.success) {
-      console.log(response);
+      // console.log(response);
       setComment("");
       setRating(0);
       getThisProduct();
