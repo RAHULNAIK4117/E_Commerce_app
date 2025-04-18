@@ -14,7 +14,7 @@ const razorpayInstance = new Razorpay({
 // ROUTE 1 : Create Order Api Using POST Method http://localhost:4000/api/payment/order
 router.post('/order', (req, res) => {
     const { amount } = req.body;
-    console.log(req.body);
+    // console.log(req.body);
     
 
     try {
@@ -30,7 +30,7 @@ router.post('/order', (req, res) => {
                 return res.status(500).json({ message: "Something Went Wrong!" });
             }
             res.status(200).json({ data: order });
-            console.log(order)
+            // console.log(order)
         });
     } catch (error) {
         res.status(500).json({ message: "Internal Server Error!" });

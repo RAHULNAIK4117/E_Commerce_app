@@ -48,7 +48,7 @@ const Cart = () => {
     // console.log({ productId });
     const response = await deleteCart({ userId: userData?._id, productId });
     if (response.success) {
-      console.log("delete response", response);
+      // console.log("delete response", response);
       dispatch(setItem(response.data[0].products));
     }
   };

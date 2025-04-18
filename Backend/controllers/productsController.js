@@ -1,11 +1,10 @@
-import { Product } from "../models/ProductModel.js";
-
+import Product from "../models/ProductModel.js";
 // add a products
 const addProduct = async (req, res) => {
   try {
     const files = req.files?.map((image) => image.path) || [];
 
-    console.log({ files, body: req.body });
+    // console.log({ files, body: req.body });
 
     const {
       title,
@@ -72,7 +71,7 @@ const addProduct = async (req, res) => {
 
 // get all products
 const getProducts = async (req, res) => {
-  console.log("prams", req.query);
+  // console.log("prams", req.query);
 
   try {
     const sort = req.query.sort ? JSON.parse(req.query.sort) : { title: 1 };
@@ -96,7 +95,7 @@ const getProducts = async (req, res) => {
     //   req.query.search.length > 0 &&
     //   (filters.description = { $regex: req.query.search, $options: "i" });
 
-    console.log("sort: ", sort, "filters: ", filters);
+    // console.log("sort: ", sort, "filters: ", filters);
 
     const total = await Product.countDocuments();
 
@@ -127,7 +126,7 @@ const updateProduct = async (req, res) => {
     const newImages = req.files?.map((image) => image.path) || [];
     const newProduct = req.body;
 
-    console.log({ newImages, newProduct });
+    // console.log({ newImages, newProduct });
 
     const { id } = req.params;
 

@@ -54,7 +54,7 @@ const Checkout = () => {
         );
 
         const data = res.data;
-        console.log(data);
+        // console.log(data);
         handlePaymentVerify(data.data);
       } catch (error) {
         console.log(error);
@@ -76,7 +76,7 @@ const Checkout = () => {
       description: "Test Mode",
       order_id: data.id,
       handler: async (response) => {
-        console.log("response", response);
+        // console.log("response", response);
         try {
           const res = await axios.post(
             `${import.meta.env.VITE_SERVER_BASE_URL}/api/payment/verify`,
@@ -88,7 +88,7 @@ const Checkout = () => {
           );
 
           const verifyData = res.data;
-          console.log(verifyData);
+          // console.log(verifyData);
 
           if (verifyData.message) {
             handleOrder({
@@ -131,7 +131,7 @@ const Checkout = () => {
       await clearCart(userData?._id)
       dispatch(addToCart({ userId: userData?._id }));
 
-      console.log({ order });
+      // console.log({ order });
     }
   };
 

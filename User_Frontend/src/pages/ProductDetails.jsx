@@ -47,7 +47,7 @@ const ProductDetails = () => {
   const userData = useSelector((state) => state.auth.userData);
   const dispatch = useDispatch();
 
-  console.log({ userData });
+  // console.log({ userData });
 
   // const relatedProducts = product
   //   ? Products.filter((prod) => prod.category === product.category).slice(0, 10)
@@ -56,7 +56,7 @@ const ProductDetails = () => {
   const getThisProduct = async () => {
     setLoading(true);
     const product = await getProductDetails(id);
-    console.log({ product });
+    // console.log({ product });
     setProduct(product?.data);
 
     const relProducts = await getProducts({
@@ -93,7 +93,7 @@ const ProductDetails = () => {
 
   const handleReviewSubmit = (e, comment) => {
     e.preventDefault();
-    console.log("New Review:", comment);
+    // console.log("New Review:", comment);
   };
 
   return (

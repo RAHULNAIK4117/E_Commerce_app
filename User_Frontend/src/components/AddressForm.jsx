@@ -47,7 +47,7 @@ const AddressForm = () => {
 
   const saveAddress = async (e) => {
     e.preventDefault();
-    console.log("Address saved", { ...form, user: userData?._id });
+    // console.log("Address saved", { ...form, user: userData?._id });
     dispatch(addAddress({ ...form, user: userData?._id }));
   };
 
