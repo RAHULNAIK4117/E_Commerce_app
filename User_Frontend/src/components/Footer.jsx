@@ -15,26 +15,26 @@ const Footer = () => {
               <li className="flex items-center gap-2">
                 <BiMap className="text-green-500 text-lg" />
                 <span>
-                  <strong>Address:</strong> 5171 W Campbell Ave, Kent, Utah 53127, USA
+                  <strong>Address:</strong>Techno Park, Shandhapur, Jatni, Bhubaneswar, Odisha 752050
                 </span>
               </li>
               <li className="flex items-center gap-2">
                 <BiPhoneCall className="text-green-500 text-lg" />
                 <span>
-                  <strong>Call Us:</strong> (+91) - 540-025-124553
+                  <strong>Call Us:</strong> (+91)7609858433
                 </span>
               </li>
               <li className="flex items-center gap-2">
                 <BiEnvelope className="text-green-500 text-lg" />
                 <span>
-                  <strong>Email:</strong> sale@Nest.com
+                  <strong>Email:</strong> rahns5080@gmail.com
                 </span>
               </li>
               <li className="flex items-center gap-2">
                 <BiTime className="text-green-500 text-lg" />
                 <span>
-                  <strong>Hours:</strong> 10:00 - 18:00, Mon - Sat
-                </span>
+                  <strong>Hours:</strong> Mon - Sat: 9:00 AM - 8:00 PM
+                  </span>
               </li>
             </ul>
           </div>

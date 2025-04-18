@@ -11,20 +11,52 @@ const categories = [
   "fashion",
   "accessories",
   "appliances",
+  "Furniture",
+  "groceries",
 ];
 const subCategories = {
-  footwear: ["men", "women"],
-  electronics: ["laptop", "camera"],
-  fashion: ["men", "women"],
-  accessories: ["smart watch accessories"],
-  appliances: [],
+  footwear: ["Men", "Women", "Kids", "Sports", "Casual", "Formal", "Boots", "Sandals", "Sneakers"],
+  electronics: ["Laptops", "Cameras", "Mobiles", "Headphones", "Speakers", "Tablets", "Monitors", "Smartwatches"],
+  fashion: ["Men", "Women", "Kids", "Ethnic Wear", "Western Wear", "Sportswear", "Winter Wear", "Footwear", "Accessories"],
+  accessories: ["Smart Watch Accessories", "Phone Cases", "Bags", "Wallets", "Belts", "Jewelry", "Sunglasses", "Hats"],
+  appliances: ["Refrigerators", "Washing Machines", "Microwaves", "Air Conditioners", "Vacuum Cleaners", "Water Purifiers", "Heaters", "Fans"],
+  furniture: [
+    "Sofa", "Chair", "Table", "Bed", "Wardrobe", "Bookshelf", "TV Unit",
+    "Dining Table", "Coffee Table", "Office Desk", "Recliner", "Cabinet",
+    "Dresser", "Nightstand", "Ottoman"
+  ],
+  groceries: [
+    "Fruits & Vegetables",
+    "Dairy & Eggs",
+    "Bakery",
+    "Beverages",
+    "Snacks",
+    "Cereals & Grains",
+    "Pulses & Lentils",
+    "Oil & Ghee",
+    "Spices & Masalas",
+    "Dry Fruits & Nuts",
+    "Packaged Foods",
+    "Sauces & Condiments",
+    "Personal Care",
+    "Cleaning & Household",
+    "Baby Care",
+    "Meat & Seafood",
+    "Frozen Foods",
+    "Organic Products"
+  ]
 };
+
 const brands = {
   footwear: ["Nike", "Adidas", "Puma", "Reebok", "Skechers"],
   electronics: ["Apple", "Samsung", "Dell", "Sony", "HP"],
   fashion: ["Zara", "H&M", "Levi's", "Gucci", "Louis Vuitton"],
   accessories: ["Rolex", "Fossil", "Casio", "Titan", "Daniel Wellington"],
   appliances: ["LG", "Samsung", "Whirlpool", "Philips", "Bosch"],
+  furniture: ["IKEA", "Ashley", "Wayfair", "La-Z-Boy"],
+  groceries: ["Whole Foods", "Trader Joe's", "Walmart", "Kroger"]
+
+  
 };
 
 const sizes = {
@@ -33,6 +65,9 @@ const sizes = {
   fashion: ["S", "M", "L", "XL", "XXL"], // Clothing sizes
   accessories: [], // No sizes for accessories
   appliances: [], // No sizes for appliances
+  furniture: ["Small", "Medium", "Large"],
+ groceries: ["Small", "Medium", "Large"]
+
 };
 
 const colors = {
@@ -41,6 +76,8 @@ const colors = {
   fashion: ["Red", "Blue", "Green", "Black", "White", "Yellow", "Pink"],
   accessories: ["Black", "White", "Gold", "Silver", "Brown"],
   appliances: ["White", "Black", "Silver", "Gray"],
+  furniture: ["Brown", "Black", "White", "Gray"],
+  groceries: ["Red", "Green", "Yellow", "Brown"]
 };
 
 const ProductForm = ({ formTitle }) => {

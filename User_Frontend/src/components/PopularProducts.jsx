@@ -49,7 +49,7 @@ const PopularProducts = () => {
   // ).slice(0, 5);
 
   const fetchProducts = async () => {
-    const response = await getProducts({category, limit: 8});
+    const response = await getProducts({category, limit: 10});
     console.log(response.data);
     setPopularProducts(response.data);
     

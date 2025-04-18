@@ -1,58 +1,84 @@
 import React, { useEffect, useState } from "react";
-import { Link, useSearchParams } from "react-router-dom";
-import Products from "../assets/Products";
+import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import { ProductCard } from "../components";
-import { Breadcrumbs, Typography } from "@mui/material";
+import { 
+  Breadcrumbs, 
+  Typography, 
+  Button, 
+  Checkbox, 
+  FormControlLabel,
+  FormGroup,
+  Divider
+} from "@mui/material";
 import { getProducts } from "../services/productsServices";
 
 const Product = () => {
   const [searchParams] = useSearchParams();
-  const [productNumber, setProductNumber] = useState(20);
+  const navigate = useNavigate();
   const [showProducts, setShowProducts] = useState([]);
   const category = searchParams.get("category");
   const subCategory = searchParams.get("subCategory");
   const search = searchParams.get("search");
-  // console.log(Products);
+  const sort = searchParams.get("sort");
 
-  // let showProducts = []
-
-  console.log(Products?.length);
-  
+  const categories = [
+    { name: "Fashion", subcategories: [] },
+    { name: "Electronics", subcategories: [] },
+    { name: "Footwear", subcategories: [] },
+    { name: "Groceries", subcategories: [] },
+    { name: "Appliances", subcategories: [] }
+  ];
 
   const fetchAndSetProducts = async () => {
-    const response = await getProducts({ category, subCategory, search });
-    console.log({response});
-    setShowProducts(response.data);
-  }
+    const response = await getProducts({ 
+      category, 
+      subCategory, 
+      search, 
+      sort 
+    });
+    
+    // Apply client-side sorting if needed
+    let sortedProducts = [...response.data];
+    if (sort === "low-to-high") {
+      sortedProducts.sort((a, b) => a.price - b.price);
+    } else if (sort === "high-to-low") {
+      sortedProducts.sort((a, b) => b.price - a.price);
+    }
+    
+    setShowProducts(sortedProducts);
+  };
 
   useEffect(() => {
-    // console.log({ category, subCategory, search });
-
-    // const showProducts = search ? Products?.filter(
-    //   (product) =>
-    //     product.title.toLowerCase().includes(search.toLowerCase()) ||
-    //     product.brand.toLowerCase().includes(search.toLowerCase()) ||
-    //     product.category.toLowerCase().includes(search.toLowerCase()) ||
-    //     product.description.toLowerCase().includes(search.toLowerCase())
-    // ).slice(0, productNumber) : category
-    //   ? Products?.filter(
-    //       (prod) => prod?.category?.toLowerCase() === category?.toLowerCase()
-    //     ).slice(0, productNumber)
-    //   : Products.slice(0, 20);
-    
-
-    // setShowProducts(showProducts);
-
-    fetchAndSetProducts()
-
-
-
+    fetchAndSetProducts();
     window.scrollTo({
       top: 0,
       left: 100,
       behavior: "smooth",
     });
-  }, [category, subCategory, search]);
+  }, [category, subCategory, search, sort]);
+
+  const handleSort = (order) => {
+    const params = new URLSearchParams(searchParams);
+    params.set("sort", order);
+    navigate(`/products?${params.toString()}`);
+  };
+
+  const handleCategory = (cat, subCat) => {
+    const params = new URLSearchParams();
+    params.set("category", cat.toLowerCase());
+    if (subCat) {
+      params.set("subCategory", subCat.toLowerCase().replace(/\s+/g, '-'));
+    }
+    navigate(`/products?${params.toString()}`);
+  };
+
+  const isCategoryActive = (catName) => {
+    return category === catName.toLowerCase();
+  };
+
+  const isSubCategoryActive = (subCatName) => {
+    return subCategory === subCatName.toLowerCase().replace(/\s+/g, '-');
+  };
 
   return (
     <div className="w-full px-4 md:px-10 py-5">
@@ -69,10 +95,7 @@ const Product = () => {
           </Typography>
           {category && (
             <Typography color="inherit">
-              <Link
-                to={`/products?category=${category}`}
-                className="capitalize"
-              >
+              <Link to={`/products?category=${category}`} className="capitalize">
                 {category}
               </Link>
             </Typography>
@@ -87,24 +110,94 @@ const Product = () => {
               </Link>
             </Typography>
           )}
-          {search && (
-            <Typography color="inherit">
-              {search}
-            </Typography>
-          )}
+          {search && <Typography color="inherit">{search}</Typography>}
         </Breadcrumbs>
       </div>
+      
       <div className="flex flex-col lg:flex-row gap-5">
-        <div className="bg-red-400 w-full lg:w-[270px] hidden lg:block flex-shrink-0"></div>
+        <div className="bg-white w-full lg:w-[270px] hidden lg:block flex-shrink-0 asidebarfilter p-4 shadow-md rounded-lg">
+          <div className="mb-6">
+            <Typography variant="h6" className="font-semibold mb-3">
+              Sort by Price
+            </Typography>
+            <div className="flex flex-col gap-2">
+              <Button
+                variant={sort === "low-to-high" ? "contained" : "outlined"}
+                color={sort === "low-to-high" ? "primary" : "inherit"}
+                size="small"
+                fullWidth
+                onClick={() => handleSort("low-to-high")}
+                className="text-left justify-start"
+              >
+                Low to High
+              </Button>
+              <Button
+                variant={sort === "high-to-low" ? "contained" : "outlined"}
+                color={sort === "high-to-low" ? "primary" : "inherit"}
+                size="small"
+                fullWidth
+                onClick={() => handleSort("high-to-low")}
+                className="text-left justify-start"
+              >
+                High to Low
+              </Button>
+            </div>
+          </div>
+
+          <Divider className="my-4" />
+
+          <div className="mb-6">
+            <Typography variant="h6" className="font-semibold mb-3">
+              CATEGORIES
+            </Typography>
+            <FormGroup>
+              {categories.map((cat) => (
+                <div key={cat.name} className="mb-2">
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={isCategoryActive(cat.name)}
+                        onChange={() => handleCategory(cat.name)}
+                        color="primary"
+                      />
+                    }
+                    label={<span className="font-medium">{cat.name}</span>}
+                  />
+                  
+                  {cat.subcategories.length > 0 && (
+                    <div className="ml-8 mt-1">
+                      {cat.subcategories.map((subcat) => (
+                        <FormControlLabel
+                          key={subcat}
+                          control={
+                            <Checkbox
+                              checked={isSubCategoryActive(subcat)}
+                              onChange={() => handleCategory(cat.name, subcat)}
+                              color="primary"
+                              size="small"
+                            />
+                          }
+                          label={<span className="text-sm">{subcat}</span>}
+                          className="mb-1"
+                        />
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </FormGroup>
+          </div>
+        </div>
+
         <div className="w-full">
           <div className="py-4 font-semibold text-gray-600">
             We found{" "}
-            <span className="text-[#00A63E] text-lg ">
+            <span className="text-[#00A63E] text-lg">
               {showProducts?.length}
             </span>{" "}
             items for you!
           </div>
-          <div className=" w-full min-h-[500px] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-2">
+          <div className="w-full min-h-[500px] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {showProducts?.length ? (
               showProducts.map((product) => (
                 <ProductCard key={product._id} {...product} />
@@ -117,11 +210,6 @@ const Product = () => {
               </div>
             )}
           </div>
-          {/* {showProducts.length >= productNumber && (
-            <div className="p-2 mt-5 flex justify-end">
-              <p>Show More Products</p>
-            </div>
-          )} */}
         </div>
       </div>
     </div>

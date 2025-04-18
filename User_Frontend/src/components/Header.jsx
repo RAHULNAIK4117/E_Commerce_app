@@ -400,8 +400,8 @@ const Header = () => {
             color="black"
             className="hover:text-green-600 capitalize group"
           >
-            Fashion <KeyboardArrowDownOutlined />
-            <ul className="absolute top-full left-0 bg-white min-w-40 flex-col items-start shadow-md shadow-gray-700 rounded hidden duration-150 py-4 group-hover:flex">
+            Fashion {/* <KeyboardArrowDownOutlined /> */} 
+            {/* <ul className="absolute top-full left-0 bg-white min-w-40 flex-col items-start shadow-md shadow-gray-700 rounded hidden duration-150 py-4 group-hover:flex">
               <li
                 onClick={(event) => handleCategory(event, "fashion", "men")}
                 className="px-5 py-1 hover:bg-gray-200 w-full text-start whitespace-nowrap"
@@ -414,7 +414,7 @@ const Header = () => {
               >
                 women
               </li>
-            </ul>
+            </ul> */}
           </Button>
           <Button
             onClick={(event) => handleCategory(event, "electronics")}
@@ -423,8 +423,8 @@ const Header = () => {
             color="black"
             className="hover:text-green-600 capitalize group"
           >
-            Electronics <KeyboardArrowDownOutlined />
-            <ul className="absolute top-full left-0 bg-white min-w-40 flex-col items-start shadow-md shadow-gray-700 rounded hidden duration-150 py-4 group-hover:flex">
+            Electronics {/* <KeyboardArrowDownOutlined />*/}
+            {/* <ul className="absolute top-full left-0 bg-white min-w-40 flex-col items-start shadow-md shadow-gray-700 rounded hidden duration-150 py-4 group-hover:flex">
               <li
                 onClick={(event) =>
                   handleCategory(event, "electronics", "smart-watch")
@@ -449,17 +449,17 @@ const Header = () => {
               >
                 camera
               </li>
-            </ul>
+            </ul> */}
           </Button>
           <Button
-            onClick={(event) => handleCategory(event, "bags")}
+            onClick={(event) => handleCategory(event, "appliances")}
             sx={{ textTransform: "capitalize" }}
             variant="text"
             color="black"
             className="hover:text-green-600 capitalize group"
           >
-            Bags <KeyboardArrowDownOutlined />
-            <ul className="absolute top-full left-0 bg-white min-w-40 flex-col items-start shadow-md shadow-gray-700 rounded hidden duration-150 py-4 group-hover:flex">
+            Home appliances {/*<KeyboardArrowDownOutlined />*/}
+            {/* <ul className="absolute top-full left-0 bg-white min-w-40 flex-col items-start shadow-md shadow-gray-700 rounded hidden duration-150 py-4 group-hover:flex">
               <li
                 onClick={(event) => handleCategory(event, "bags", "men-bags")}
                 className="px-5 py-1 hover:bg-gray-200 w-full text-start whitespace-nowrap"
@@ -472,7 +472,7 @@ const Header = () => {
               >
                 women bags
               </li>
-            </ul>
+            </ul> */}
           </Button>
           <Button
             onClick={(event) => handleCategory(event, "footwear")}
@@ -481,8 +481,8 @@ const Header = () => {
             color="black"
             className="hover:text-green-600 capitalize group"
           >
-            Footwear <KeyboardArrowDownOutlined />
-            <ul className="absolute top-full left-0 bg-white min-w-40 flex-col items-start shadow-md shadow-gray-700 rounded hidden duration-150 py-4 group-hover:flex">
+            Footwear {/*<KeyboardArrowDownOutlined />*/}
+            {/* <ul className="absolute top-full left-0 bg-white min-w-40 flex-col items-start shadow-md shadow-gray-700 rounded hidden duration-150 py-4 group-hover:flex">
               <li
                 onClick={(event) =>
                   handleCategory(event, "footwear", "men-footwear")
@@ -499,7 +499,7 @@ const Header = () => {
               >
                 women footware
               </li>
-            </ul>
+            </ul> */}
           </Button>
           <Button
             onClick={(event) => handleCategory(event, "groceries")}

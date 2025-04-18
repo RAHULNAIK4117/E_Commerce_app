@@ -10,24 +10,38 @@ const Sidebar = () => {
       <div className="flex flex-col gap-4 p-4 text-[15px]">
         <NavLink
           to="/admin/list"
-          className="flex items-center gap-3 border-r-0 px-3 py-2 rounded-1"
+          className={({ isActive }) =>
+            `flex items-center gap-3 px-3 py-2 rounded-md transition ${
+              isActive ? "bg-gray-300" : ""
+            }`
+          }
         >
           <FaListUl className="w-5 h-5" />
-          <p className="hidden md:block">list items</p>
+          <p className="hidden md:block adminitemssection">list items</p>
         </NavLink>
+
         <NavLink
           to="/admin/add"
-          className="flex items-center gap-3 border-r-0 px-3 py-2 rounded-1"
+          className={({ isActive }) =>
+            `flex items-center gap-3 px-3 py-2 rounded-md transition ${
+              isActive ? "bg-gray-300" : ""
+            }`
+          }
         >
           <MdAddCircleOutline className="w-5 h-5" />
-          <p className="hidden md:block">add items</p>
+          <p className="hidden md:block adminitemssection">add items</p>
         </NavLink>
+
         <NavLink
           to="/admin/orders"
-          className="flex items-center gap-3 border-r-0 px-3 py-2 rounded-1"
+          className={({ isActive }) =>
+            `flex items-center gap-3 px-3 py-2 rounded-md transition ${
+              isActive ? "bg-gray-300" : ""
+            }`
+          }
         >
           <RiLuggageCartFill className="w-5 h-5" />
-          <p className="hidden md:block">orders items</p>
+          <p className="hidden md:block adminitemssection">orders items</p>
         </NavLink>
       </div>
     </div>
