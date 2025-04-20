@@ -78,4 +78,4 @@ const Product = mongoose.model("Product", productSchema);
 // const PopularProduct = mongoose.model("PopularProduct", productSchema);
 // const FeaturedProduct = mongoose.model("FeaturedProduct", productSchema);
 
-export { Product };
+export default Product;

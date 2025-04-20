@@ -60,7 +60,7 @@ const brands = {
 };
 
 const sizes = {
-  footwear: ["6", "7", "8", "9", "10", "11"], // Shoe sizes
+  footwear: ["6", "7", "8", "9", "10",], // Shoe sizes
   electronics: [], // No sizes for electronics
   fashion: ["S", "M", "L", "XL", "XXL"], // Clothing sizes
   accessories: [], // No sizes for accessories

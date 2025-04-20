@@ -6,7 +6,7 @@ import User from "../models/UserModel.js";
 const registerUser = async (req, res) => {
   const { name, email, password } = req.body;
 
-  console.log({ name, email, password });
+  // console.log({ name, email, password });
 
   try {
     const checkUser = await User.findOne({ email });
@@ -154,7 +154,7 @@ const updateUser = async (req, res) => {
       userDetails.password = await bcrypt.hash(userDetails.password, 12);
     }
 
-    console.log({ userDetails });
+    // console.log({ userDetails });
 
     const user = User.findByIdAndUpdate(userId, userDetails, { new: true });
 

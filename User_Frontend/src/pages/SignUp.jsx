@@ -22,10 +22,10 @@ const SignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
+    // console.log(formData);
 
     const response = await signUp(formData);
-    console.log(response);
+    // console.log(response);
 
     if (response.success) {
       localStorage.setItem("token", response.token);

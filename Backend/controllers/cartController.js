@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import Cart from "../models/CartModel.js";
-import { Product } from "../models/ProductModel.js";
+import Product from "../models/ProductModel.js";
 
 const createCart = async (req, res) => {
   try {
@@ -29,7 +29,7 @@ const createCart = async (req, res) => {
 const addCartProduct = async (req, res) => {
   try {
     const { userId, productId, quantity } = req.body;
-    console.log({ userId, productId, quantity });
+    // console.log({ userId, productId, quantity });
 
     if (productId && quantity) {
       const product = await Product.findById(productId);
@@ -104,7 +104,7 @@ const addCartProduct = async (req, res) => {
       },
     ]);
 
-    console.log(newCart);
+    // console.log(newCart);
 
     res.status(200).json({
       success: true,
@@ -184,7 +184,7 @@ const fetchCartProducts = async (req, res) => {
 const updateProductQuantity = async (req, res) => {
   try {
     const { userId, productId, quantity } = req.body;
-    console.log({ userId, productId, quantity });
+    // console.log({ userId, productId, quantity });
 
     if (!userId || !productId || quantity <= 0) {
       return res.status(400).json({
@@ -315,7 +315,7 @@ const deleteCartProduct = async (req, res) => {
   try {
     const { userId, productId } = req.params;
 
-    console.log({ userId, productId });
+    // console.log({ userId, productId });
 
     if (!userId || !productId) {
       return res.status(400).json({
@@ -332,7 +332,7 @@ const deleteCartProduct = async (req, res) => {
         message: "Cart not found!",
       });
     }
-    console.log({cart});
+    // console.log({cart});
     
 
     cart.products = cart.products.filter(
@@ -388,7 +388,7 @@ const deleteCartProduct = async (req, res) => {
       },
     ]);
 
-    console.log({newCart});
+    // console.log({newCart});
     
 
     res.status(200).json({

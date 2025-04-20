@@ -5,7 +5,7 @@ const addOrder = async (req, res) => {
   try {
     const { user, orders, address, payment, totalPrice } = req.body;
 
-    console.log(req.body);
+    // console.log(req.body);
 
     if (!user || !orders || !address || !payment || !totalPrice) {
       return res.status(400).json({
@@ -101,7 +101,7 @@ const getOrders = async (req, res) => {
 const getOrder = async (req, res) => {
   try {
     const { orderId } = req.params;
-    console.log({ orderId });
+    // console.log({ orderId });
 
     if (!orderId) {
       return res.status(400).json({
@@ -117,7 +117,7 @@ const getOrder = async (req, res) => {
         message: "Order ID not valid!",
       });
     }
-    console.log({ order });
+    // console.log({ order });
 
     res.status(200).json({
       success: true,
