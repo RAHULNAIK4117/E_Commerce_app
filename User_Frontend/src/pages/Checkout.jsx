@@ -72,7 +72,7 @@ const Checkout = () => {
       key: import.meta.env.VITE_RAZORPAY_KEY_ID,
       amount: data.amount,
       currency: data.currency,
-      name: "Raj_Store",
+      name: "rahul_store",
       description: "Test Mode",
       order_id: data.id,
       handler: async (response) => {
@@ -115,6 +115,7 @@ const Checkout = () => {
       orders: cart.map((item) => ({
         product: item.productId,
         quantity: item.quantity,
+        size: item.size,
       })),
       address,
       payment: {

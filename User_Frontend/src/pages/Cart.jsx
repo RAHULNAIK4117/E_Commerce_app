@@ -83,10 +83,16 @@ const Cart = () => {
           {cart.length ? (
             <TableContainer>
               <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                <TableHead sx={{ bgcolor: "#f7f7f7" }}>
+              <TableHead sx={{ bgcolor: "#f7f7f7" }}>
                   <TableRow>
                     <TableCell sx={{ fontWeight: "bold", fontSize: "18px" }}>
                       Product
+                    </TableCell>
+                    <TableCell
+                      align="center"
+                      sx={{ fontWeight: "bold", fontSize: "18px" }}
+                    >
+                      Size
                     </TableCell>
                     <TableCell
                       align="center"
@@ -140,7 +146,13 @@ const Cart = () => {
                         align="center"
                         sx={{ fontSize: "14px md:16px" }}
                       >
-                        Rs. {product.details?.price}
+                        {product.size || "N/A"}
+                      </TableCell>
+                      <TableCell
+                        align="center"
+                        sx={{ fontSize: "14px md:16px" }}
+                      >
+                         Rs. {product.details?.price}
                       </TableCell>
                       <TableCell
                         align="center"

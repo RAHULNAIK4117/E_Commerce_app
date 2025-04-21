@@ -43,6 +43,7 @@ const ProductDetails = () => {
   const [loading, setLoading] = useState(false);
   const [product, setProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
+  const [selectedSize, setSelectedSize] = useState("");
   const [relatedProducts, setrelatedProducts] = useState(null);
   const userData = useSelector((state) => state.auth.userData);
   const dispatch = useDispatch();
@@ -68,8 +69,18 @@ const ProductDetails = () => {
   };
 
   const addToCartProduct = async () => {
-    dispatch(addToCart({ userId: userData?._id, productId: id, quantity }));
+    if (product?.size?.length > 0 && !selectedSize) {
+      toast.error("Please select a size");
+      return;
+    }
     
+     dispatch(addToCart({ 
+      userId: userData?._id, 
+      productId: id, 
+      quantity,
+      size: selectedSize,
+      details: product, 
+    }));
     // const product = await addToCart({ userId: userData._id, productId: id, quantity });
     // console.log({product});
     // if (product?.success) {
@@ -181,6 +192,8 @@ const ProductDetails = () => {
                         value={size}
                         id={size}
                         className="hidden peer"
+                        onChange={() => setSelectedSize(size)}
+                              checked={selectedSize === size}
                       />
                       <label
                         htmlFor={size}

@@ -28,7 +28,7 @@ const createCart = async (req, res) => {
 
 const addCartProduct = async (req, res) => {
   try {
-    const { userId, productId, quantity } = req.body;
+    const { userId, productId, quantity, size } = req.body;
     // console.log({ userId, productId, quantity });
 
     if (productId && quantity) {
@@ -46,10 +46,10 @@ const addCartProduct = async (req, res) => {
       }
 
       const findCurrentProductIndex = cart.products.findIndex(
-        (product) => product.productId.toString() === productId
+        (product) => product.productId.toString() === productId  && product.size === size
       );
       if (findCurrentProductIndex === -1) {
-        cart.products.push({ productId, quantity });
+        cart.products.push({ productId, quantity, size});
       } else {
         cart.products[findCurrentProductIndex].quantity += quantity;
       }
@@ -80,6 +80,7 @@ const addCartProduct = async (req, res) => {
               in: {
                 productId: "$$prod.productId",
                 quantity: "$$prod.quantity",
+                size: "$$prod.size",
                 details: {
                   $arrayElemAt: [
                     {
@@ -162,6 +163,7 @@ const fetchCartProducts = async (req, res) => {
       price: item.productId.price,
       salePrice: item.productId.salePrice,
       quantity: item.quantity,
+      size: item.size,
     }));
 
     res.status(200).json({
@@ -183,7 +185,7 @@ const fetchCartProducts = async (req, res) => {
 
 const updateProductQuantity = async (req, res) => {
   try {
-    const { userId, productId, quantity } = req.body;
+    const { userId, productId, quantity,size } = req.body;
     // console.log({ userId, productId, quantity });
 
     if (!userId || !productId || quantity <= 0) {
@@ -313,7 +315,7 @@ const clearCart = async (req, res) => {
 
 const deleteCartProduct = async (req, res) => {
   try {
-    const { userId, productId } = req.params;
+    const { userId, productId,size } = req.params;
 
     // console.log({ userId, productId });
 

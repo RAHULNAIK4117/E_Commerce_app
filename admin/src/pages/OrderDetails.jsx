@@ -147,28 +147,38 @@ const OrderDetails = () => {
 
       {/* Orders */}
       <div className="w-full text-left shadow-md p-4 space-y-4">
-        <h2 className="text-2xl font-semibold">Orders</h2>
-        {order && (
-          <div className="overflow-x-auto">
-            <table className="min-w-full bg-white border border-gray-200">
-              <thead>
-                <tr className="bg-gray-100 border-b">
-                  <th className="py-2 px-4 ">Order ID</th>
-                  <th className="py-2 px-4 ">Quantity</th>
-                </tr>
-              </thead>
-              <tbody>
-                {order?.orders?.map((prod, index) => (
-                  <tr key={index} className=" border-b">
-                    <td className="py-2 px-4 ">{prod.product}</td>
-                    <td className="py-2 px-4 ">{prod.quantity}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
-      </div>
+  <h2 className="text-2xl font-semibold">Orders</h2>
+  {order && (
+    <div className="overflow-x-auto">
+      <table className="min-w-full bg-white border border-gray-200">
+        <thead>
+          <tr className="bg-gray-100 border-b">
+            <th className="py-2 px-4">Image</th>
+            <th className="py-2 px-4">Order ID</th>
+            <th className="py-2 px-4">Quantity</th>
+            <th className="py-2 px-4">Size</th>
+          </tr>
+        </thead>
+        <tbody>
+  {order?.orders?.map((prod, index) => (
+    <tr key={index} className="border-b">
+    <td className="py-2 px-4">
+      <img
+        src={prod?.product?.images?.[0]}
+        alt="Product"
+        className="w-16 h-16 object-cover rounded"
+      />
+    </td>
+    <td className="py-2 px-4">{prod.product?._id}</td>
+    <td className="py-2 px-4">{prod.quantity}</td>
+    <td className="py-2 px-4">{prod.size || "N/A"}</td>
+  </tr>
+  ))}
+</tbody>
+      </table>
+    </div>
+  )}
+</div>
 
       {/* Address */}
       <div className="w-full text-left shadow-md p-4 space-y-4">

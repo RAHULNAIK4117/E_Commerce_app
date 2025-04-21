@@ -101,7 +101,6 @@ const getOrders = async (req, res) => {
 const getOrder = async (req, res) => {
   try {
     const { orderId } = req.params;
-    // console.log({ orderId });
 
     if (!orderId) {
       return res.status(400).json({
@@ -110,18 +109,22 @@ const getOrder = async (req, res) => {
       });
     }
 
-    const order = await Order.findOne({ _id: orderId });
+    const order = await Order.findOne({ _id: orderId })
+      .populate({
+        path: "orders.product",
+        select: "images title price", // Added price as it's useful for order details
+      });
+
     if (!order) {
       return res.status(400).json({
         success: false,
         message: "Order ID not valid!",
       });
     }
-    // console.log({ order });
 
     res.status(200).json({
       success: true,
-      message: "Orders fetched successfully",
+      message: "Order fetched successfully",
       data: order,
     });
   } catch (error) {
