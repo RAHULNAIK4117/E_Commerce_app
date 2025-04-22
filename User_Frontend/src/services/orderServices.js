@@ -27,3 +27,15 @@ export const getOrders = async (userId) => {
         return error.response?.data || { message: "Failed to get orders!" };
     }
 }
+
+export const cancelProductFromOrder = async (orderId, productId) => {
+    try {
+        const response = await api.patch('cancel-product', {
+            orderId,
+            productId,
+        });
+        return response.data;
+    } catch (error) {
+        return error.response?.data || { message: "Failed to cancel product!" };
+    }
+};

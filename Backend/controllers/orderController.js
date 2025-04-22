@@ -48,46 +48,18 @@ const getOrders = async (req, res) => {
       });
     }
 
-    const order = await Order.find({ user: userId })
-      .select("orders totalPrice user _id status createdAt");
-
-    // const order = await Order.aggregate([
-    //   {
-    //     $match: { user: new mongoose.Types.ObjectId(userId) },
-    //   },
-    //   {
-    //     $unwind: "$orders"
-    //   },
-    //   {
-    //     $lookup: {
-    //       from: "products",
-    //       localField: "orders.product",
-    //       foreignField: "_id",
-    //       as: "orders.productDetails",
-    //     },
-    //   },
-    //   {
-    //     $unwind: "$orders.productDetails"
-    //   },
-    //   {
-    //     $group: {
-    //       _id: "$_id",
-    //       user: { $first: "$user" },
-    //       address: { $first: "$address" },
-    //       payment: { $first: "$payment" },
-    //       totalPrice: { $first: "$totalPrice" },
-    //       createdAt: { $first: "$createdAt" },
-    //       updatedAt: { $first: "$updatedAt" },
-    //       status: { $first: "$status" },
-    //       orders: { $push: "$orders" }
-    //     }
-    //   }
-    // ]);
+    const orders = await Order.find({ user: userId })
+      .populate({
+        path: "orders.product",
+        select: "images title price", // Only include necessary product fields
+      })
+      .select("orders totalPrice user _id status createdAt")
+      .lean(); // Convert to plain JavaScript objects
 
     res.status(200).json({
       success: true,
       message: "Orders fetched successfully",
-      data: order,
+      data: orders,
     });
   } catch (error) {
     console.log("Error in fetching Orders!", error);
@@ -190,4 +162,48 @@ const updateOrder = async (req, res) => {
   }
 };
 
-export { addOrder, getOrders, getOrder, getAllOrders, updateOrder };
+const cancelProductFromOrder = async (req, res) => {
+  try {
+    const { orderId, productId } = req.body;
+
+    if (!orderId || !productId) {
+      return res.status(400).json({
+        success: false,
+        message: "Missing orderId or productId",
+      });
+    }
+
+    const order = await Order.findById(orderId);
+    if (!order) {
+      return res.status(404).json({
+        success: false,
+        message: "Order not found",
+      });
+    }
+
+    // Filter out the product
+    order.orders = order.orders.filter(
+      (item) => item.product.toString() !== productId
+    );
+
+    // Optionally: update total price
+    // You may calculate the new total here based on remaining items
+
+    await order.save();
+
+    return res.status(200).json({
+      success: true,
+      message: "Product removed from order",
+      data: order,
+    });
+  } catch (error) {
+    console.error("Error canceling product:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Server error while canceling product",
+    });
+  }
+};
+
+
+export { addOrder, getOrders, getOrder, getAllOrders, updateOrder, cancelProductFromOrder};
