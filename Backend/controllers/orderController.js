@@ -162,48 +162,5 @@ const updateOrder = async (req, res) => {
   }
 };
 
-const cancelProductFromOrder = async (req, res) => {
-  try {
-    const { orderId, productId } = req.body;
 
-    if (!orderId || !productId) {
-      return res.status(400).json({
-        success: false,
-        message: "Missing orderId or productId",
-      });
-    }
-
-    const order = await Order.findById(orderId);
-    if (!order) {
-      return res.status(404).json({
-        success: false,
-        message: "Order not found",
-      });
-    }
-
-    // Filter out the product
-    order.orders = order.orders.filter(
-      (item) => item.product.toString() !== productId
-    );
-
-    // Optionally: update total price
-    // You may calculate the new total here based on remaining items
-
-    await order.save();
-
-    return res.status(200).json({
-      success: true,
-      message: "Product removed from order",
-      data: order,
-    });
-  } catch (error) {
-    console.error("Error canceling product:", error);
-    return res.status(500).json({
-      success: false,
-      message: "Server error while canceling product",
-    });
-  }
-};
-
-
-export { addOrder, getOrders, getOrder, getAllOrders, updateOrder, cancelProductFromOrder};
+export { addOrder, getOrders, getOrder, getAllOrders, updateOrder,};

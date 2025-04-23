@@ -122,7 +122,7 @@ const Header = () => {
           onClick={goToHome}
           className="hidden sm:flex items-center space-x-2 flex-shrink-0 cursor-pointer"
         >
-          <img src="/Logo.jpg" alt="Shopstic Logo" className="h-8" />
+          <img src="/Logo.jpeg" alt="Shopstic Logo" className="h-13 border-1 " />
         </button>
 
         <div className="flex items-center justify-end w-full gap-4 ">

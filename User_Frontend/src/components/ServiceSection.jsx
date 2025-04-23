@@ -1,11 +1,11 @@
 import { FaTags, FaTruck, FaHandshake, FaBoxes, FaUndo } from "react-icons/fa";
 
 const services = [
-  { icon: <FaTags size={32} className="text-green-500" />, title: "Best prices & offers", subtitle: "Orders $50 or more" },
-  { icon: <FaTruck size={32} className="text-green-500" />, title: "Free delivery", subtitle: "Orders $50 or more" },
-  { icon: <FaHandshake size={32} className="text-green-500" />, title: "Great daily deal", subtitle: "Orders $50 or more" },
-  { icon: <FaBoxes size={32} className="text-green-500" />, title: "Wide assortment", subtitle: "Orders $50 or more" },
-  { icon: <FaUndo size={32} className="text-green-500" />, title: "Easy returns", subtitle: "Orders $50 or more" },
+  { icon: <FaTags size={32} className="text-green-500" />, title: "Best prices & offers", subtitle: "Orders 1500 or more" },
+  { icon: <FaTruck size={32} className="text-green-500" />, title: "Free delivery", subtitle: "Orders 1500 or more" },
+  { icon: <FaHandshake size={32} className="text-green-500" />, title: "Great daily deal", subtitle: "Orders 1500 or more" },
+  { icon: <FaBoxes size={32} className="text-green-500" />, title: "Wide assortment", subtitle: "Orders 1500 or more" },
+  { icon: <FaUndo size={32} className="text-green-500" />, title: "Easy returns", subtitle: "Orders 1500 or more" },
 ];
 
 export default function ServiceSection() {

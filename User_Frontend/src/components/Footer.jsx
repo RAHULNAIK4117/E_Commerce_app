@@ -9,7 +9,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
           {/* Company Info */}
           <div className="col-span-1">
-            <img src="/Logo.jpg" alt="Shopstic Logo" className="w-24 md:w-36 mb-4" />
+          <img src="/Logo.jpeg" alt="Shopstic Logo" className="h-13 border-1 " />
             <p className="text-base md:text-lg">Awesome grocery store website template</p>
             <ul className="mt-4 space-y-2">
               <li className="flex items-center gap-2">

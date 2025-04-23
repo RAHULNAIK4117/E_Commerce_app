@@ -28,14 +28,11 @@ export const getOrders = async (userId) => {
     }
 }
 
-export const cancelProductFromOrder = async (orderId, productId) => {
+export const updateOrderStatus = async (orderId, status) => {
     try {
-        const response = await api.patch('cancel-product', {
-            orderId,
-            productId,
-        });
+        const response = await api.put(`update/${orderId}`, { orderStatus: status });
         return response.data;
     } catch (error) {
-        return error.response?.data || { message: "Failed to cancel product!" };
+        return error.response?.data || { message: "Failed to update order status!" };
     }
-};
+}

@@ -1,5 +1,5 @@
 import express from 'express'
-import { addOrder, getAllOrders, getOrder, getOrders, updateOrder,cancelProductFromOrder } from '../controllers/orderController.js'
+import { addOrder, getAllOrders, getOrder, getOrders, updateOrder,} from '../controllers/orderController.js'
 
 
 
@@ -11,7 +11,10 @@ router.get('/get/:userId', getOrders)
 router.get('/getAllOrders', getAllOrders)
 router.get('/get-order/:orderId', getOrder)
 router.put('/update/:orderId', updateOrder)
-router.patch("/cancel-product", cancelProductFromOrder);
+
+
+
+
 
 
 export default router
