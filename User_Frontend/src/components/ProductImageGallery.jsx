@@ -41,7 +41,7 @@ const ProductImageGallery = ({images}) => {
               <img
                 src={img}
                 alt={`Slide ${index}`}
-                className="w-full h-[500px] object-cover rounded-lg"
+                className="w-[500px] h-[500px] object-cover rounded-lg"
               />
             </SwiperSlide>
           ))}
