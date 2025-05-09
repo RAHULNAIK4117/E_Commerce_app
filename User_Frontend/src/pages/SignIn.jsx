@@ -4,10 +4,14 @@ import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from "react-router-dom";
 import { signIn } from "../services/authServices";
 import toast from "react-hot-toast";
+import { LuLoaderCircle } from "react-icons/lu";
+
 
 const SignIn = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false)
   const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -23,6 +27,7 @@ const SignIn = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     // console.log(formData);
+    setLoading(true)
     
     const response = await signIn(formData);
     // console.log(response);
@@ -37,6 +42,7 @@ const SignIn = () => {
       toast.error(response.message)
     }
 
+    setLoading(false)
   }
 
   return (
@@ -83,7 +89,7 @@ const SignIn = () => {
           </div>
 
           <button className="w-full bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 transition  cursor-pointer">
-            Sign In
+            {loading ? <LuLoaderCircle size={20} className={`animate-spin mx-auto`} /> : "Sign In"}
           </button>
         </form>
 

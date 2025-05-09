@@ -3,9 +3,12 @@ import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from "react-router-dom";
 import { signUp } from "../services/authServices";
 import toast from "react-hot-toast";
+import { LuLoaderCircle } from "react-icons/lu";
+
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false)
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
@@ -23,6 +26,7 @@ const SignUp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     // console.log(formData);
+    setLoading(true)
 
     const response = await signUp(formData);
     // console.log(response);
@@ -35,11 +39,7 @@ const SignUp = () => {
       toast.error(response.message);
     }
 
-    // setFormData({
-    //   name: "",
-    //   email: "",
-    //   password: "",
-    // })
+    setLoading(false)
   };
 
   return (
@@ -81,7 +81,7 @@ const SignUp = () => {
             type="submit"
             className="w-full bg-green-500 text-white py-2 mt-6 rounded-md hover:bg-green-600  cursor-pointer"
           >
-            Sign Up
+           {loading ? <LuLoaderCircle size={20} className={`animate-spin mx-auto`} /> : "Sign Up"}
           </button>
         </form>
         <div className="flex items-center my-4">
