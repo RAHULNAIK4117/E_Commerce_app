@@ -31,13 +31,13 @@ const Product = () => {
 
   const fetchAndSetProducts = async () => {
     const response = await getProducts({ 
-      // category, 
-      // subCategory, 
-      // search, 
-      // sort 
+      category, 
+      subCategory, 
+      search, 
+      sort 
     });
 
-    console.log("Products fetched:", response.data);
+    // console.log("Products fetched:", response.data);
     
     
     // Apply client-side sorting if needed
@@ -220,3 +220,5 @@ const Product = () => {
 };
 
 export default Product;
+
+
