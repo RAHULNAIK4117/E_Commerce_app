@@ -31,11 +31,14 @@ const Product = () => {
 
   const fetchAndSetProducts = async () => {
     const response = await getProducts({ 
-      category, 
-      subCategory, 
-      search, 
-      sort 
+      // category, 
+      // subCategory, 
+      // search, 
+      // sort 
     });
+
+    console.log("Products fetched:", response.data);
+    
     
     // Apply client-side sorting if needed
     let sortedProducts = [...response.data];
